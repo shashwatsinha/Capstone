@@ -30,15 +30,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MemoryPool.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameCodeStd.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="String.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\3rdPartyTools\tinystr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,22 +45,16 @@
     <ClCompile Include="Source\3rdPartyTools\tinyxmlparser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FSM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="ActorFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Process.cpp">
+    <ClCompile Include="NormalEnemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProcessManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FPSCamera.cpp">
+    <ClCompile Include="EnvironmentObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,15 +71,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MemoryPool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameCodeStd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MemoryMacros.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="String.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -107,22 +83,19 @@
     <ClInclude Include="Source\3rdPartyTools\tinyxml2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ActorFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Process.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ProcessManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FPSCamera.h">
+    <ClInclude Include="FSM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnvironmentObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

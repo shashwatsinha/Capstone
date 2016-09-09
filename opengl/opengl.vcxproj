@@ -79,8 +79,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\glew\glew-1.13.0\include;C:\glfw\glfw-3.1.2.bin.WIN32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\glew\glew-1.13.0\lib;C:\glfw\glfw-3.1.2.bin.WIN32\lib-vc2015;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\ThirdParty\glm;$(ProjectDir)ThirdParty\glew\include;$(ProjectDir)ThirdParty\GLFW\include;$(ProjectDir)ThirdParty\SOIL\include;$(ProjectDir)ThirdParty\assimp\include;$(ProjectDir)ThirdParty\GL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)ThirdParty\SOIL\lib;$(ProjectDir)ThirdParty\GLFW\lib;$(ProjectDir)ThirdParty\GL\lib;$(ProjectDir)ThirdParty\assimp\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -151,37 +151,28 @@
   <ItemGroup>
     <ClCompile Include="ActorFactory.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="FPSCamera.cpp" />
-    <ClCompile Include="GameCodeStd.cpp" />
+    <ClCompile Include="EnvironmentObject.cpp" />
+    <ClCompile Include="FSM.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MemoryPool.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Process.cpp" />
-    <ClCompile Include="ProcessManager.cpp" />
-    <ClCompile Include="Resource.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="NormalEnemy.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinystr.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxml.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxml2.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxmlerror.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxmlparser.cpp" />
-    <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActorFactory.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="FPSCamera.h" />
-    <ClInclude Include="GameCodeStd.h" />
-    <ClInclude Include="MemoryMacros.h" />
-    <ClInclude Include="MemoryPool.h" />
+    <ClInclude Include="EnvironmentObject.h" />
+    <ClInclude Include="FSM.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="Process.h" />
-    <ClInclude Include="ProcessManager.h" />
+    <ClInclude Include="NormalEnemy.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Source\3rdPartyTools\tinystr.h" />
     <ClInclude Include="Source\3rdPartyTools\tinyxml.h" />

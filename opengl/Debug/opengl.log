@@ -1,18 +1,2 @@
-﻿  main.cpp
-c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
-  c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\thirdparty\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
-c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\shader.h(9): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\main.cpp(67): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\main.cpp(121): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\main.cpp(122): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\main.cpp(126): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\main.cpp(127): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\main.cpp(129): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\main.cpp(130): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\main.cpp(137): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-  Model.cpp
-c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\shader.h(9): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  ActorFactory.cpp
-c:\users\shashwats system\documents\visual studio 2015\projects\opengl\opengl\shader.h(9): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Generating Code...
-  opengl.vcxproj -> C:\Users\Shashwats System\documents\visual studio 2015\Projects\opengl\Debug\opengl.exe
+﻿  NormalEnemy.cpp
+  opengl.vcxproj -> C:\SelfCapstone\opengl\Debug\opengl.exe

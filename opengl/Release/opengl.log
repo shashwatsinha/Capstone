@@ -1,0 +1,6 @@
+﻿SOIL.lib(SOIL.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:ICF' specification
+MSVCRT.lib(initializers.obj) : warning LNK4098: defaultlib 'msvcrtd.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+MSVCRT.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+msvcrtd.lib(_init_.obj) : error LNK2001: unresolved external symbol __CrtDbgReport
+msvcrtd.lib(_init_.obj) : error LNK2001: unresolved external symbol __CrtDbgReportW
+C:\SelfCapstone\opengl\Release\opengl.exe : fatal error LNK1120: 2 unresolved externals

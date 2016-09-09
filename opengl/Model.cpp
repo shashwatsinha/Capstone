@@ -1,47 +1,48 @@
 #include "Model.h"
 
 
+
 Model::Model()
 {
-	positionX = 0;
-	positionY = 0;
-	positionZ = 0;
-	scaleX = 1;
-	scaleY = 1;
-	scaleZ = 1;
 }
 
-void Model::Draw(Shader *shader)
+void Model::InitPath(GLchar * path)
 {
-	
+	this->loadModel(path);
+}
+
+void Model :: Draw(Shader *shader)
+{
+	glm::mat4 model;
+	model = glm::translate(model, position); // Translate it down a bit so it's at the center of the scene
+	model = glm::scale(model, scale);	// It's a bit too big for our scene, so scale it down
+	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
 	for (GLuint i = 0; i < this->meshes.size(); i++)
-		meshes[i].Draw(shader);
+		this->meshes[i].Draw(shader);
 }
 
-void Model::SetPosition(GLfloat x, GLfloat y, GLfloat z)
+void Model::SetPosition(glm::vec3 pos)
 {
-	positionX = x;
-	positionY = y;
-	positionZ = z;
+	position = pos;
 }
 
-void Model::SetScale(GLfloat x, GLfloat y, GLfloat z)
+glm::vec3 Model::GetPosition()
 {
-	scaleX = x;
-	scaleY = y;
-	scaleZ = z;
+	return this->position;
 }
 
-void Model::SetPath(GLfloat x, GLfloat y, GLfloat z)
+void Model::SetScale(glm::vec3 sc)
 {
+	scale = sc;
 }
 
-void Model::Load(string p)
+glm::vec3 Model::GetScale()
 {
-	this->loadModel(p);
+	return this->scale;
 }
 
-void Model::loadModel(string path)
+void Model ::  loadModel(string path)
 {
 	// Read file via ASSIMP
 	Assimp::Importer importer;
@@ -59,7 +60,7 @@ void Model::loadModel(string path)
 	this->processNode(scene->mRootNode, scene);
 }
 
-void Model::processNode(aiNode * node, const aiScene * scene)
+void Model ::  processNode(aiNode* node, const aiScene* scene)
 {
 	// Process each mesh located at the current node
 	for (GLuint i = 0; i < node->mNumMeshes; i++)
@@ -74,9 +75,10 @@ void Model::processNode(aiNode * node, const aiScene * scene)
 	{
 		this->processNode(node->mChildren[i], scene);
 	}
+
 }
 
-Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
+Mesh Model ::  processMesh(aiMesh* mesh, const aiScene* scene)
 {
 	// Data to fill
 	vector<Vertex> vertices;
@@ -89,9 +91,9 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
 		Vertex vertex;
 		glm::vec3 vector; // We declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
 						  // Positions
-		vector.x = (mesh->mVertices[i].x + positionX)*scaleX;
-		vector.y = (mesh->mVertices[i].y + positionY)*scaleY;
-		vector.z = (mesh->mVertices[i].z + positionZ)*scaleZ;
+		vector.x = mesh->mVertices[i].x;
+		vector.y = mesh->mVertices[i].y;
+		vector.z = mesh->mVertices[i].z;
 		vertex.Position = vector;
 		// Normals
 		vector.x = mesh->mNormals[i].x;
@@ -143,7 +145,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
 	return Mesh(vertices, indices, textures);
 }
 
-vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type, string typeName)
+vector<Texture> Model :: loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
 {
 	vector<Texture> textures;
 	for (GLuint i = 0; i < mat->GetTextureCount(type); i++)
@@ -174,7 +176,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	return textures;
 }
 
-GLint Model :: TextureFromFile(const char* path, string directory)
+GLint TextureFromFile(const char* path, string directory)
 {
 	//Generate texture ID and load texture data 
 	string filename = string(path);

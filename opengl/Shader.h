@@ -6,19 +6,18 @@
 #include <sstream>
 #include <iostream>
 
-#include <GL/glew.h>; // Include glew to get all the required OpenGL headers
+#include <GL/glew.h>
 
 class Shader
 {
 public:
-	// The program ID
 	GLuint Program;
-	Shader();
-	// Constructor reads and builds the shader
+	// Constructor generates the shader on the fly
 	Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
-	void Init(const GLchar* vertexPath, const GLchar* fragmentPath);
-	// Use the program
+
+	// Uses the current shader
 	void Use();
+
 };
 
 #endif
