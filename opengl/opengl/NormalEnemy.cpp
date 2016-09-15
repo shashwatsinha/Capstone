@@ -53,15 +53,15 @@ NormalEnemy::~NormalEnemy()
 
 void NormalEnemy::Patrolling()
 {
-	std::cout << "Patrolling" << endl;
+	//std::cout << "Patrolling" << endl;
 }
 
 void NormalEnemy::Chasing()
 {
-	std::cout << "Chasing" << endl;
+	//std::cout << "Chasing" << endl;
 }
 
 void NormalEnemy::Attacking()
 {
-	std::cout << "Attacking" << endl;
+	//std::cout << "Attacking" << endl;
 }

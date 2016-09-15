@@ -9,14 +9,24 @@ public:
 	//Inititalize the actor, if typeActor=0, then model, 1 = sound. typeModel= 0 denotes a non-movable Object, 1 denotes an enemy, 2 denotes a random moving object
 	void InitActor(GLchar* path, int typeActor,int typeModel);
 
+	btRigidBody* GetRigidBody();
+
+	btCollisionObject* GetCollisionObject();
+
+	btTransform GetstartTransform();
+
 	//Update the Actor per frame if necesssary
 	void UpdateActor(Shader *shader);
 
 	//Set position of Actor
 	void SetPosition(glm::vec3 pos);
 
+	void SetPosition(XMFLOAT3 pos);
+
 	//Get Position of Actor
-	glm::vec3 GetPosition(glm::vec3 pos);
+	glm::vec3 GetPosition();
+
+	void UpdatePhysicsPropertiesForObject();
 
 	//Set scale of Actor
 	void SetScale(glm::vec3 sc);

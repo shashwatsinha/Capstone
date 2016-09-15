@@ -28,6 +28,10 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void Do_Movement();
 void InitGLFW();
+void LoadDynamicsWorld();
+void UpdatePhysicsWorld(float elapsedtime);
+void AddPhysicsForModels(ActorFactory* g);
+
 float x = 0;
 // Camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -39,55 +43,31 @@ GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 GLFWwindow* window;
 
+Physics* physics;
+std::vector<ActorFactory*> physicsGameObjects;
+
 // The MAIN function, from here we start our application and run our Game loop
 int main()
 {
+	LoadDynamicsWorld();
+
+
+
 	// Init GLFW
 	InitGLFW();
 	// Setup and compile our shaders
 	Shader shader("Shaders/nanosuit.vs", "Shaders/nanosuit.frag");
 
-	btBroadphaseInterface* broadphase = new btDbvtBroadphase();
-
-	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-	btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-
-	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
-
-	btDiscreteDynamicsWorld* dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-
-	dynamicsWorld->setGravity(btVector3(0, -10, 0));
-
-
-	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
-
-	btCollisionShape* fallShape = new btSphereShape(1);
-
-
-	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
-	btRigidBody::btRigidBodyConstructionInfo
-		groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
-	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
-	dynamicsWorld->addRigidBody(groundRigidBody);
-
-
-	btDefaultMotionState* fallMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 5, 0)));
-	btScalar mass = 10;
-	btVector3 fallInertia(0, 0, 0);
-	fallShape->calculateLocalInertia(mass, fallInertia);
-	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
-	btRigidBody* fallRigidBody = new btRigidBody(fallRigidBodyCI);
-	fallRigidBody->setLinearVelocity(btVector3(0.00001f, 0, 0));
-	dynamicsWorld->addRigidBody(fallRigidBody);
-	
-
 	ActorFactory *ac1 = new ActorFactory();
 	ac1->InitActor("Models/Cube/Cube.obj", 0, 1);
-	ac1->SetPosition(glm::vec3(0, 0, 0));
+	ac1->SetPosition(glm::vec3(0, 1, 0));
 	ac1->SetScale(glm::vec3(0.2f, 0.2f, 0.2f));
+
 	ac1->AddAI();
 	
+	// add every object with physics property soon after creation.
+
+	AddPhysicsForModels(ac1);
 	// Draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//glm::mat4 model[1];
@@ -99,6 +79,7 @@ int main()
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
+		UpdatePhysicsWorld(currentFrame);
 		// Check and call events
 		glfwPollEvents();
 		Do_Movement();
@@ -114,13 +95,13 @@ int main()
 		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 		// Draw the loaded model
-		
+		ac1->GetPosition();
 		ac1->UpdateActor(&shader);
 		ac1->ProcessAI(camera.Position);
-		dynamicsWorld->stepSimulation(1 / 60.f, 10);
+		//dynamicsWorld->stepSimulation(1 / 60.f, 10);
 
-		btTransform trans;
-		fallRigidBody->getMotionState()->getWorldTransform(trans);
+		//btTransform trans;
+		//fallRigidBody->getMotionState()->getWorldTransform(trans);
 		//std::cout << "sphere height: " <<trans.getOrigin().getX()<<" "<< trans.getOrigin().getY() << std::endl;
 		//ac1->SetPosition(glm::vec3(trans.getOrigin().getY(), 0, 0));
 		
@@ -129,25 +110,6 @@ int main()
 	}
 
 	// Clean up behind ourselves like good little programmers
-	dynamicsWorld->removeRigidBody(fallRigidBody);
-	delete fallRigidBody->getMotionState();
-	delete fallRigidBody;
-
-	dynamicsWorld->removeRigidBody(groundRigidBody);
-	delete groundRigidBody->getMotionState();
-	delete groundRigidBody;
-
-
-	delete fallShape;
-
-	delete groundShape;
-
-
-	delete dynamicsWorld;
-	delete solver;
-	delete collisionConfiguration;
-	delete dispatcher;
-	delete broadphase;
 	glfwTerminate();
 	return 0;
 }
@@ -174,6 +136,23 @@ void Do_Movement()
 	{
 		cout<<camera.GetPosition().x<< " " << camera.GetPosition().y<<" "<< camera.GetPosition().z<<endl;
 	}
+	if (keys[GLFW_KEY_K])
+	{
+		physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(1.0f, 0.0f, 0.0f));
+	}
+	if (keys[GLFW_KEY_J])
+	{
+		physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(-1.0f, 0.0f, 0.0f));
+	}
+	if (keys[GLFW_KEY_I])
+	{
+		physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(0.0f, 0.0f, 1.0f));
+	}
+	if (keys[GLFW_KEY_M])
+	{
+		physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(0.0f, 0.0f, -1.0f));
+	}
+
 }
 
 // Is called whenever a key is pressed/released via GLFW
@@ -242,4 +221,47 @@ void InitGLFW()
 	// Setup some OpenGL options
 	glEnable(GL_DEPTH_TEST);
 
+
+
+}
+
+void LoadDynamicsWorld()
+{
+	physics = new Physics();
+}
+
+void AddPhysicsForModels( ActorFactory* g)
+{
+
+	g->UpdatePhysicsPropertiesForObject();
+
+	physicsGameObjects.push_back(g);
+	physics->dynamicsWorld->addRigidBody(g->GetRigidBody());
+	physics->dynamicsWorld->addCollisionObject(g->GetCollisionObject());
+
+}
+
+void UpdatePhysicsWorld(float elapsedTime)
+{
+	// fixed 1/60 timestep
+	physics->dynamicsWorld->stepSimulation(1 / 10.0f, 1);
+
+	XMFLOAT3 mat;
+	const btCollisionObjectArray& objectArray = physics->dynamicsWorld->getCollisionObjectArray();
+
+	for (int i = 0; i < physicsGameObjects.size(); i++)
+	{
+		physicsGameObjects.at(i)->GetRigidBody()->activate(true);
+
+		btRigidBody* pBody = physicsGameObjects.at(i)->GetRigidBody();
+		if (pBody && pBody->getMotionState())
+		{
+			btTransform trans = physicsGameObjects.at(i)->GetstartTransform();
+			pBody->getMotionState()->getWorldTransform(trans);
+			XMFLOAT3 pos = XMFLOAT3(trans.getOrigin());
+			physicsGameObjects.at(i)->SetPosition(pos);
+			//physicsGameObjects.at(i)->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
+			//physicsGameObjects.at(i)->SetWorldMatrix();
+		}
+	}
 }
