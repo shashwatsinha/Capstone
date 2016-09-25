@@ -59,31 +59,17 @@ GLfloat lastFrame = 0.0f;
 GLFWwindow* window;
 
 Physics* physics;
-std::list<ActorFactory*> physicsGameObjects;
-//list<ActorFactory*> bullets;
+std::vector<ActorFactory*> physicsGameObjects;
 std::list<ActorFactory*> bullets;
+std::list<btCollisionObject*> bulletsBodies;
 int objIdTracker = 0;
 ActorFactory *enemy = new ActorFactory();
-
-
-struct rCallBack : public btCollisionWorld::ContactResultCallback
-{
-	virtual   btScalar   addSingleResult(btManifoldPoint& cp, const btCollisionObject* colObj0, int partId0, int index0, const btCollisionObject* colObj1, int partId1, int index1)
-	{
-		btVector3 ptA = cp.getPositionWorldOnA();
-		btVector3 ptB = cp.getPositionWorldOnB();
-		std::cout << "HIT" << std::endl;
-		return 0;
-	}
-};
 
 
 // The MAIN function, from here we start our application and run our Game loop
 int main()
 {
 	LoadDynamicsWorld();
-
-
 
 	// Init GLFW
 	InitGLFW();
@@ -103,15 +89,12 @@ int main()
 	// Game loop
 	AddPhysicsForModels(enemy);
 	// Draw in wireframe
-	
-	//ac1->GetRigidBody()->setUserPointer(physicsGameObjects.end);
-
-	//gContactAddedCallback = callbackFunc();
 
 	float bulletdestroyTimer = 3.0;
 
 	while (!glfwWindowShouldClose(window))
 	{
+		// destroy shot objects after some time
 		if (bulletdestroyTimer < 0)
 		{
 			bulletdestroyTimer = 3.0;
@@ -166,13 +149,6 @@ int main()
 
 			cout << bullets.size() << " " << x << " " << y << " " << z << endl;
 		}
-
-		//dynamicsWorld->stepSimulation(1 / 60.f, 10);
-
-		//btTransform trans;
-		//fallRigidBody->getMotionState()->getWorldTransform(trans);
-		//std::cout << "sphere height: " <<trans.getOrigin().getX()<<" "<< trans.getOrigin().getY() << std::endl;
-		//ac1->SetPosition(glm::vec3(trans.getOrigin().getY(), 0, 0));
 		
 		// Swap the buffers
 		glfwSwapBuffers(window);
@@ -195,6 +171,7 @@ void Shoot()
 
 	AddPhysicsForModels(ac1);
 	bullets.push_back(ac1);
+	bulletsBodies.push_back(ac1->GetCollisionObject());
 
 }
 
@@ -221,19 +198,12 @@ void DestroyExcessBullets()
 		ActorFactory *temp;
 		temp = bullets.front();
       		bullets.pop_front();
-		physicsGameObjects.remove(temp);
+		physicsGameObjects.erase(std::remove(physicsGameObjects.begin(), physicsGameObjects.end(), temp), physicsGameObjects.end());
 		delete temp;
 
 	}
 }
 
-//bool callbackFunc(btManifoldPoint& cp, const btCollisionObject* obj1, int id1, int index1, const btCollisionObject* obj2, int id2, int index2)
-//{
-//	((bulletObject*)obj1->getUserPointer())->hit = true;
-//
-//	((bulletObject*)obj2->getUserPointer())->hit = true;
-//	return false;
-//}
 
 
 #pragma region "User input"
@@ -258,22 +228,22 @@ void Do_Movement()
 	{
 		cout<<camera.GetPosition().x<< " " << camera.GetPosition().y<<" "<< camera.GetPosition().z<<endl;
 	}
-	//if (keys[GLFW_KEY_K])
-	//{
-	//	physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(1.0f, 0.0f, 0.0f));
-	//}
-	//if (keys[GLFW_KEY_J])
-	//{
-	//	physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(-1.0f, 0.0f, 0.0f));
-	//}
-	//if (keys[GLFW_KEY_I])
-	//{
-	//	physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(0.0f, 0.0f, 1.0f));
-	//}
-	//if (keys[GLFW_KEY_M])
-	//{
-	//	physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(0.0f, 0.0f, -1.0f));
-	//}
+	if (keys[GLFW_KEY_K])
+	{
+		physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(1.0f, 0.0f, 0.0f));
+	}
+	if (keys[GLFW_KEY_J])
+	{
+		physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(-1.0f, 0.0f, 0.0f));
+	}
+	if (keys[GLFW_KEY_I])
+	{
+		physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(0.0f, 0.0f, 1.0f));
+	}
+	if (keys[GLFW_KEY_M])
+	{
+		physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(0.0f, 0.0f, -1.0f));
+	}
 
 	if (keys[GLFW_KEY_SPACE])
 	{
@@ -367,20 +337,51 @@ void AddPhysicsForModels( ActorFactory* g)
 
 }
 
-void DetectCollision()
+bool DetectCollision(btCollisionObject* target)
 {
-	//physics->dynamicsWorld->performDiscreteCollisionDetection();
-	////Also tried doing this with stepSimulation(deltaTime, 7), but nothing changed.
-	////stepSimulation seems to only be for letting Bullet set world Transforms?
 
-	////check collisions with player
-	//resultCallback = rCallBack;
-	//physics->dynamicsWorld->contactTest(enemy->GetCollisionObject(), resultCallback);
-	//int numManifolds = physics->dynamicsWorld->getDispatcher()->getNumManifolds();
-	//if (numManifolds > 0)
-	//{
-	//	//there's a collision, execute blah blah blah
-	//}
+	int numManifolds = physics->dynamicsWorld->getDispatcher()->getNumManifolds();
+	for (int i = 0;i<numManifolds;i++)
+	{
+		btPersistentManifold* contactManifold = physics->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+		const  btCollisionObject* obA = contactManifold->getBody0();
+		const  btCollisionObject* obB = contactManifold->getBody1();
+
+		if ((target == obA) && (obA!=obB))
+		{
+			if ((std::find(std::begin(bulletsBodies), std::end(bulletsBodies), obB) != std::end(bulletsBodies)))
+			{
+				std::cout << "bullet hit" << std::endl;
+			}
+
+			return true;
+		}
+
+		if ((target == obB) && (obA != obB))
+		{
+			if ((std::find(std::begin(bulletsBodies), std::end(bulletsBodies), obA) != std::end(bulletsBodies)))
+			{
+				std::cout << "bullet hit" << std::endl;
+			}
+
+			return true;
+		}
+		
+		//code for future reference
+
+		//int numContacts = contactManifold->getNumContacts();
+		//for (int j = 0;j<numContacts;j++)
+		//{
+		//	btManifoldPoint& pt = contactManifold->getContactPoint(j);
+		//	if (pt.getDistance()<0.f)
+		//	{
+		//		const btVector3& ptA = pt.getPositionWorldOnA();
+		//		const btVector3& ptB = pt.getPositionWorldOnB();
+		//		const btVector3& normalOnB = pt.m_normalWorldOnB;
+		//	}
+		//}
+	}
+	return false;
 }
 
 void DetectCollisions()
@@ -422,10 +423,6 @@ void DetectCollisions()
 
 void UpdatePhysicsWorld(float elapsedTime)
 {
-	//list<ActorFactory*> objectList;
-	//objectList.insert(objectList.end(), objectList1.begin(), objectList1.end());
-	//objectList.insert(objectList.end(), objectList2.begin(), objectList2.end());
-
 	// fixed 1/60 timestep
 	physics->dynamicsWorld->stepSimulation(1 / 10.0f, 1);
 
@@ -449,6 +446,10 @@ void UpdatePhysicsWorld(float elapsedTime)
 		}
 	}
 
-	DetectCollisions();
+	//collision detection on all objects
+	//DetectCollisions();
+
+	//collision detection for specific object
+	DetectCollision(enemy->GetCollisionObject());
 
 }
