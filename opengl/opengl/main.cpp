@@ -100,7 +100,7 @@ int main()
 			bulletdestroyTimer = 3.0;
 			DestroyExcessBullets();
 		}
-		HandleShotObjects();
+		//HandleShotObjects();
 
 		// Set frame time
 		GLfloat currentFrame = glfwGetTime();
@@ -172,6 +172,9 @@ void Shoot()
 	AddPhysicsForModels(ac1);
 	bullets.push_back(ac1);
 	bulletsBodies.push_back(ac1->GetCollisionObject());
+
+	float impulse = 10.0;
+	ac1->GetRigidBody()->applyCentralImpulse(btVector3(camera.Front.x, camera.Front.x, camera.Front.x)*impulse);
 
 }
 
@@ -245,9 +248,24 @@ void Do_Movement()
 		physicsGameObjects.at(0)->GetRigidBody()->applyCentralImpulse(btVector3(0.0f, 0.0f, -1.0f));
 	}
 
+	float shootinterval = 0.0;
 	if (keys[GLFW_KEY_SPACE])
 	{
-		Shoot();
+		// Set frame time
+		GLfloat currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+		shootinterval = shootinterval - deltaTime;
+			// destroy shot objects after some time
+ 			if (shootinterval < 0)
+			{
+				shootinterval = 0.5;
+				Shoot();
+			}
+			//HandleShotObjects();
+
+
 	}
 }
 
