@@ -28,13 +28,24 @@ void ActorFactory::InitActor(GLchar * path, int typeActor, int typeModel)
 
 btRigidBody* ActorFactory::GetRigidBody()
 {
-	return ourModel->body;
+		return ourModel->body;
 }
 
 btCollisionObject* ActorFactory::GetCollisionObject()
 {
 	return ourModel->mPlayerObject;
 }
+
+void ActorFactory::SetGameObjID(int id)
+{
+	ourModel->GameObjID = id;
+}
+
+int ActorFactory::GetGameObjID()
+{
+	return ourModel->GameObjID;
+}
+
 btTransform  ActorFactory::GetstartTransform()
 {
 	return ourModel->startTransform;
@@ -69,7 +80,7 @@ glm::vec3 ActorFactory::GetPosition()
 {
 	if (typeOfActor == 0)
 	{
-		cout << ourModel->GetPosition().x << " " << ourModel->GetPosition().y << " " << ourModel->GetPosition().z << endl;
+		//cout << ourModel->GetPosition().x << " " << ourModel->GetPosition().y << " " << ourModel->GetPosition().z << endl;
 		return ourModel->GetPosition();
 	}
 

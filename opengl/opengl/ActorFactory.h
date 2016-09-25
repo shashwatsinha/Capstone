@@ -13,6 +13,10 @@ public:
 
 	btCollisionObject* GetCollisionObject();
 
+	void SetGameObjID(int id);
+
+	int GetGameObjID();
+
 	btTransform GetstartTransform();
 
 	//Update the Actor per frame if necesssary

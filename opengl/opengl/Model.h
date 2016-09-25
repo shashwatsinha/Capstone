@@ -65,6 +65,7 @@ public:
 	btRigidBody* body;
 	btBoxShape * mPlayerBox;
 	btCollisionObject * mPlayerObject;
+	int GameObjID;
 
 	void InitializeRigidBody();
 	void SetMass(float newmass);
