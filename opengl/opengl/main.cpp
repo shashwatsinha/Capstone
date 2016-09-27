@@ -60,11 +60,11 @@ GLFWwindow* window;
 
 Physics* physics;
 std::vector<ActorFactory*> physicsGameObjects;
-std::list<ActorFactory*> bullets;
+//std::list<ActorFactory*> bullets;
 std::list<btCollisionObject*> bulletsBodies;
 int objIdTracker = 0;
 ActorFactory *enemy = new ActorFactory();
-
+ActorFactory *bullets = new ActorFactory();
 
 // The MAIN function, from here we start our application and run our Game loop
 int main()
@@ -130,25 +130,27 @@ int main()
 		enemy->UpdateActor(&shader);
 		enemy->ProcessAI(camera.Position);
 
-		if (bullets.size() > 1)
-		{
-			int counter = 0;
-			float  x=0;
-			float  y=0;
-			float  z=0;
-			for each (ActorFactory *obj in bullets)
-			{
-				counter++;
-				if(counter>1){
-					break;
-				}
-				x = obj->GetPosition().x;
-				y = obj->GetPosition().y;
-				z = obj->GetPosition().z;
-			}
+		bullets->UpdateActor(&shader);
 
-			cout << bullets.size() << " " << x << " " << y << " " << z << endl;
-		}
+		//if (bullets.size() > 1)
+		//{
+		//	int counter = 0;
+		//	float  x=0;
+		//	float  y=0;
+		//	float  z=0;
+		//	for each (ActorFactory *obj in bullets)
+		//	{
+		//		counter++;
+		//		if(counter>1){
+		//			break;
+		//		}
+		//		x = obj->GetPosition().x;
+		//		y = obj->GetPosition().y;
+		//		z = obj->GetPosition().z;
+		//	}
+
+		////	cout << bullets.size() << " " << x << " " << y << " " << z << endl;
+		//}
 		
 		// Swap the buffers
 		glfwSwapBuffers(window);
@@ -162,49 +164,50 @@ int main()
 
 void Shoot()
 {
-	ActorFactory *ac1 = new ActorFactory();
-	ac1->InitActor("Models/Cube/Cube.obj", 0, 1);
-	ac1->SetPosition(glm::vec3(camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z));
-	ac1->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
-	ac1->SetGameObjID(objIdTracker);
-	objIdTracker++;
+	bullets->InitActor("Models/Cube/Cube.obj", 0, 1);
+	bullets->SetPosition(glm::vec3(camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z));
+	
 
-	AddPhysicsForModels(ac1);
-	bullets.push_back(ac1);
-	bulletsBodies.push_back(ac1->GetCollisionObject());
+	bullets->SetScale(glm::vec3(0.2f, 0.2f, 0.2f));
+	bullets->SetGameObjID(objIdTracker);
+	objIdTracker++;
+	cout << "Shooting";
+//	AddPhysicsForModels(ac1);
+	//bullets.push_back(ac1);
+	//bulletsBodies.push_back(ac1->GetCollisionObject());
 
 	float impulse = 10.0;
-	ac1->GetRigidBody()->applyCentralImpulse(btVector3(camera.Front.x, camera.Front.x, camera.Front.x)*impulse);
+	enemy->GetRigidBody()->applyCentralImpulse(btVector3(camera.Front.x, camera.Front.x, camera.Front.x)*impulse);
 
 }
 
 void HandleShotObjects()
 {
 
-	for each (ActorFactory *obj in bullets)
+	/*for each (ActorFactory *obj in bullets)
 	{
 		obj->GetRigidBody()->applyCentralImpulse(btVector3(0.0f, 0.0f, 1.0f));
-	}
+	}*/
 }
 
 void DestroyExcessBullets()
 {
-	int removeObjectsCounter;
-	removeObjectsCounter = bullets.size() / 2;
+	//int removeObjectsCounter;
+	//removeObjectsCounter = bullets.size() / 2;
 
-	if (removeObjectsCounter<20)
-	{
-		removeObjectsCounter = removeObjectsCounter / 2;
-	}
-	for (int i = 0;i < removeObjectsCounter;i++)
-	{
-		ActorFactory *temp;
-		temp = bullets.front();
-      		bullets.pop_front();
-		physicsGameObjects.erase(std::remove(physicsGameObjects.begin(), physicsGameObjects.end(), temp), physicsGameObjects.end());
-		delete temp;
+	//if (removeObjectsCounter<20)
+	//{
+	//	removeObjectsCounter = removeObjectsCounter / 2;
+	//}
+	//for (int i = 0;i < removeObjectsCounter;i++)
+	//{
+	//	ActorFactory *temp;
+	//	temp = bullets.front();
+ //     		bullets.pop_front();
+	//	physicsGameObjects.erase(std::remove(physicsGameObjects.begin(), physicsGameObjects.end(), temp), physicsGameObjects.end());
+	//	delete temp;
 
-	}
+	//}
 }
 
 

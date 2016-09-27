@@ -23,6 +23,14 @@ void ActorFactory::InitActor(GLchar * path, int typeActor, int typeModel)
 	{
 		ourModel = new NormalEnemy();
 		ourModel->InitPath(path);
+		physicsObjects.push_back((NormalEnemy*)ourModel);
+	}
+
+	if (typeActor == 0 && typeModel == 3)
+	{
+		ourModel = new Bullet();
+		ourModel->InitPath(path);
+		physicsObjects.push_back((Bullet*)ourModel);
 	}
 }
 
@@ -53,7 +61,16 @@ btTransform  ActorFactory::GetstartTransform()
 
 void ActorFactory::UpdateActor(Shader *shader)
 {
-	ourModel->Draw(shader);
+	//ourModel->Draw(shader);
+	for (int i = 0; i < physicsObjects.size(); i++)
+	{
+		physicsObjects[i]->Draw(shader);
+	}
+
+	for (int i = 0; i < nonPhysicsObjects.size(); i++)
+	{
+		nonPhysicsObjects[i]->Draw(shader);
+	}
 }
 
 void ActorFactory::SetPosition(glm::vec3 pos)

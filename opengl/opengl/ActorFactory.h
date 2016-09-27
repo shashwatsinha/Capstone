@@ -2,11 +2,12 @@
 #include "Model.h"
 #include "NormalEnemy.h"
 #include "EnvironmentObject.h"
+#include "Bullet.h"
 class ActorFactory
 {
 public:
 	ActorFactory();
-	//Inititalize the actor, if typeActor=0, then model, 1 = sound. typeModel= 0 denotes a non-movable Object, 1 denotes an enemy, 2 denotes a random moving object
+	//Inititalize the actor, if typeActor=0, then model, 1 = sound. typeModel= 0 denotes a non-movable Object, 1 denotes an enemy, 2 denotes a random moving object,3 denotes a bullet
 	void InitActor(GLchar* path, int typeActor,int typeModel);
 
 	btRigidBody* GetRigidBody();
@@ -52,5 +53,7 @@ private:
 	glm::vec3 position;
 	glm::vec3 scale;
 	Model *ourModel;
+	vector<Model*> physicsObjects;
+	vector<Model*> nonPhysicsObjects;
 };
 
