@@ -1,4 +1,5 @@
 #pragma once
+#include "windows.h"
 #include "Model.h"
 #include "NormalEnemy.h"
 #include "EnvironmentObject.h"
@@ -26,8 +27,6 @@ public:
 	//Set position of Actor
 	void SetPosition(glm::vec3 pos);
 
-	void SetPosition(XMFLOAT3 pos);
-
 	//Get Position of Actor
 	glm::vec3 GetPosition();
 
@@ -53,7 +52,7 @@ private:
 	glm::vec3 position;
 	glm::vec3 scale;
 	Model *ourModel;
-	vector<Model*> physicsObjects;
-	vector<Model*> nonPhysicsObjects;
+	std::vector<Model*> physicsObjects;
+	std::vector<Model*> nonPhysicsObjects;
 };
 

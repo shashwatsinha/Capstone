@@ -1,4 +1,5 @@
 #define GLEW_STATIC
+#include "windows.h"
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
 #include <glm/glm.hpp>
@@ -11,11 +12,10 @@
 #include <list>
 using std::list;
 #include <queue>
-
+#include <DirectXMath.h>
 #include <iostream>
 #include <GL/gl.h>
 #include <GL/glu.h>
-
 
 
 #pragma comment(lib, "glfw3.lib")
@@ -358,96 +358,14 @@ void AddPhysicsForModels( ActorFactory* g)
 
 }
 
-bool DetectCollision(btCollisionObject* target)
-{
 
-	int numManifolds = physics->dynamicsWorld->getDispatcher()->getNumManifolds();
-	for (int i = 0;i<numManifolds;i++)
-	{
-		btPersistentManifold* contactManifold = physics->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
-		const  btCollisionObject* obA = contactManifold->getBody0();
-		const  btCollisionObject* obB = contactManifold->getBody1();
-
-		if ((target == obA) && (obA!=obB))
-		{
-			if ((std::find(std::begin(bulletsBodies), std::end(bulletsBodies), obB) != std::end(bulletsBodies)))
-			{
-				std::cout << "bullet hit" << std::endl;
-			}
-
-			return true;
-		}
-
-		if ((target == obB) && (obA != obB))
-		{
-			if ((std::find(std::begin(bulletsBodies), std::end(bulletsBodies), obA) != std::end(bulletsBodies)))
-			{
-				std::cout << "bullet hit" << std::endl;
-			}
-
-			return true;
-		}
-		
-		//code for future reference
-
-		//int numContacts = contactManifold->getNumContacts();
-		//for (int j = 0;j<numContacts;j++)
-		//{
-		//	btManifoldPoint& pt = contactManifold->getContactPoint(j);
-		//	if (pt.getDistance()<0.f)
-		//	{
-		//		const btVector3& ptA = pt.getPositionWorldOnA();
-		//		const btVector3& ptB = pt.getPositionWorldOnB();
-		//		const btVector3& normalOnB = pt.m_normalWorldOnB;
-		//	}
-		//}
-	}
-	return false;
-}
-
-void DetectCollisions()
-{
-	physics->dynamicsWorld->performDiscreteCollisionDetection();
-
-	int numManifolds = physics->dynamicsWorld->getDispatcher()->getNumManifolds();
-
-	for (int i = 0;i<numManifolds;i++)
-
-	{
-
-		btPersistentManifold* contactManifold = physics->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
-
-		int numContacts = contactManifold->getNumContacts();
-
-		for (int j = 0;j<numContacts;j++)
-
-		{
-
-			btManifoldPoint& pt = contactManifold->getContactPoint(j);
-
-			if (pt.getDistance()<0.f)
-
-			{
-
-				const btVector3& ptA = pt.getPositionWorldOnA();
-
-				const btVector3& ptB = pt.getPositionWorldOnB();
-
-				const btVector3& normalOnB = pt.m_normalWorldOnB;
-
-			}
-
-		}
-
-	}
-}
 
 void UpdatePhysicsWorld(float elapsedTime)
 {
 	// fixed 1/60 timestep
 	physics->dynamicsWorld->stepSimulation(1 / 10.0f, 1);
 
-	XMFLOAT3 mat;
+	glm::vec3 mat;
 	const btCollisionObjectArray& objectArray = physics->dynamicsWorld->getCollisionObjectArray();
 	int count = 0;
 	for each (ActorFactory *obj in physicsGameObjects)
@@ -460,7 +378,11 @@ void UpdatePhysicsWorld(float elapsedTime)
 		{
 			btTransform trans = obj->GetstartTransform();
 			pBody->getMotionState()->getWorldTransform(trans);
-			XMFLOAT3 pos = XMFLOAT3(trans.getOrigin());
+
+			glm::vec3 pos ;
+			pos.x = trans.getOrigin().getX();
+			pos.y = trans.getOrigin().getY();
+			pos.z = trans.getOrigin().getZ();
 			obj->SetPosition(pos);
 			//obj->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
 			//obj->SetWorldMatrix();
@@ -470,7 +392,7 @@ void UpdatePhysicsWorld(float elapsedTime)
 	//collision detection on all objects
 	//DetectCollisions();
 
-	//collision detection for specific object
-	DetectCollision(enemy->GetCollisionObject());
+	//collision detection for all objects
+	physics->DetectCollisions();
 
 }

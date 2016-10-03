@@ -81,17 +81,6 @@ void ActorFactory::SetPosition(glm::vec3 pos)
 	}
 }
 
-void ActorFactory::SetPosition(XMFLOAT3 pos)
-{
-	if (typeOfActor == 0)
-	{
-		glm::vec3 position;
-		position.x = pos.x;
-		position.y = pos.y;
-		position.z = pos.z;
-		ourModel->SetPosition(position);
-	}
-}
 
 glm::vec3 ActorFactory::GetPosition()
 {
