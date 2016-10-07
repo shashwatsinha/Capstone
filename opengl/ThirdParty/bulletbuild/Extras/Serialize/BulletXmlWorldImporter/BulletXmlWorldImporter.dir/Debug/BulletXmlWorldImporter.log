@@ -1,0 +1,10 @@
+﻿  Building Custom Rule C:/bullet3-2.83.7/Extras/Serialize/BulletXmlWorldImporter/CMakeLists.txt
+  CMake does not need to re-run because C:\bulletbuild\Extras\Serialize\BulletXmlWorldImporter\CMakeFiles\generate.stamp is up-to-date.
+  btBulletXmlWorldImporter.cpp
+  string_split.cpp
+  tinyxml.cpp
+  tinystr.cpp
+  tinyxmlerror.cpp
+  tinyxmlparser.cpp
+  Generating Code...
+  BulletXmlWorldImporter.vcxproj -> C:\bulletbuild\lib\Debug\BulletXmlWorldImporter_Debug.lib
