@@ -1,33 +1,30 @@
-﻿  main.cpp
-c:\selfcapstone\opengl\opengl\thirdparty\reactphysics\src\collision\shapes\heightfieldshape.h(227): warning C4244: 'return': conversion from 'double' to 'reactphysics3d::decimal', possible loss of data
-c:\selfcapstone\opengl\opengl\thirdparty\reactphysics\src\collision\shapes\heightfieldshape.h(235): warning C4244: 'return': conversion from 'reactphysics3d::decimal' to 'int', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(61): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(77): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(154): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(155): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(159): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(160): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(162): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(163): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(170): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(218): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(219): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(220): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\tuple(142): warning C4244: 'initializing': conversion from 'const reactphysics3d::decimal' to 'int', possible loss of data
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\tuple(397): note: see reference to function template instantiation 'std::_Tuple_val<_This>::_Tuple_val<const _Ty&>(_Other)' being compiled
-          with
-          [
-              _This=int,
-              _Ty=float,
-              _Other=const float &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\tuple(396): note: see reference to function template instantiation 'std::_Tuple_val<_This>::_Tuple_val<const _Ty&>(_Other)' being compiled
-          with
-          [
-              _This=int,
-              _Ty=float,
-              _Other=const float &
-          ]
-  c:\selfcapstone\opengl\opengl\main.cpp(246): note: see reference to function template instantiation 'std::tuple<int,int,int>::tuple<float,float,float,0,0>(const std::tuple<float,float,float> &)' being compiled
-  c:\selfcapstone\opengl\opengl\main.cpp(246): note: see reference to function template instantiation 'std::tuple<int,int,int>::tuple<float,float,float,0,0>(const std::tuple<float,float,float> &)' being compiled
-  opengl.vcxproj -> C:\SelfCapstone\opengl\Debug\opengl.exe
+﻿  Physics.cpp
+c:\opengl3\opengl\opengl\physics.h(7): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+Model.obj : warning LNK4049: locally defined symbol ___glewActiveTexture imported
+Model.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
+Model.obj : warning LNK4049: locally defined symbol ___glewBufferData imported
+Model.obj : warning LNK4049: locally defined symbol ___glewGenBuffers imported
+Model.obj : warning LNK4049: locally defined symbol ___glewEnableVertexAttribArray imported
+Model.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
+Model.obj : warning LNK4049: locally defined symbol ___glewUniform1f imported
+Model.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
+Model.obj : warning LNK4049: locally defined symbol ___glewUniformMatrix4fv imported
+Model.obj : warning LNK4049: locally defined symbol ___glewVertexAttribPointer imported
+Model.obj : warning LNK4049: locally defined symbol ___glewGenerateMipmap imported
+Model.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
+Model.obj : warning LNK4049: locally defined symbol ___glewGenVertexArrays imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewAttachShader imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewCompileShader imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewCreateProgram imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewCreateShader imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewDeleteShader imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewGetProgramInfoLog imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewGetProgramiv imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewGetShaderInfoLog imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewGetShaderiv imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewLinkProgram imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewShaderSource imported
+Shader.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\opengl3\opengl\Debug\vc120.pdb'; linking object as if no debug info
+  opengl.vcxproj -> C:\opengl3\opengl\Debug\opengl.exe

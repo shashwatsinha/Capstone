@@ -1,4 +1,5 @@
 #define GLEW_STATIC
+#include "windows.h"
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
 #include <glm/glm.hpp>
@@ -7,12 +8,13 @@
 #include <SOIL.h>
 #include "Camera.h"
 #include "ActorFactory.h"
-#include <reactphysics3d.h>
-#include <stdlib.h>    
-#include <time.h>
-#include <map>
-#include <tuple>
+#include "btBulletDynamicsCommon.h"
 
+#include <queue>
+#include <iostream>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include "Physics.h"
 
 #pragma comment(lib, "glfw3.lib")
 #pragma comment(lib, "opengl32.lib")
@@ -23,9 +25,9 @@
 #pragma comment(lib,"BulletCollision_Debug.lib")
 #pragma comment(lib,"BulletDynamics_Debug.lib")
 #pragma comment(lib,"LinearMath_Debug.lib")
-#pragma comment(lib,"reactphysics3d.lib")
 #include <iostream>
-using namespace reactphysics3d;
+
+//typedef list<allocator<ActorFactory> > ActorFactoryQ;
 
 GLuint screenWidth = 800, screenHeight = 600;
 int sizeA = 1;
@@ -34,9 +36,14 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void Do_Movement();
-void GenerateEnvironment();
 void InitGLFW();
-bool IsPositionValid(std::tuple<int, int, int>);
+void LoadDynamicsWorld();
+void UpdatePhysicsWorld(float elapsedTime);
+//void UpdatePhysicsWorld(float elapsedTime, list<ActorFactory*> objectList1, list<ActorFactory*> objectList2);
+void AddPhysicsForModels(ActorFactory* g);
+void DestroyExcessBullets();
+ void Shoot();
+ void HandleShotObjects();
 
 float x = 0;
 // Camera
@@ -48,36 +55,77 @@ bool firstMouse = true;
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 GLFWwindow* window;
-ActorFactory *ac1 = new ActorFactory();
+
+GLfloat lastBulletFired;
+GLfloat currentBulletFired;
+//std::vector<Model*> physicsGameObjects;
+//std::list<ActorFactory*> bullets;
+std::list<btCollisionObject*> bulletsBodies;
+int objIdTracker = 0;
+ActorFactory *enemy = new ActorFactory();
+ActorFactory *bullets = new ActorFactory();
 
 // The MAIN function, from here we start our application and run our Game loop
-map<tuple<int,int,int>, int> mapPositions;
 int main()
 {
+	LoadDynamicsWorld();
+
 	// Init GLFW
 	InitGLFW();
 	// Setup and compile our shaders
 	Shader shader("Shaders/nanosuit.vs", "Shaders/nanosuit.frag");
-	srand(time(NULL));
 
-	
-	GenerateEnvironment();
-	//ac1->AddAI();
-	
-	// Draw in wireframe
+	enemy->InitActor("Models/Cube/Cube.obj", 0, 1);
+	enemy->SetPosition(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(3, 3, 2));
+	enemy->SetScale(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1], glm::vec3(0.2f, 0.2f, 0.2f));
+	enemy->SetGameObjID(objIdTracker);
+	objIdTracker++;
+	enemy->AddAI();
+
+	enemy->InitActor("Models/Cube/Cube.obj", 0, 1);
+	enemy->SetPosition(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(0, 1, 3));
+	enemy->SetScale(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(0.2f, 0.2f, 0.2f));
+	enemy->SetGameObjID(objIdTracker);
+	objIdTracker++;
+	enemy->AddAI();
+
+
+	enemy->InitActor("Models/Cube/Cube.obj", 0, 1);
+	enemy->SetPosition(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(0, 1, -2));
+	enemy->SetScale(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(0.2f, 0.2f, 0.2f));
+	enemy->SetGameObjID(objIdTracker);
+	objIdTracker++;
+	enemy->AddAI();
+
+	// add every object with physics property soon after creation.
+
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//glm::mat4 model[1];
 	// Game loop
+	AddPhysicsForModels(enemy);
+	// Draw in wireframe
 
-
+	float bulletdestroyTimer = 3.0;
 
 	while (!glfwWindowShouldClose(window))
 	{
+		// destroy shot objects after some time
+		if (bulletdestroyTimer < 0)
+		{
+			bulletdestroyTimer = 3.0;
+			DestroyExcessBullets();
+		}
+		//HandleShotObjects();
+
 		// Set frame time
 		GLfloat currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
+		bulletdestroyTimer = bulletdestroyTimer - deltaTime;
+
+		UpdatePhysicsWorld(currentFrame);
+		//UpdatePhysicsWorld(currentFrame,physicsGameObjects,bullets);
 		// Check and call events
 		glfwPollEvents();
 		Do_Movement();
@@ -93,23 +141,93 @@ int main()
 		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 		// Draw the loaded model
-		
-		ac1->UpdateActor(&shader);
-		//ac1->ProcessAI(camera.Position);
-		
-		//std::cout << "sphere height: " <<trans.getOrigin().getX()<<" "<< trans.getOrigin().getY() << std::endl;
-		//ac1->SetPosition(glm::vec3(trans.getOrigin().getY(), 0, 0));
+		enemy->GetPosition();
+		enemy->UpdateActor(&shader);
+		enemy->ProcessAI(camera.Position);
+
+		bullets->UpdateActor(&shader);
+
+		//if (bullets.size() > 1)
+		//{
+		//	int counter = 0;
+		//	float  x=0;
+		//	float  y=0;
+		//	float  z=0;
+		//	for each (ActorFactory *obj in bullets)
+		//	{
+		//		counter++;
+		//		if(counter>1){
+		//			break;
+		//		}
+		//		x = obj->GetPosition().x;
+		//		y = obj->GetPosition().y;
+		//		z = obj->GetPosition().z;
+		//	}
+
+		////	cout << bullets.size() << " " << x << " " << y << " " << z << endl;
+		//}
 		
 		// Swap the buffers
 		glfwSwapBuffers(window);
+
 	}
 
 	// Clean up behind ourselves like good little programmers
-	
-	
 	glfwTerminate();
 	return 0;
 }
+
+void Shoot()
+{
+	lastBulletFired = glfwGetTime();
+	bullets->InitActor("Models/Cube/Cube.obj", 0, 1);
+	bullets->SetPosition(bullets->GetPhysicsObjectsList()[bullets->GetPhysicsObjectsList().size() - 1], glm::vec3(camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z));
+
+
+	bullets->SetScale(bullets->GetPhysicsObjectsList()[bullets->GetPhysicsObjectsList().size() - 1], glm::vec3(0.2f, 0.2f, 0.2f));
+	bullets->SetGameObjID(objIdTracker);
+	objIdTracker++;
+	cout << "Shooting";
+	AddPhysicsForModels(bullets);
+		//bullets.push_back(ac1);
+		//bulletsBodies.push_back(ac1->GetCollisionObject());
+
+	float impulse = 10.0;
+
+	bullets->GetRigidBody(bullets->GetPhysicsObjectsList()[bullets->GetPhysicsObjectsList().size() - 1])->applyCentralImpulse(btVector3(camera.Front.x, camera.Front.x, camera.Front.x)*impulse);
+	
+}
+
+void HandleShotObjects()
+{
+
+	/*for each (ActorFactory *obj in bullets)
+	{
+		obj->GetRigidBody()->applyCentralImpulse(btVector3(0.0f, 0.0f, 1.0f));
+	}*/
+}
+
+void DestroyExcessBullets()
+{
+	//int removeObjectsCounter;
+	//removeObjectsCounter = bullets.size() / 2;
+
+	//if (removeObjectsCounter<20)
+	//{
+	//	removeObjectsCounter = removeObjectsCounter / 2;
+	//}
+	//for (int i = 0;i < removeObjectsCounter;i++)
+	//{
+	//	ActorFactory *temp;
+	//	temp = bullets.front();
+ //     		bullets.pop_front();
+	//	physicsGameObjects.erase(std::remove(physicsGameObjects.begin(), physicsGameObjects.end(), temp), physicsGameObjects.end());
+	//	delete temp;
+
+	//}
+}
+
+
 
 #pragma region "User input"
 
@@ -133,6 +251,32 @@ void Do_Movement()
 	{
 		cout<<camera.GetPosition().x<< " " << camera.GetPosition().y<<" "<< camera.GetPosition().z<<endl;
 	}
+
+
+
+	float shootinterval = 0.0;
+
+	GLfloat currentFrame1 = 0.0f;
+	GLfloat lastFrame1 = 0.0f;
+	if (keys[GLFW_KEY_SPACE])
+	{
+		// Set frame time
+		currentBulletFired = glfwGetTime();
+		deltaTime = currentFrame1 - lastFrame1;
+		
+
+		shootinterval = shootinterval - deltaTime;
+			// destroy shot objects after some time
+ 			if (currentBulletFired - lastBulletFired > 1.0f)
+			{
+				Shoot();
+			}
+			//HandleShotObjects();
+
+
+	}
+
+	lastFrame1 = currentFrame1;
 }
 
 // Is called whenever a key is pressed/released via GLFW
@@ -201,60 +345,85 @@ void InitGLFW()
 	// Setup some OpenGL options
 	glEnable(GL_DEPTH_TEST);
 
+
+
 }
 
-bool IsPositionValid(std::tuple<int,int,int> positionTuple)
+void LoadDynamicsWorld()
 {
-	bool flag = false;
-	if (mapPositions[positionTuple] == NULL)
-	{
-		flag = true;
-		for (auto it = mapPositions.begin(); it != mapPositions.end(); it++)
-		{
-			int x1 = get<0>(it->first); int x2 = get<0>(positionTuple);
-			int y1 = get<1>(it->first); int y2 = get<1>(positionTuple);
-			int z1 = get<2>(it->first); int z2 = get<2>(positionTuple);
-
-			int d1 = pow(x1 - x2, 2);
-			int d2 = pow(y1 - y2, 2);
-			int d3 = pow(z1 - z2, 2);
-
-			if ((d1 + d2 + d3) < 25 && (d1 + d2 + d3)>0)
-			{
-				mapPositions.erase(positionTuple);
-				flag = false;
-				return flag;
-			}
-		}
-		return flag;
-	}
-	mapPositions.erase(positionTuple);
-	return flag;
+	//physics = new Physics();
 }
 
-void GenerateEnvironment()
+void AddPhysicsForModels( ActorFactory* g)
 {
-	bool checkPositionValidity = true;
-	int numberOfObjects = 20;
-	for (int i = 0; i < numberOfObjects; i++)
+	for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
 	{
-		ac1->InitActor("Models/SpaceShip/SpaceShip.obj", 0, 0);
-		while (checkPositionValidity == true)
-		{
-			ac1->SetPosition(glm::vec3(rand() % 10, (rand() % 5 - 5), (rand() % 50) * -1));
-			auto positionTuple = make_tuple(ac1->GetPosition().x, ac1->GetPosition().y, ac1->GetPosition().z);
-			if (IsPositionValid(positionTuple) == true)
-			{
-				checkPositionValidity = false;
-			}
-		}
-		checkPositionValidity = true;
-		auto positionTuple = make_tuple(ac1->GetPosition().x, ac1->GetPosition().y, ac1->GetPosition().z);
-		mapPositions[positionTuple] = 2;
-		ac1->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
+		
+		g->UpdatePhysicsPropertiesForObject(g->GetPhysicsObjectsList()[i]);
+		Physics::instance()->dynamicsWorld->addRigidBody(g->GetRigidBody(g->GetPhysicsObjectsList()[i]));
+		Physics::instance()->dynamicsWorld->addCollisionObject(g->GetCollisionObject(g->GetPhysicsObjectsList()[i]));
 	}
 
-	ac1->InitActor("Models/Bullet/Bullet.obj", 0, 0);
-	ac1->SetPosition(glm::vec3(0, 0, -5));
-	ac1->SetScale(glm::vec3(1, 1, 1));
+}
+
+
+
+void UpdatePhysicsWorld(float elapsedTime)
+{
+	// fixed 1/60 timestep
+	Physics::instance()->dynamicsWorld->stepSimulation(1 / 10.0f, 1);
+
+	glm::vec3 mat;
+	const btCollisionObjectArray& objectArray = Physics::instance()->dynamicsWorld->getCollisionObjectArray();
+	int count = 0;
+	for (int i = 0;i<enemy->GetPhysicsObjectsList().size();i++)
+	{
+
+		enemy->GetRigidBody(enemy->GetPhysicsObjectsList()[i])->activate(true);
+
+		btRigidBody* pBody = enemy->GetRigidBody(enemy->GetPhysicsObjectsList()[i]);
+		if (pBody && pBody->getMotionState())
+		{
+			btTransform trans = enemy->GetstartTransform();
+			pBody->getMotionState()->getWorldTransform(trans);
+
+			glm::vec3 pos ;
+			pos.x = trans.getOrigin().getX();
+			pos.y = trans.getOrigin().getY();
+			pos.z = trans.getOrigin().getZ();
+			enemy->SetPosition(enemy->GetPhysicsObjectsList()[i],pos);
+			//obj->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
+			//obj->SetWorldMatrix();
+			cout << pos.x<<endl;
+		}
+	}
+
+	for (int i = 0; i<bullets->GetPhysicsObjectsList().size(); i++)
+	{
+
+		bullets->GetRigidBody(bullets->GetPhysicsObjectsList()[i])->activate(true);
+
+		btRigidBody* pBody = bullets->GetRigidBody(bullets->GetPhysicsObjectsList()[i]);
+		if (pBody && pBody->getMotionState())
+		{
+			btTransform trans = bullets->GetstartTransform();
+			pBody->getMotionState()->getWorldTransform(trans);
+
+			glm::vec3 pos;
+			pos.x = trans.getOrigin().getX();
+			pos.y = trans.getOrigin().getY();
+			pos.z = trans.getOrigin().getZ();
+
+			bullets->SetPosition(bullets->GetPhysicsObjectsList()[i], pos);
+			//obj->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
+			//obj->SetWorldMatrix();
+		}
+	}
+
+	//collision detection on all objects
+	//DetectCollisions();
+
+	//collision detection for all objects
+	Physics::instance()->DetectCollisions();
+
 }

@@ -199,3 +199,61 @@ GLint TextureFromFile(const char* path, string directory)
 	SOIL_free_image_data(image);
 	return textureID;
 }
+
+void Model::InitializeRigidBody()
+{
+	//create a dynamic rigidbody
+
+	//colShape = new btSphereShape(btScalar(0.05));
+
+	mPlayerObject = new btCollisionObject();
+	mPlayerObject->setCollisionShape(mPlayerBox);
+	collisionShapes.push_back(mPlayerBox);
+
+	// Create Dynamic Objects
+	startTransform.setIdentity();
+
+	mass = 1.0f;
+
+	localInertia = btVector3(0, 0, 0);
+	mPlayerBox->calculateLocalInertia(mass, localInertia);
+
+	startTransform.setOrigin(btVector3(position.x, position.y, position.z));
+
+	//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
+	myMotionState = new btDefaultMotionState(startTransform);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, mPlayerBox, localInertia);
+	body = new btRigidBody(rbInfo);
+
+	mPlayerObject->setWorldTransform(startTransform);
+}
+
+void Model::SetMass(float newmass)
+{
+	mass = newmass;
+	CleanupPhysicsObjects();
+	InitializeRigidBody();
+}
+
+void Model::SetDefaultMass()
+{
+
+	mass = 1.0f;
+	mPlayerBox = new btBoxShape(btVector3(0.5, 0.5, 0.5));
+
+}
+
+void Model::CleanupPhysicsObjects()
+{
+	//delete body;
+	//delete myMotionState;
+	//delete mPlayerObject;
+	//delete mPlayerBox;
+}
+
+void Model::SetRigidBodyShape(float scalex, float scaley, float scalez)
+{
+	mPlayerBox = new btBoxShape(btVector3(scalex, scaley, scalez));
+	CleanupPhysicsObjects();
+	InitializeRigidBody();
+}
