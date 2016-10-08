@@ -7,6 +7,7 @@
 #include <SOIL.h>
 #include "Camera.h"
 #include "ActorFactory.h"
+#include "Skybox.h"
 #pragma comment(lib, "glfw3.lib")
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
@@ -22,7 +23,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void Do_Movement();
+void SetViewAndProjection(Shader shader, glm::mat4 view);
 void InitGLFW();
+
 float x = 0;
 // Camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -41,20 +44,20 @@ int main()
 	InitGLFW();
 	// Setup and compile our shaders
 	Shader shader("Shaders/nanosuit.vs", "Shaders/nanosuit.frag");
+	Shader skyboxShader("Shaders/skybox.vs", "Shaders/skybox.frag");
 
 	// Load models
 	//Model ourModel("Models/Nanosuit/nanosuit.obj");
-
-
 
 	ActorFactory *ac1 = new ActorFactory();
 	ac1->InitActor("Models/Cube/Cube.obj",0,1);
 	ac1->SetPosition(glm::vec3(0,0,0));
 	ac1->SetScale(glm::vec3(0.2f, 0.2f, 0.2f));
 	ac1->AddAI();
-	
-	
-	
+
+	Skybox skybox;
+	skybox.setupMesh();
+
 	// Draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//glm::mat4 model[1];
@@ -74,18 +77,24 @@ int main()
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		// SkyBox: Aruns Code
+		// Draw skybox first
+		glDepthMask(GL_FALSE);// Remember to turn depth writing off
+		skyboxShader.Use();
+		glm::mat4 view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix
+		SetViewAndProjection(skyboxShader, view);
+		skybox.Draw(&skyboxShader);
+		glDepthMask(GL_TRUE);
+		// SkyBox: Aruns Code
+
 		shader.Use();   // <-- Don't forget this one!
-						// Transformation matrices
-		glm::mat4 projection = glm::perspective(camera.Zoom, (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
-		glm::mat4 view = camera.GetViewMatrix();
-		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		view = camera.GetViewMatrix();
+		SetViewAndProjection(shader, view);
 		// Draw the loaded model
 		
 		ac1->SetPosition(glm::vec3(x, 0, 0));
 		ac1->UpdateActor(&shader);
 		ac1->ProcessAI(camera.Position);
-
 
 		// Swap the buffers
 		glfwSwapBuffers(window);
@@ -93,6 +102,12 @@ int main()
 
 	glfwTerminate();
 	return 0;
+}
+
+void SetViewAndProjection(Shader shader, glm::mat4 view) {
+	glm::mat4 projection = glm::perspective(camera.Zoom, (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 }
 
 #pragma region "User input"

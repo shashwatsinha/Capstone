@@ -57,6 +57,9 @@
     <ClCompile Include="EnvironmentObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -98,5 +101,16 @@
     <ClInclude Include="EnvironmentObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\skybox.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Shaders\skybox.frag">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
