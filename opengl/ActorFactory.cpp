@@ -15,6 +15,7 @@ void ActorFactory::InitActor(GLchar * path, int typeActor, int typeModel)
 	{
 		ourModel = new EnvironmentObject();
 		ourModel->InitPath(path);
+		nonPhysicsObjects.push_back(ourModel);
 	}
 
 	if (typeActor == 0 && typeModel == 1)
@@ -26,7 +27,11 @@ void ActorFactory::InitActor(GLchar * path, int typeActor, int typeModel)
 
 void ActorFactory::UpdateActor(Shader *shader)
 {
-	ourModel->Draw(shader);
+	//ourModel->Draw(shader);
+	for (int i = 0; i < nonPhysicsObjects.size(); i++)
+	{
+		nonPhysicsObjects[i]->Draw(shader);
+	}
 }
 
 void ActorFactory::SetPosition(glm::vec3 pos)
@@ -37,7 +42,7 @@ void ActorFactory::SetPosition(glm::vec3 pos)
 	}
 }
 
-glm::vec3 ActorFactory::GetPosition(glm::vec3 pos)
+glm::vec3 ActorFactory::GetPosition()
 {
 	if (typeOfActor == 0)
 	{
@@ -56,7 +61,7 @@ void ActorFactory::SetScale(glm::vec3 sc)
 }
 
 
-glm::vec3 ActorFactory::GetScale(glm::vec3 sc)
+glm::vec3 ActorFactory::GetScale()
 {
 	if (typeOfActor == 0)
 	{
@@ -75,7 +80,7 @@ void ActorFactory::ProcessAI(glm::vec3 playerPos)
 {
 	if (this->typeOfModel == 1)
 	{
-		dynamic_cast<NormalEnemy*>(ourModel)->DistanceFromPlayer(playerPos);
+		dynamic_cast<NormalEnemy*>(ourModel)->ProcessAI(playerPos);
 	}
 }
 

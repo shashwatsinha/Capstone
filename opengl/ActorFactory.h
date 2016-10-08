@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "NormalEnemy.h"
 #include "EnvironmentObject.h"
+#include <vector>
 class ActorFactory
 {
 public:
@@ -16,13 +17,13 @@ public:
 	void SetPosition(glm::vec3 pos);
 
 	//Get Position of Actor
-	glm::vec3 GetPosition(glm::vec3 pos);
+	glm::vec3 GetPosition();
 
 	//Set scale of Actor
 	void SetScale(glm::vec3 sc);
 
 	//Get scale of Actor
-	glm::vec3 GetScale(glm::vec3 sc);
+	glm::vec3 GetScale();
 
 	//Add AI to an Actor
 	void AddAI();
@@ -38,5 +39,6 @@ private:
 	glm::vec3 position;
 	glm::vec3 scale;
 	Model *ourModel;
+	vector<Model*> nonPhysicsObjects;
 };
 
