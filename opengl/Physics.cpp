@@ -87,15 +87,15 @@ void Physics::CreatePhysicsWorld()
 
 	// The world.
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-	dynamicsWorld->setGravity(btVector3(0, -10, 0));
+	dynamicsWorld->setGravity(btVector3(0, 0, 0));
 
 	//create a ground
-	groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
-	groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -2, 0)));
-	btRigidBody::btRigidBodyConstructionInfo
-		groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, -10, 0));
-	groundRigidBody = new btRigidBody(groundRigidBodyCI);
-	dynamicsWorld->addRigidBody(groundRigidBody);
+	//groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
+	//groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -2, 0)));
+	//btRigidBody::btRigidBodyConstructionInfo
+	//	groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, -10, 0));
+	//groundRigidBody = new btRigidBody(groundRigidBodyCI);
+	//dynamicsWorld->addRigidBody(groundRigidBody);
 
 }
 
@@ -146,13 +146,14 @@ bool Physics::DetectCollision(btCollisionObject* target, Physics*physics)
 }
 
 //detect collision, by pairs, most efficient... find collision for particular object
-void Physics::DetectCollision(Physics*physics)
+void Physics::DetectCollision()
 {
+	collisionTracker.erase(collisionTracker.begin(), collisionTracker.end());
 
-	int numManifolds = physics->dynamicsWorld->getDispatcher()->getNumManifolds();
+	int numManifolds = this->dynamicsWorld->getDispatcher()->getNumManifolds();
 	for (int i = 0;i<numManifolds;i++)
 	{
-		btPersistentManifold* contactManifold = physics->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+		btPersistentManifold* contactManifold = this->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
 		const  btCollisionObject* obA = contactManifold->getBody0();
 		const  btCollisionObject* obB = contactManifold->getBody1();
 

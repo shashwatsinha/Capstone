@@ -32,6 +32,8 @@ public:
 	// Constructor, expects a filepath to a 3D model.
 	Model();
 
+	void InitPath(string * path);
+
 	void InitPath(GLchar* path);
 	
 	// Draws the model, and thus all its meshes
@@ -68,9 +70,11 @@ public:
 
 	void InitializeRigidBody();
 	void SetMass(float newmass);
+	float GetMass();
 	void SetDefaultMass();
 	void CleanupPhysicsObjects();
 	void SetRigidBodyShape(float scalex, float scaley, float scalez);
+	void ActivatePhysics();
 	/*----------------------physics end----------------------*/
 	//XMFLOAT4X4 GetWorldMatrix() {
 	//	return worldMatrix;

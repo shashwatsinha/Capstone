@@ -28,7 +28,7 @@ public:
 
 	bool DetectCollision(btCollisionObject * target, Physics * physics);
 
-	void DetectCollision(Physics * physics);
+	void DetectCollision();
 
 	void DetectCollisions();
 

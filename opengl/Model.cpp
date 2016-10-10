@@ -213,8 +213,6 @@ void Model::InitializeRigidBody()
 	// Create Dynamic Objects
 	startTransform.setIdentity();
 
-	mass = 1.0f;
-
 	localInertia = btVector3(0, 0, 0);
 	mPlayerBox->calculateLocalInertia(mass, localInertia);
 
@@ -231,15 +229,21 @@ void Model::InitializeRigidBody()
 void Model::SetMass(float newmass)
 {
 	mass = newmass;
+	mPlayerBox = new btBoxShape(btVector3(0.1, 0.1, 0.1));
 	CleanupPhysicsObjects();
-	InitializeRigidBody();
+	//InitializeRigidBody();
+}
+
+float Model::GetMass()
+{
+	return mass;
 }
 
 void Model::SetDefaultMass()
 {
 
-	mass = 1.0f;
-	mPlayerBox = new btBoxShape(btVector3(0.5, 0.5, 0.5));
+	mass = 0.0f;
+	mPlayerBox = new btBoxShape(btVector3(0.1, 0.1, 0.1));
 
 }
 
@@ -257,3 +261,11 @@ void Model::SetRigidBodyShape(float scalex, float scaley, float scalez)
 	CleanupPhysicsObjects();
 	InitializeRigidBody();
 }
+
+void Model::ActivatePhysics()
+{
+	//SetDefaultMass();
+	InitializeRigidBody();
+	body->activate(true);
+}
+

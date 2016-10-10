@@ -44,6 +44,8 @@ void AddPhysicsForModels(ActorFactory* g);
 void DestroyExcessBullets();
  void Shoot();
  void HandleShotObjects();
+ void SetMassForModels(ActorFactory* g, float mass);
+ void GetRigidBodyState(ActorFactory* g);
 
 float x = 0;
 // Camera
@@ -58,12 +60,15 @@ GLFWwindow* window;
 
 GLfloat lastBulletFired;
 GLfloat currentBulletFired;
-//std::vector<Model*> physicsGameObjects;
-//std::list<ActorFactory*> bullets;
-std::list<btCollisionObject*> bulletsBodies;
+std::vector<NormalEnemy*> enemies;
+vector<Bullets*> bullets;
+vector<EnvironmentObject*> envObjs;
+
+vector<ActorFactory*> physicsObjects;
+
 int objIdTracker = 0;
-ActorFactory *enemy = new ActorFactory();
-ActorFactory *bullets = new ActorFactory();
+//ActorFactory *enemy = new ActorFactory();
+//ActorFactory *bullets = new ActorFactory();
 
 // The MAIN function, from here we start our application and run our Game loop
 int main()
@@ -75,40 +80,70 @@ int main()
 	// Setup and compile our shaders
 	Shader shader("Shaders/nanosuit.vs", "Shaders/nanosuit.frag");
 
-	enemy->InitActor("Models/Cube/Cube.obj", 0, 1);
-	enemy->SetPosition(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(3, 3, 2));
-	enemy->SetScale(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1], glm::vec3(0.2f, 0.2f, 0.2f));
-	enemy->SetGameObjID(objIdTracker);
-	objIdTracker++;
-	enemy->AddAI();
+	//create enemies
+	for (int i = 0;i < 10;i++)
+	{
+		NormalEnemy *enemy = new NormalEnemy();
+		enemy->InitPath("Models/Cube/Cube.obj");
+		enemy->SetPosition(glm::vec3(i * 2, 0, 5));
+		enemy->SetScale(glm::vec3(0.2f, 0.2f, 0.2f));
+		enemies.push_back(enemy);
+		//AddPhysicsForModels(enemy);
+		//SetMassForModels(enemy, 1.0);
+		//enemy->SetGameObjID(objIdTracker);
+		objIdTracker++;
+		//enemy->AddAI();
+		enemy->mass = 0.0f;
+		enemy->mPlayerBox = new btBoxShape(btVector3(0.1, 0.1, 0.1));
+		enemy->ActivatePhysics();
+		Physics::instance()->dynamicsWorld->addRigidBody(enemy->body);
+		Physics::instance()->dynamicsWorld->addCollisionObject(enemy->mPlayerObject);
 
-	enemy->InitActor("Models/Cube/Cube.obj", 0, 1);
-	enemy->SetPosition(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(0, 1, 3));
-	enemy->SetScale(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(0.2f, 0.2f, 0.2f));
-	enemy->SetGameObjID(objIdTracker);
-	objIdTracker++;
-	enemy->AddAI();
+
+	}
+
+	for (int i = 0;i < 10;i++)
+	{
+		EnvironmentObject *env1 = new EnvironmentObject();
+		env1->InitPath("Models/Cube/Cube.obj");
+		env1->SetPosition(glm::vec3(i*2, 5, 10));
+		env1->SetScale(glm::vec3(0.2f, 0.2f, 0.2f));
+		envObjs.push_back(env1);
+		//AddPhysicsForModels(env1);
+		//SetMassForModels(env1, 1.0);
+		env1->mass = 0.0f;
+		env1->mPlayerBox = new btBoxShape(btVector3(0.1, 0.1, 0.1));
+		env1->ActivatePhysics();
+		Physics::instance()->dynamicsWorld->addRigidBody(env1->body);
+		Physics::instance()->dynamicsWorld->addCollisionObject(env1->mPlayerObject);
+	}
 
 
-	enemy->InitActor("Models/Cube/Cube.obj", 0, 1);
-	enemy->SetPosition(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(0, 1, -2));
-	enemy->SetScale(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(0.2f, 0.2f, 0.2f));
-	enemy->SetGameObjID(objIdTracker);
-	objIdTracker++;
-	enemy->AddAI();
+	//enemy->InitActor("Models/Cube/Cube.obj", 0, 1);
+	//enemy->SetPosition(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(10, 10, 10));
+	//enemy->SetScale(enemy->GetPhysicsObjectsList()[enemy->GetPhysicsObjectsList().size() - 1],glm::vec3(0.2f, 0.2f, 0.2f));
+	//enemy->SetGameObjID(objIdTracker);
+	//objIdTracker++;
+	//enemy->AddAI();
+
+	
 
 	// add every object with physics property soon after creation.
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	//glm::mat4 model[1];
 	// Game loop
-	AddPhysicsForModels(enemy);
+	//AddPhysicsForModels(enemy);
+	//SetMassForModels(enemy,1.0);
+	
 	// Draw in wireframe
 
 	float bulletdestroyTimer = 3.0;
 
 	while (!glfwWindowShouldClose(window))
 	{
+		//GetRigidBodyState(enemy);
+
 		// destroy shot objects after some time
 		if (bulletdestroyTimer < 0)
 		{
@@ -141,11 +176,26 @@ int main()
 		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 		// Draw the loaded model
-		enemy->GetPosition();
-		enemy->UpdateActor(&shader);
-		enemy->ProcessAI(camera.Position);
+		//enemy->GetPosition();
+		//enemy->UpdateActor(&shader);
+		//enemy->ProcessAI(camera.Position);
 
-		bullets->UpdateActor(&shader);
+		for (int i = 0;i < envObjs.size();i++)
+		{
+			envObjs[i]->Draw(&shader);
+		}
+
+		for (int i = 0;i < enemies.size();i++)
+		{
+			enemies[i]->Draw(&shader);
+		}
+
+		for (int i = 0;i < bullets.size();i++)
+		{
+			bullets[i]->Draw(&shader);
+		}
+
+		//bullets->UpdateActor(&shader);
 
 		//if (bullets.size() > 1)
 		//{
@@ -168,6 +218,12 @@ int main()
 		//}
 		
 		// Swap the buffers
+
+		if (bullets.size())
+		{
+			cout << bullets.at(0)->GetMass() << endl;
+		}
+
 		glfwSwapBuffers(window);
 
 	}
@@ -179,22 +235,36 @@ int main()
 
 void Shoot()
 {
-	lastBulletFired = glfwGetTime();
-	bullets->InitActor("Models/Cube/Cube.obj", 0, 1);
-	bullets->SetPosition(bullets->GetPhysicsObjectsList()[bullets->GetPhysicsObjectsList().size() - 1], glm::vec3(camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z));
+	//lastBulletFired = glfwGetTime();
+	//bullets->InitActor("Models/Cube/Cube.obj", 0, 1);
+	//bullets->SetPosition(bullets->GetPhysicsObjectsList()[bullets->GetPhysicsObjectsList().size() - 1], glm::vec3(camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z));
 
 
-	bullets->SetScale(bullets->GetPhysicsObjectsList()[bullets->GetPhysicsObjectsList().size() - 1], glm::vec3(0.2f, 0.2f, 0.2f));
-	bullets->SetGameObjID(objIdTracker);
-	objIdTracker++;
-	cout << "Shooting";
-	AddPhysicsForModels(bullets);
+	//bullets->SetScale(bullets->GetPhysicsObjectsList()[bullets->GetPhysicsObjectsList().size() - 1], glm::vec3(0.2f, 0.2f, 0.2f));
+	//bullets->SetGameObjID(objIdTracker);
+	//objIdTracker++;
+	//cout << "Shooting";
+	//AddPhysicsForModels(bullets);
 		//bullets.push_back(ac1);
 		//bulletsBodies.push_back(ac1->GetCollisionObject());
 
-	float impulse = 10.0;
+	Bullets *bullet = new Bullets();
+	bullet->InitPath("Models/Cube/Cube.obj");
+	bullet->SetPosition(camera.Position);
+	bullet->SetScale(glm::vec3(0.2f, 0.2f, 0.2f));
+	bullets.push_back(bullet);
 
-	bullets->GetRigidBody(bullets->GetPhysicsObjectsList()[bullets->GetPhysicsObjectsList().size() - 1])->applyCentralImpulse(btVector3(camera.Front.x, camera.Front.x, camera.Front.x)*impulse);
+	bullet->mass = 1.0f;
+	bullet->mPlayerBox = new btBoxShape(btVector3(0.1, 0.1, 0.1));
+
+	bullet->ActivatePhysics();
+	Physics::instance()->dynamicsWorld->addRigidBody(bullet->body);
+	Physics::instance()->dynamicsWorld->addCollisionObject(bullet->mPlayerObject);
+
+
+
+	float impulse = 10.0;
+	bullet->body->applyCentralImpulse(btVector3(camera.Front.x, camera.Front.x, camera.Front.x)*impulse);
 	
 }
 
@@ -262,21 +332,22 @@ void Do_Movement()
 	{
 		// Set frame time
 		currentBulletFired = glfwGetTime();
-		deltaTime = currentFrame1 - lastFrame1;
+		deltaTime = currentBulletFired - lastBulletFired;
 		
 
 		shootinterval = shootinterval - deltaTime;
 			// destroy shot objects after some time
- 			if (currentBulletFired - lastBulletFired > 1.0f)
+ 			if (shootinterval < 0.0f)
 			{
 				Shoot();
+				shootinterval = 10.0;
 			}
 			//HandleShotObjects();
 
 
 	}
 
-	lastFrame1 = currentFrame1;
+	lastBulletFired = currentBulletFired;
 }
 
 // Is called whenever a key is pressed/released via GLFW
@@ -354,19 +425,62 @@ void LoadDynamicsWorld()
 	//physics = new Physics();
 }
 
-void AddPhysicsForModels( ActorFactory* g)
+void AddPhysicsForModels( Model* g)
 {
-	for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
-	{
-		
-		g->UpdatePhysicsPropertiesForObject(g->GetPhysicsObjectsList()[i]);
-		Physics::instance()->dynamicsWorld->addRigidBody(g->GetRigidBody(g->GetPhysicsObjectsList()[i]));
-		Physics::instance()->dynamicsWorld->addCollisionObject(g->GetCollisionObject(g->GetPhysicsObjectsList()[i]));
-	}
+	//for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
+	//{
+	//	
+	//	g->UpdatePhysicsPropertiesForObject(g->GetPhysicsObjectsList()[i]);
+	//	Physics::instance()->dynamicsWorld->addRigidBody(g->GetRigidBody(g->GetPhysicsObjectsList()[i]));
+	//	Physics::instance()->dynamicsWorld->addCollisionObject(g->GetCollisionObject(g->GetPhysicsObjectsList()[i]));
+	//}
+
+	g->ActivatePhysics();
+		Physics::instance()->dynamicsWorld->addRigidBody(g->body);
+		Physics::instance()->dynamicsWorld->addCollisionObject(g->mPlayerObject);
+	//physicsObjects.push_back(g);
+
+}
+
+void AddPhysicsForModels(EnvironmentObject* g)
+{
+	//for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
+	//{
+	//	
+	//	g->UpdatePhysicsPropertiesForObject(g->GetPhysicsObjectsList()[i]);
+	//	Physics::instance()->dynamicsWorld->addRigidBody(g->GetRigidBody(g->GetPhysicsObjectsList()[i]));
+	//	Physics::instance()->dynamicsWorld->addCollisionObject(g->GetCollisionObject(g->GetPhysicsObjectsList()[i]));
+	//}
+
+	g->ActivatePhysics();
+	Physics::instance()->dynamicsWorld->addRigidBody(g->body);
+	Physics::instance()->dynamicsWorld->addCollisionObject(g->mPlayerObject);
+	//physicsObjects.push_back(g);
 
 }
 
 
+void SetMassForModels(ActorFactory* g,float mass)
+{
+	for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
+	{
+
+		g->SetMass(mass);
+		g->GetRigidBody(g->GetPhysicsObjectsList()[i])->setGravity(btVector3(0, 0, 0));
+		//g->GetRigidBody(g->GetPhysicsObjectsList()[i])->setActivationState(0);
+
+	}
+
+}
+
+void GetRigidBodyState(ActorFactory* g)
+{
+	for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
+	{
+		int activestate = g->GetRigidBody(g->GetPhysicsObjectsList()[i])->getActivationState();
+		cout << activestate << endl;
+	}
+}
 
 void UpdatePhysicsWorld(float elapsedTime)
 {
@@ -376,47 +490,108 @@ void UpdatePhysicsWorld(float elapsedTime)
 	glm::vec3 mat;
 	const btCollisionObjectArray& objectArray = Physics::instance()->dynamicsWorld->getCollisionObjectArray();
 	int count = 0;
-	for (int i = 0;i<enemy->GetPhysicsObjectsList().size();i++)
+	//for (int i = 0;i<enemy->GetPhysicsObjectsList().size();i++)
+	//{
+
+	//	enemy->GetRigidBody(enemy->GetPhysicsObjectsList()[i])->activate(true);
+
+	//	btRigidBody* pBody = enemy->GetRigidBody(enemy->GetPhysicsObjectsList()[i]);
+	//	if (pBody && pBody->getMotionState())
+	//	{
+	//		btTransform trans = enemy->GetstartTransform();
+	//		pBody->getMotionState()->getWorldTransform(trans);
+
+	//		glm::vec3 pos ;
+	//		pos.x = trans.getOrigin().getX();
+	//		pos.y = trans.getOrigin().getY();
+	//		pos.z = trans.getOrigin().getZ();
+	//		enemy->SetPosition(enemy->GetPhysicsObjectsList()[i],pos);
+	//		//obj->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
+	//		//obj->SetWorldMatrix();
+	//		//cout << pos.x<<endl;
+	//	}
+	//}
+
+
+
+	//for (int i = 0; i<bullets->GetPhysicsObjectsList().size(); i++)
+	//{
+
+	//	bullets->GetRigidBody(bullets->GetPhysicsObjectsList()[i])->activate(true);
+
+	//	btRigidBody* pBody = bullets->GetRigidBody(bullets->GetPhysicsObjectsList()[i]);
+	//	if (pBody && pBody->getMotionState())
+	//	{
+	//		btTransform trans = bullets->GetstartTransform();
+	//		pBody->getMotionState()->getWorldTransform(trans);
+
+	//		glm::vec3 pos;
+	//		pos.x = trans.getOrigin().getX();
+	//		pos.y = trans.getOrigin().getY();
+	//		pos.z = trans.getOrigin().getZ();
+
+	//		bullets->SetPosition(bullets->GetPhysicsObjectsList()[i], pos);
+	//		//obj->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
+	//		//obj->SetWorldMatrix();
+	//	}
+	//}
+
+
+
+	for (int i = 0; i < envObjs.size(); i++)
 	{
+		envObjs.at(i)->body->activate(true);
 
-		enemy->GetRigidBody(enemy->GetPhysicsObjectsList()[i])->activate(true);
-
-		btRigidBody* pBody = enemy->GetRigidBody(enemy->GetPhysicsObjectsList()[i]);
+		btRigidBody* pBody = envObjs.at(i)->body;
 		if (pBody && pBody->getMotionState())
 		{
-			btTransform trans = enemy->GetstartTransform();
-			pBody->getMotionState()->getWorldTransform(trans);
-
-			glm::vec3 pos ;
-			pos.x = trans.getOrigin().getX();
-			pos.y = trans.getOrigin().getY();
-			pos.z = trans.getOrigin().getZ();
-			enemy->SetPosition(enemy->GetPhysicsObjectsList()[i],pos);
-			//obj->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
-			//obj->SetWorldMatrix();
-			cout << pos.x<<endl;
-		}
-	}
-
-	for (int i = 0; i<bullets->GetPhysicsObjectsList().size(); i++)
-	{
-
-		bullets->GetRigidBody(bullets->GetPhysicsObjectsList()[i])->activate(true);
-
-		btRigidBody* pBody = bullets->GetRigidBody(bullets->GetPhysicsObjectsList()[i]);
-		if (pBody && pBody->getMotionState())
-		{
-			btTransform trans = bullets->GetstartTransform();
+			btTransform trans = envObjs.at(i)->startTransform;
 			pBody->getMotionState()->getWorldTransform(trans);
 
 			glm::vec3 pos;
 			pos.x = trans.getOrigin().getX();
 			pos.y = trans.getOrigin().getY();
 			pos.z = trans.getOrigin().getZ();
+			envObjs.at(i)->SetPosition(pos);
+			//physicsGameObjects.at(i)->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
+		}
+	}
 
-			bullets->SetPosition(bullets->GetPhysicsObjectsList()[i], pos);
-			//obj->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
-			//obj->SetWorldMatrix();
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		enemies.at(i)->body->activate(true);
+
+		btRigidBody* pBody = enemies.at(i)->body;
+		if (pBody && pBody->getMotionState())
+		{
+			btTransform trans = enemies.at(i)->startTransform;
+			pBody->getMotionState()->getWorldTransform(trans);
+
+			glm::vec3 pos;
+			pos.x = trans.getOrigin().getX();
+			pos.y = trans.getOrigin().getY();
+			pos.z = trans.getOrigin().getZ();
+			enemies.at(i)->SetPosition(pos);
+			//physicsGameObjects.at(i)->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
+		}
+	}
+
+	for (int i = 0; i < bullets.size(); i++)
+	{
+		bullets.at(i)->body->activate(true);
+
+		btRigidBody* pBody = bullets.at(i)->body;
+		if (pBody && pBody->getMotionState())
+		{
+			btTransform trans = bullets.at(i)->startTransform;
+			pBody->getMotionState()->getWorldTransform(trans);
+
+			glm::vec3 pos;
+			pos.x = trans.getOrigin().getX();
+			pos.y = trans.getOrigin().getY();
+			pos.z = trans.getOrigin().getZ();
+			bullets.at(i)->SetPosition(pos);
+			//physicsGameObjects.at(i)->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
 		}
 	}
 
@@ -424,6 +599,6 @@ void UpdatePhysicsWorld(float elapsedTime)
 	//DetectCollisions();
 
 	//collision detection for all objects
-	Physics::instance()->DetectCollisions();
+	Physics::instance()->DetectCollision();
 
 }

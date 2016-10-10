@@ -6,6 +6,19 @@ ActorFactory::ActorFactory()
 {
 }
 
+void ActorFactory::SetMass(float mass)
+{
+	ourModel->SetMass(mass);
+}
+
+
+
+void ActorFactory::InitPath(GLchar * path)
+{
+	ourModel->InitPath(path);
+}
+
+
 void ActorFactory::InitActor(GLchar * path, int typeActor, int typeModel)
 {
 	typeOfActor = typeActor;
@@ -39,7 +52,17 @@ btRigidBody* ActorFactory::GetRigidBody(Model *ourModel)
 		return ourModel->body;
 }
 
+btRigidBody* ActorFactory::GetRigidBody()
+{
+	return ourModel->body;
+}
+
 btCollisionObject* ActorFactory::GetCollisionObject(Model *ourModel)
+{
+	return ourModel->mPlayerObject;
+}
+
+btCollisionObject* ActorFactory::GetCollisionObject()
 {
 	return ourModel->mPlayerObject;
 }
@@ -73,7 +96,25 @@ void ActorFactory::UpdateActor(Shader *shader)
 	}
 }
 
+void ActorFactory::Draw(Shader *shader)
+{
+	ourModel->Draw(shader);
+}
+
+void ActorFactory::UpdateActor(Shader *shader,bool test)
+{
+		ourModel->Draw(shader);
+}
+
 void ActorFactory::SetPosition(Model *ourModel,glm::vec3 pos)
+{
+	if (typeOfActor == 0)
+	{
+		ourModel->SetPosition(pos);
+	}
+}
+
+void ActorFactory::SetPosition( glm::vec3 pos)
 {
 	if (typeOfActor == 0)
 	{
@@ -104,6 +145,17 @@ void ActorFactory::UpdatePhysicsPropertiesForObject(Model *ourModel)
 	}
 }
 
+void ActorFactory::UpdatePhysicsPropertiesForObject()
+{
+	if (typeOfActor == 0)
+	{
+		ourModel->SetDefaultMass();
+		ourModel->InitializeRigidBody();
+		ourModel->body->activate(true);
+
+	}
+}
+
 void ActorFactory::SetScale(Model *ourModel, glm::vec3 sc)
 {
 	if (typeOfActor == 0)
@@ -112,6 +164,13 @@ void ActorFactory::SetScale(Model *ourModel, glm::vec3 sc)
 	}
 }
 
+void ActorFactory::SetScale( glm::vec3 sc)
+{
+	if (typeOfActor == 0)
+	{
+		ourModel->SetScale(sc);
+	}
+}
 
 glm::vec3 ActorFactory::GetScale(glm::vec3 sc)
 {
