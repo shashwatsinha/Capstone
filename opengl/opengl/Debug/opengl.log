@@ -1,42 +1,92 @@
 ﻿  main.cpp
-c:\selfcapstone\opengl\opengl\main.cpp(98): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(195): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(196): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(200): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(201): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(203): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(204): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\selfcapstone\opengl\opengl\main.cpp(211): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(31): error C2065: 'ActorFactory': undeclared identifier
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(31): error C2059: syntax error: '>'
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(31): error C2976: 'std::vector': too few template arguments
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(678): note: see declaration of 'std::vector'
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(35): error C2065: 'ActorFactory': undeclared identifier
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(35): error C2059: syntax error: '>'
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(35): error C2976: 'std::vector': too few template arguments
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(678): note: see declaration of 'std::vector'
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(56): warning C4091: 'static ': ignored on left of 'Physics' when no variable is declared
+d:\academics\capstone\latest\3\opengl\opengl\main.cpp(106): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\academics\capstone\latest\3\opengl\opengl\main.cpp(258): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\academics\capstone\latest\3\opengl\opengl\main.cpp(291): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\academics\capstone\latest\3\opengl\opengl\main.cpp(292): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\academics\capstone\latest\3\opengl\opengl\main.cpp(296): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\academics\capstone\latest\3\opengl\opengl\main.cpp(297): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\academics\capstone\latest\3\opengl\opengl\main.cpp(299): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\academics\capstone\latest\3\opengl\opengl\main.cpp(300): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\academics\capstone\latest\3\opengl\opengl\main.cpp(307): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
   NormalEnemy.cpp
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\academics\capstone\latest\3\opengl\opengl\environmentobject.h(4): error C2504: 'Model': base class undefined
+d:\academics\capstone\latest\3\opengl\opengl\bullet.h(4): error C2504: 'Model': base class undefined
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(54): error C2143: syntax error: missing ';' before '*'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(54): error C2238: unexpected token(s) preceding ';'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(55): error C2065: 'Model': undeclared identifier
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(55): error C2059: syntax error: '>'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(55): error C2976: 'std::vector': too few template arguments
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(678): note: see declaration of 'std::vector'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(56): error C2065: 'Model': undeclared identifier
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(56): error C2059: syntax error: '>'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(56): error C2976: 'std::vector': too few template arguments
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(678): note: see declaration of 'std::vector'
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(56): warning C4091: 'static ': ignored on left of 'Physics' when no variable is declared
+  Model.cpp
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\academics\capstone\latest\3\opengl\opengl\normalenemy.h(4): error C2504: 'Model': base class undefined
+d:\academics\capstone\latest\3\opengl\opengl\environmentobject.h(4): error C2504: 'Model': base class undefined
+d:\academics\capstone\latest\3\opengl\opengl\bullet.h(4): error C2504: 'Model': base class undefined
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(54): error C2143: syntax error: missing ';' before '*'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(54): error C2238: unexpected token(s) preceding ';'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(55): error C2065: 'Model': undeclared identifier
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(55): error C2059: syntax error: '>'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(55): error C2976: 'std::vector': too few template arguments
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(678): note: see declaration of 'std::vector'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(56): error C2065: 'Model': undeclared identifier
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(56): error C2059: syntax error: '>'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(56): error C2976: 'std::vector': too few template arguments
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(678): note: see declaration of 'std::vector'
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(56): warning C4091: 'static ': ignored on left of 'Physics' when no variable is declared
+  EnvironmentObject.cpp
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\academics\capstone\latest\3\opengl\opengl\normalenemy.h(4): error C2504: 'Model': base class undefined
+d:\academics\capstone\latest\3\opengl\opengl\bullet.h(4): error C2504: 'Model': base class undefined
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(54): error C2143: syntax error: missing ';' before '*'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(54): error C2238: unexpected token(s) preceding ';'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(55): error C2065: 'Model': undeclared identifier
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(55): error C2059: syntax error: '>'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(55): error C2976: 'std::vector': too few template arguments
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(678): note: see declaration of 'std::vector'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(56): error C2065: 'Model': undeclared identifier
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(56): error C2059: syntax error: '>'
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.h(56): error C2976: 'std::vector': too few template arguments
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(678): note: see declaration of 'std::vector'
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(56): warning C4091: 'static ': ignored on left of 'Physics' when no variable is declared
+  ActorFactory.cpp
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(31): error C2065: 'ActorFactory': undeclared identifier
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(31): error C2059: syntax error: '>'
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(31): error C2976: 'std::vector': too few template arguments
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(678): note: see declaration of 'std::vector'
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(35): error C2065: 'ActorFactory': undeclared identifier
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(35): error C2059: syntax error: '>'
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(35): error C2976: 'std::vector': too few template arguments
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(678): note: see declaration of 'std::vector'
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(56): warning C4091: 'static ': ignored on left of 'Physics' when no variable is declared
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.cpp(17): warning C4316: 'EnvironmentObject': object allocated on the heap may not be aligned 16
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.cpp(24): warning C4316: 'NormalEnemy': object allocated on the heap may not be aligned 16
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.cpp(31): warning C4316: 'Bullet': object allocated on the heap may not be aligned 16
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.cpp(65): warning C4018: '<': signed/unsigned mismatch
+d:\academics\capstone\latest\3\opengl\opengl\actorfactory.cpp(70): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
   Compiling...
-  ActorFactory.cpp
+  Physics.cpp
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\academics\capstone\latest\3\opengl\opengl\physics.h(56): warning C4091: 'static ': ignored on left of 'Physics' when no variable is declared
+d:\academics\capstone\latest\3\opengl\opengl\physics.cpp(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   Generating Code...
-MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
-Model.obj : warning LNK4049: locally defined symbol ___glewActiveTexture imported
-Model.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
-Model.obj : warning LNK4049: locally defined symbol ___glewBufferData imported
-Model.obj : warning LNK4049: locally defined symbol ___glewGenBuffers imported
-Model.obj : warning LNK4049: locally defined symbol ___glewEnableVertexAttribArray imported
-Model.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
-Model.obj : warning LNK4049: locally defined symbol ___glewUniform1f imported
-Model.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
-Model.obj : warning LNK4049: locally defined symbol ___glewUniformMatrix4fv imported
-Model.obj : warning LNK4049: locally defined symbol ___glewVertexAttribPointer imported
-Model.obj : warning LNK4049: locally defined symbol ___glewGenerateMipmap imported
-Model.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
-Model.obj : warning LNK4049: locally defined symbol ___glewGenVertexArrays imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewAttachShader imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewCompileShader imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewCreateProgram imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewCreateShader imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewDeleteShader imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewGetProgramInfoLog imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewGetProgramiv imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewGetShaderInfoLog imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewGetShaderiv imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewLinkProgram imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewShaderSource imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
-glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\SelfCapstone\opengl\Debug\vc120.pdb'; linking object as if no debug info
-  opengl.vcxproj -> C:\SelfCapstone\opengl\Debug\opengl.exe
