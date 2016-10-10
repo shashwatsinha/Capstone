@@ -324,7 +324,7 @@ void Do_Movement()
 
 
 
-	float shootinterval = 0.0;
+	float shootinterval = 1.0;
 
 	GLfloat currentFrame1 = 0.0f;
 	GLfloat lastFrame1 = 0.0f;
@@ -332,12 +332,10 @@ void Do_Movement()
 	{
 		// Set frame time
 		currentBulletFired = glfwGetTime();
-		deltaTime = currentBulletFired - lastBulletFired;
+		shootinterval = currentBulletFired - lastBulletFired;
 		
-
-		shootinterval = shootinterval - deltaTime;
 			// destroy shot objects after some time
- 			if (shootinterval < 0.0f)
+ 			if (shootinterval > 0.5f)
 			{
 				Shoot();
 				shootinterval = 10.0;
