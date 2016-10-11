@@ -163,6 +163,7 @@
     <ClCompile Include="NormalEnemy.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinystr.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxml.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxml2.cpp" />
@@ -181,10 +182,15 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="Source\3rdPartyTools\tinystr.h" />
     <ClInclude Include="Source\3rdPartyTools\tinyxml.h" />
     <ClInclude Include="Source\3rdPartyTools\tinyxml2.h" />
     <ClInclude Include="String.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\skybox.frag" />
+    <None Include="Shaders\skybox.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

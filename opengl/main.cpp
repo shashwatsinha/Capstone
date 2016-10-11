@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "ActorFactory.h"
 #include "btBulletDynamicsCommon.h"
+#include "Skybox.h"
 
 #include <queue>
 #include <iostream>
@@ -42,10 +43,11 @@ void UpdatePhysicsWorld(float elapsedTime);
 //void UpdatePhysicsWorld(float elapsedTime, list<ActorFactory*> objectList1, list<ActorFactory*> objectList2);
 void AddPhysicsForModels(ActorFactory* g);
 void DestroyExcessBullets();
- void Shoot();
- void HandleShotObjects();
- void SetMassForModels(ActorFactory* g, float mass);
- void GetRigidBodyState(ActorFactory* g);
+void Shoot();
+void HandleShotObjects();
+void SetMassForModels(ActorFactory* g, float mass);
+void GetRigidBodyState(ActorFactory* g);
+void SetViewAndProjection(Shader shader, glm::mat4 view);
 
 float x = 0;
 // Camera
@@ -79,6 +81,11 @@ int main()
 	InitGLFW();
 	// Setup and compile our shaders
 	Shader shader("Shaders/nanosuit.vs", "Shaders/nanosuit.frag");
+	Shader skyboxShader("Shaders/skybox.vs", "Shaders/skybox.frag");
+
+	// Setup Skybox
+	Skybox skybox;
+	skybox.setupMesh();
 
 	//create enemies
 	for (int i = 0;i < 10;i++)
@@ -169,12 +176,19 @@ int main()
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		// SkyBox
+		// Draw skybox first
+		glDepthMask(GL_FALSE);// Remember to turn depth writing off
+		skyboxShader.Use();
+		glm::mat4 view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix
+		SetViewAndProjection(skyboxShader, view);
+		skybox.Draw(&skyboxShader);
+		glDepthMask(GL_TRUE);
+		// SkyBox
+
 		shader.Use();   // <-- Don't forget this one!
-						// Transformation matrices
-		glm::mat4 projection = glm::perspective(camera.Zoom, (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
-		glm::mat4 view = camera.GetViewMatrix();
-		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		view = camera.GetViewMatrix();
+		SetViewAndProjection(shader, view);
 		// Draw the loaded model
 		//enemy->GetPosition();
 		//enemy->UpdateActor(&shader);
@@ -231,6 +245,12 @@ int main()
 	// Clean up behind ourselves like good little programmers
 	glfwTerminate();
 	return 0;
+}
+
+void SetViewAndProjection(Shader shader, glm::mat4 view) {
+	glm::mat4 projection = glm::perspective(camera.Zoom, (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 }
 
 void Shoot()
