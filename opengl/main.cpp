@@ -282,9 +282,9 @@ void Shoot()
 	Physics::instance()->dynamicsWorld->addCollisionObject(bullet->mPlayerObject);
 
 
-
+	
 	float impulse = 10.0;
-	bullet->body->applyCentralImpulse(btVector3(camera.Front.x, camera.Front.x, camera.Front.x)*impulse);
+	bullet->body->applyCentralImpulse(btVector3(camera.Front.x, camera.Front.y, camera.Front.z)*impulse);
 	
 }
 
@@ -333,16 +333,6 @@ void Do_Movement()
 		camera.ProcessKeyboard(LEFT, deltaTime);
 	if (keys[GLFW_KEY_D])
 		camera.ProcessKeyboard(RIGHT, deltaTime);
-	if (keys[GLFW_KEY_Q])
-		x = x - 0.01f;
-	if (keys[GLFW_KEY_E])
-		x = x + 0.01f;
-	if (keys[GLFW_KEY_P])
-	{
-		cout<<camera.GetPosition().x<< " " << camera.GetPosition().y<<" "<< camera.GetPosition().z<<endl;
-	}
-
-
 
 	float shootinterval = 1.0;
 
@@ -445,36 +435,17 @@ void LoadDynamicsWorld()
 
 void AddPhysicsForModels( Model* g)
 {
-	//for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
-	//{
-	//	
-	//	g->UpdatePhysicsPropertiesForObject(g->GetPhysicsObjectsList()[i]);
-	//	Physics::instance()->dynamicsWorld->addRigidBody(g->GetRigidBody(g->GetPhysicsObjectsList()[i]));
-	//	Physics::instance()->dynamicsWorld->addCollisionObject(g->GetCollisionObject(g->GetPhysicsObjectsList()[i]));
-	//}
-
 	g->ActivatePhysics();
-		Physics::instance()->dynamicsWorld->addRigidBody(g->body);
-		Physics::instance()->dynamicsWorld->addCollisionObject(g->mPlayerObject);
-	//physicsObjects.push_back(g);
-
+	Physics::instance()->dynamicsWorld->addRigidBody(g->body);
+	Physics::instance()->dynamicsWorld->addCollisionObject(g->mPlayerObject);
 }
 
 void AddPhysicsForModels(EnvironmentObject* g)
 {
-	//for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
-	//{
-	//	
-	//	g->UpdatePhysicsPropertiesForObject(g->GetPhysicsObjectsList()[i]);
-	//	Physics::instance()->dynamicsWorld->addRigidBody(g->GetRigidBody(g->GetPhysicsObjectsList()[i]));
-	//	Physics::instance()->dynamicsWorld->addCollisionObject(g->GetCollisionObject(g->GetPhysicsObjectsList()[i]));
-	//}
-
 	g->ActivatePhysics();
 	Physics::instance()->dynamicsWorld->addRigidBody(g->body);
 	Physics::instance()->dynamicsWorld->addCollisionObject(g->mPlayerObject);
 	//physicsObjects.push_back(g);
-
 }
 
 
@@ -508,51 +479,7 @@ void UpdatePhysicsWorld(float elapsedTime)
 	glm::vec3 mat;
 	const btCollisionObjectArray& objectArray = Physics::instance()->dynamicsWorld->getCollisionObjectArray();
 	int count = 0;
-	//for (int i = 0;i<enemy->GetPhysicsObjectsList().size();i++)
-	//{
 
-	//	enemy->GetRigidBody(enemy->GetPhysicsObjectsList()[i])->activate(true);
-
-	//	btRigidBody* pBody = enemy->GetRigidBody(enemy->GetPhysicsObjectsList()[i]);
-	//	if (pBody && pBody->getMotionState())
-	//	{
-	//		btTransform trans = enemy->GetstartTransform();
-	//		pBody->getMotionState()->getWorldTransform(trans);
-
-	//		glm::vec3 pos ;
-	//		pos.x = trans.getOrigin().getX();
-	//		pos.y = trans.getOrigin().getY();
-	//		pos.z = trans.getOrigin().getZ();
-	//		enemy->SetPosition(enemy->GetPhysicsObjectsList()[i],pos);
-	//		//obj->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
-	//		//obj->SetWorldMatrix();
-	//		//cout << pos.x<<endl;
-	//	}
-	//}
-
-
-
-	//for (int i = 0; i<bullets->GetPhysicsObjectsList().size(); i++)
-	//{
-
-	//	bullets->GetRigidBody(bullets->GetPhysicsObjectsList()[i])->activate(true);
-
-	//	btRigidBody* pBody = bullets->GetRigidBody(bullets->GetPhysicsObjectsList()[i]);
-	//	if (pBody && pBody->getMotionState())
-	//	{
-	//		btTransform trans = bullets->GetstartTransform();
-	//		pBody->getMotionState()->getWorldTransform(trans);
-
-	//		glm::vec3 pos;
-	//		pos.x = trans.getOrigin().getX();
-	//		pos.y = trans.getOrigin().getY();
-	//		pos.z = trans.getOrigin().getZ();
-
-	//		bullets->SetPosition(bullets->GetPhysicsObjectsList()[i], pos);
-	//		//obj->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
-	//		//obj->SetWorldMatrix();
-	//	}
-	//}
 
 
 

@@ -44,6 +44,7 @@ void NormalEnemy::ProcessAI(glm::vec3 playerPos)
 
 NormalEnemy::NormalEnemy()
 {
+	health = 100;
 }
 
 
@@ -64,4 +65,14 @@ void NormalEnemy::Chasing()
 void NormalEnemy::Attacking()
 {
 	//std::cout << "Attacking" << endl;
+}
+
+void NormalEnemy::ReduceHealth(int amount)
+{
+	health = health - amount;
+}
+
+int NormalEnemy::GetHeatlh()
+{
+	return health;
 }

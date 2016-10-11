@@ -13,8 +13,12 @@ public:
 	void Chasing();
 	void Attacking();
 
+	void ReduceHealth(int amount);
+	int GetHeatlh();
+
 private:
 	State currentState = Patrol;
 	State previousState = Patrol;
+	int health;
 };
 
