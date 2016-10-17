@@ -16,9 +16,17 @@ public:
 	void ReduceHealth(int amount);
 	int GetHeatlh();
 
+	glm::vec3 DistanceVectorFromPlayer();
+
+	void TestMove();
+
+
 private:
 	State currentState = Patrol;
 	State previousState = Patrol;
 	int health;
+	glm::vec3 playerPosition;
+	glm::vec3 enemyPosition;
+	int x = 0;
 };
 

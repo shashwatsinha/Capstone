@@ -80,7 +80,8 @@ public:
 	//	return worldMatrix;
 	//}
 
-
+	//Position of the Model
+	glm::vec3 modelPosition;
 	
 private:
 	/*  Model Data  */
@@ -103,8 +104,7 @@ private:
 	// The required info is returned as a Texture struct.
 	vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
 
-	//Position of the Model
-	glm::vec3 position;
+	
 
 	//Scale of the model
 	glm::vec3 scale;

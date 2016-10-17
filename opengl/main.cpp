@@ -88,12 +88,12 @@ int main()
 	skybox.setupMesh();
 
 	//create enemies
-	for (int i = 0;i < 10;i++)
+	for (int i = 0;i < 1;i++)
 	{
 		NormalEnemy *enemy = new NormalEnemy();
 		enemy->InitPath("Models/Cube/Cube.obj");
-		enemy->SetPosition(glm::vec3(i * 2, 0, 5));
-		enemy->SetScale(glm::vec3(0.2f, 0.2f, 0.2f));
+		enemy->SetPosition(glm::vec3(i * 2, 0, 15));
+		enemy->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 		enemies.push_back(enemy);
 		//AddPhysicsForModels(enemy);
 		//SetMassForModels(enemy, 1.0);
@@ -109,7 +109,7 @@ int main()
 
 	}
 
-	for (int i = 0;i < 10;i++)
+	for (int i = 0;i < 0;i++)
 	{
 		EnvironmentObject *env1 = new EnvironmentObject();
 		env1->InitPath("Models/Cube/Cube.obj");
@@ -146,7 +146,7 @@ int main()
 	// Draw in wireframe
 
 	float bulletdestroyTimer = 3.0;
-
+	int x = 0;
 	while (!glfwWindowShouldClose(window))
 	{
 		//GetRigidBodyState(enemy);
@@ -201,7 +201,11 @@ int main()
 
 		for (int i = 0;i < enemies.size();i++)
 		{
-			enemies[i]->Draw(&shader);
+			//enemies[i]->TestMove();
+			enemies[i]->ProcessAI(camera.GetPosition());
+			enemies[i]->Draw(&shader); 
+			
+			
 		}
 
 		for (int i = 0;i < bullets.size();i++)
@@ -516,7 +520,8 @@ void UpdatePhysicsWorld(float elapsedTime)
 			pos.x = trans.getOrigin().getX();
 			pos.y = trans.getOrigin().getY();
 			pos.z = trans.getOrigin().getZ();
-			enemies.at(i)->SetPosition(pos);
+			//What is this
+			//enemies.at(i)->SetPosition(pos);
 			//physicsGameObjects.at(i)->SetRotation(trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ());
 		}
 	}

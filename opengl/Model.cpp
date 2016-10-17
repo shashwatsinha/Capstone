@@ -14,22 +14,24 @@ void Model::InitPath(GLchar * path)
 void Model :: Draw(Shader *shader)
 {
 	glm::mat4 model;
-	model = glm::translate(model, position); // Translate it down a bit so it's at the center of the scene
+	model = glm::translate(model, modelPosition); // Translate it down a bit so it's at the center of the scene
 	model = glm::scale(model, scale);	// It's a bit too big for our scene, so scale it down
 	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
 	for (GLuint i = 0; i < this->meshes.size(); i++)
 		this->meshes[i].Draw(shader);
+
+	
 }
 
 void Model::SetPosition(glm::vec3 pos)
 {
-	position = pos;
+	modelPosition = pos;
 }
 
 glm::vec3 Model::GetPosition()
 {
-	return this->position;
+	return modelPosition;
 }
 
 void Model::SetScale(glm::vec3 sc)
@@ -216,7 +218,7 @@ void Model::InitializeRigidBody()
 	localInertia = btVector3(0, 0, 0);
 	mPlayerBox->calculateLocalInertia(mass, localInertia);
 
-	startTransform.setOrigin(btVector3(position.x, position.y, position.z));
+	startTransform.setOrigin(btVector3(modelPosition.x, modelPosition.y, modelPosition.z));
 
 	//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
 	myMotionState = new btDefaultMotionState(startTransform);

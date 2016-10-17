@@ -1,26 +1,3 @@
-﻿  main.cpp
-c:\capstone\opengl\physics.h(7): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\capstone\opengl\main.cpp(93): warning C4316: 'NormalEnemy': object allocated on the heap may not be aligned 16
-c:\capstone\opengl\main.cpp(104): warning C4305: 'argument': truncation from 'double' to 'const btScalar'
-c:\capstone\opengl\main.cpp(114): warning C4316: 'EnvironmentObject': object allocated on the heap may not be aligned 16
-c:\capstone\opengl\main.cpp(122): warning C4305: 'argument': truncation from 'double' to 'const btScalar'
-c:\capstone\opengl\main.cpp(163): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\main.cpp(197): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\main.cpp(202): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\main.cpp(207): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\main.cpp(271): warning C4316: 'Bullets': object allocated on the heap may not be aligned 16
-c:\capstone\opengl\main.cpp(278): warning C4305: 'argument': truncation from 'double' to 'const btScalar'
-c:\capstone\opengl\main.cpp(354): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\main.cpp(387): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\main.cpp(388): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\main.cpp(392): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\main.cpp(393): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\main.cpp(395): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\main.cpp(396): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\main.cpp(403): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\main.cpp(483): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\main.cpp(496): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\main.cpp(559): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\main.cpp(578): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\main.cpp(597): warning C4018: '<': signed/unsigned mismatch
-  opengl.vcxproj -> C:\Capstone\Debug\opengl.exe
+﻿  NormalEnemy.cpp
+  opengl.vcxproj -> D:\Capstone\Debug\opengl.exe
+  opengl.vcxproj -> D:\Capstone\Debug\opengl.pdb (Full PDB)
