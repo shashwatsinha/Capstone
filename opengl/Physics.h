@@ -30,6 +30,8 @@ public:
 
 	void DetectCollision();
 
+	void DetectCollision(std::vector<NormalEnemy*> enemies, std::vector<Bullets*> bullets);
+
 	void DetectCollisions();
 
 

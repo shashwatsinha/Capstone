@@ -107,8 +107,9 @@ bool Physics::DetectCollision(btCollisionObject* target1, btCollisionObject* tar
 	for (int i = 0;i<numManifolds;i++)
 	{
 		btPersistentManifold* contactManifold = physics->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
-		const  btCollisionObject* obA = contactManifold->getBody0();
-		const  btCollisionObject* obB = contactManifold->getBody1();
+
+		btCollisionObject* obA = const_cast<btCollisionObject*>(contactManifold->getBody0());
+		btCollisionObject* obB = const_cast<btCollisionObject*>(contactManifold->getBody1());
 
 		if (((target1 == obA) && (target2 == obB))|| ((target2 == obA) && (target1 == obB)))
 		{
@@ -156,9 +157,10 @@ void Physics::DetectCollision()
 		btPersistentManifold* contactManifold = this->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
 		const  btCollisionObject* obA = contactManifold->getBody0();
 		const  btCollisionObject* obB = contactManifold->getBody1();
+		int k = 0;
 
-		AddToCollisionTracker(reinterpret_cast<uintptr_t>(&obB), const_cast<btCollisionObject*>(obA));
-		AddToCollisionTracker(reinterpret_cast<uintptr_t>(&obA), const_cast<btCollisionObject*>(obB));
+		//AddToCollisionTracker(reinterpret_cast<uintptr_t>(&obB), const_cast<btCollisionObject*>(obA));
+		//AddToCollisionTracker(reinterpret_cast<uintptr_t>(&obA), const_cast<btCollisionObject*>(obB));
 
 		//code for future reference
 
@@ -175,6 +177,62 @@ void Physics::DetectCollision()
 		//}
 	}
 }
+
+
+//detect collision, by pairs, most efficient... find collision for particular object
+void Physics::DetectCollision(std::vector<NormalEnemy*> enemies, std::vector<Bullets*> bullets)
+{
+	collisionTracker.erase(collisionTracker.begin(), collisionTracker.end());
+
+	int numManifolds = this->dynamicsWorld->getDispatcher()->getNumManifolds();
+	for (int i = 0; i<numManifolds; i++)
+	{
+		btPersistentManifold* contactManifold = this->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+		const  btCollisionObject* obA = contactManifold->getBody0();
+		const  btCollisionObject* obB = contactManifold->getBody1();
+		int k = 0;
+
+		Model *obj1;
+		Model *obj2;
+
+		for (int j = 0; j < enemies.size(); j++)
+		{
+			if (obA == enemies.at(j)->mPlayerObject || obB == enemies.at(j)->mPlayerObject)
+			{
+				obj1 = enemies.at(j);
+			}
+
+		}
+
+		for (int j = 0; j < bullets.size(); j++)
+		{
+			if (obA == bullets.at(j)->mPlayerObject || obB == bullets.at(j)->mPlayerObject)
+			{
+				obj2 = bullets.at(j);
+			}
+
+		}
+
+
+		//AddToCollisionTracker(reinterpret_cast<uintptr_t>(&obB), const_cast<btCollisionObject*>(obA));
+		//AddToCollisionTracker(reinterpret_cast<uintptr_t>(&obA), const_cast<btCollisionObject*>(obB));
+
+		//code for future reference
+
+		//int numContacts = contactManifold->getNumContacts();
+		//for (int j = 0;j<numContacts;j++)
+		//{
+		//	btManifoldPoint& pt = contactManifold->getContactPoint(j);
+		//	if (pt.getDistance()<0.f)
+		//	{
+		//		const btVector3& ptA = pt.getPositionWorldOnA();
+		//		const btVector3& ptB = pt.getPositionWorldOnB();
+		//		const btVector3& normalOnB = pt.m_normalWorldOnB;
+		//	}
+		//}
+	}
+}
+
 
 // detect collision,not efficient
 void Physics::DetectCollisions()

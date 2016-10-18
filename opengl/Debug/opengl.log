@@ -1,3 +1,6 @@
-﻿  NormalEnemy.cpp
+﻿  Physics.cpp
+d:\capstone\opengl\physics.h(7): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\capstone\opengl\physics.cpp(198): warning C4018: '<': signed/unsigned mismatch
+d:\capstone\opengl\physics.cpp(207): warning C4018: '<': signed/unsigned mismatch
   opengl.vcxproj -> D:\Capstone\Debug\opengl.exe
   opengl.vcxproj -> D:\Capstone\Debug\opengl.pdb (Full PDB)

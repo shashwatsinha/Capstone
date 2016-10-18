@@ -57,23 +57,23 @@ NormalEnemy::~NormalEnemy()
 
 void NormalEnemy::Patrolling()
 {
-	std::cout << "Patrolling" << endl;
-	std::cout << playerPosition.x << " " << playerPosition.y << " " << playerPosition.z << endl;
+	//std::cout << "Patrolling" << endl;
+	//std::cout << playerPosition.x << " " << playerPosition.y << " " << playerPosition.z << endl;
 }
 
 void NormalEnemy::Chasing()
 {
 	
-	glm::vec3 k = glm::vec3(DistanceVectorFromPlayer().x *2, DistanceVectorFromPlayer().y * 2, DistanceVectorFromPlayer().z *2);
-	SetPosition(k);
-	enemyPosition = k;
-	std::cout << "Chasing" <<" "<<enemyPosition.x<<" "<< enemyPosition.y<<" "<< enemyPosition.z<< endl;
+	//glm::vec3 k = glm::vec3(DistanceVectorFromPlayer().x *2, DistanceVectorFromPlayer().y * 2, DistanceVectorFromPlayer().z *2);
+	//SetPosition(k);
+	//enemyPosition = k;
+	//std::cout << "Chasing" <<" "<<enemyPosition.x<<" "<< enemyPosition.y<<" "<< enemyPosition.z<< endl;
 }
 
 void NormalEnemy::Attacking()
 {
-	std::cout << "Attacking" << endl;
-	std::cout << enemyPosition.x << " " << enemyPosition.y << " " << enemyPosition.z << endl;
+	//std::cout << "Attacking" << endl;
+	//std::cout << enemyPosition.x << " " << enemyPosition.y << " " << enemyPosition.z << endl;
 }
 
 void NormalEnemy::ReduceHealth(int amount)

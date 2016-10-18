@@ -453,27 +453,27 @@ void AddPhysicsForModels(EnvironmentObject* g)
 }
 
 
-void SetMassForModels(ActorFactory* g,float mass)
-{
-	for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
-	{
-
-		g->SetMass(mass);
-		g->GetRigidBody(g->GetPhysicsObjectsList()[i])->setGravity(btVector3(0, 0, 0));
-		//g->GetRigidBody(g->GetPhysicsObjectsList()[i])->setActivationState(0);
-
-	}
-
-}
-
-void GetRigidBodyState(ActorFactory* g)
-{
-	for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
-	{
-		int activestate = g->GetRigidBody(g->GetPhysicsObjectsList()[i])->getActivationState();
-		cout << activestate << endl;
-	}
-}
+//void SetMassForModels(ActorFactory* g,float mass)
+//{
+//	for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
+//	{
+//
+//		g->SetMass(mass);
+//		g->GetRigidBody(g->GetPhysicsObjectsList()[i])->setGravity(btVector3(0, 0, 0));
+//		//g->GetRigidBody(g->GetPhysicsObjectsList()[i])->setActivationState(0);
+//
+//	}
+//
+//}
+//
+//void GetRigidBodyState(ActorFactory* g)
+//{
+//	for (int i = 0; i < g->GetPhysicsObjectsList().size(); i++)
+//	{
+//		int activestate = g->GetRigidBody(g->GetPhysicsObjectsList()[i])->getActivationState();
+//		//cout << activestate << endl;
+//	}
+//}
 
 void UpdatePhysicsWorld(float elapsedTime)
 {
@@ -549,6 +549,16 @@ void UpdatePhysicsWorld(float elapsedTime)
 	//DetectCollisions();
 
 	//collision detection for all objects
-	Physics::instance()->DetectCollision();
+	//Physics::instance()->DetectCollision(enemies,bullets);
 
+	for (int i=0;i<enemies.size();i++)
+	{
+		for (int j = 0; j < bullets.size(); j++)
+		{
+			if (Physics::instance()->DetectCollision(enemies[i]->mPlayerObject, bullets[j]->mPlayerObject, Physics::instance()))
+			{
+				cout << "collision happened";
+			}
+		}
+	}
 }
