@@ -20,10 +20,6 @@ using namespace std;
 
 #include "Mesh.h"
 
-//bullet physics
-#include "btBulletDynamicsCommon.h"
-#include"Physics.h"
-
 GLint TextureFromFile(const char* path, string directory);
 
 class Model
@@ -52,32 +48,6 @@ public:
 
 	//virtual function
 	virtual void ProcessAI() {};
-
-
-	//create a dynamic rigidbody
-	btAlignedObjectArray<btCollisionShape*> collisionShapes;
-	btCollisionShape* colShape;
-	// Create Dynamic Objects
-	btTransform  startTransform;
-	float mass;
-	btVector3 localInertia;
-	btDefaultMotionState* myMotionState;
-	btRigidBody* body;
-	btBoxShape * mPlayerBox;
-	btCollisionObject * mPlayerObject;
-	int GameObjID;
-
-	void InitializeRigidBody();
-	void SetMass(float newmass);
-	void SetDefaultMass();
-	void CleanupPhysicsObjects();
-	void SetRigidBodyShape(float scalex, float scaley, float scalez);
-	/*----------------------physics end----------------------*/
-	//XMFLOAT4X4 GetWorldMatrix() {
-	//	return worldMatrix;
-	//}
-
-
 	
 private:
 	/*  Model Data  */

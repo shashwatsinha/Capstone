@@ -57,7 +57,10 @@
     <ClCompile Include="EnvironmentObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Physics.cpp">
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -101,7 +104,10 @@
     <ClInclude Include="EnvironmentObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Physics.h">
+    <ClInclude Include="SphereCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

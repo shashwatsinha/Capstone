@@ -44,6 +44,7 @@ void NormalEnemy::ProcessAI(glm::vec3 playerPos)
 
 NormalEnemy::NormalEnemy()
 {
+	velocityOfEnemy = glm::vec3(0, 0, 0);
 }
 
 
@@ -64,4 +65,41 @@ void NormalEnemy::Chasing()
 void NormalEnemy::Attacking()
 {
 	//std::cout << "Attacking" << endl;
+}
+
+void NormalEnemy::AddSphereCollider(float radius, glm::vec3 position)
+{
+	sphereCollider = new SphereCollider();
+	sphereCollider->InitParameters(radius, position);
+}
+
+void NormalEnemy::UpdateCollider()
+{
+	sphereCollider->SetPosition(sphereCollider->GetPosition() + velocityOfEnemy);
+	this->SetPosition(sphereCollider->GetPosition());
+}
+
+void NormalEnemy::SetVelocity(glm::vec3 velocity)
+{
+	velocityOfEnemy = velocity;
+}
+
+SphereCollider * NormalEnemy::GetCollider()
+{
+	return sphereCollider;
+}
+
+void NormalEnemy::SetHealth(int h)
+{
+	health = h;
+}
+
+int NormalEnemy::GetHealth()
+{
+	return health;
+}
+
+void NormalEnemy::ReduceHealth(int h)
+{
+	health = health - h;
 }

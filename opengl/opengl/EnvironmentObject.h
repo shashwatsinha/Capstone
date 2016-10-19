@@ -3,7 +3,6 @@
 class EnvironmentObject : public Model
 {
 public:
-
 	EnvironmentObject();
 	void ProcessAI();
 	~EnvironmentObject();

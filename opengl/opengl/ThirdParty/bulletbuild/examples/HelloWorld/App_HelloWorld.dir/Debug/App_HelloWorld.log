@@ -1,5 +1,0 @@
-﻿  Building Custom Rule C:/bullet3-2.83.7/examples/HelloWorld/CMakeLists.txt
-  CMake does not need to re-run because C:\bulletbuild\examples\HelloWorld\CMakeFiles\generate.stamp is up-to-date.
-  HelloWorld.cpp
-  App_HelloWorld.vcxproj -> C:\bulletbuild\examples\HelloWorld\Debug\App_HelloWorld.exe
-  App_HelloWorld.vcxproj -> C:/bulletbuild/examples/HelloWorld/Debug/App_HelloWorld.pdb (Full PDB)

@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)ThirdParty\glew\include;$(ProjectDir)ThirdParty\Bullet\src;$(ProjectDir)ThirdParty\SOIL\include;$(ProjectDir)\ThirdParty\glm;$(ProjectDir)ThirdParty\GLFW\include;$(ProjectDir)ThirdParty\GL\include;$(ProjectDir)ThirdParty\assimp\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)ThirdParty\SOIL\lib;$(ProjectDir)ThirdParty\Bullet\lib\Debug\;$(ProjectDir)ThirdParty\GLFW\lib;$(ProjectDir)ThirdParty\GL\lib;$(ProjectDir)ThirdParty\assimp\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)ThirdParty\glew\include;$(ProjectDir)ThirdParty\SOIL\include;$(ProjectDir)\ThirdParty\glm;$(ProjectDir)ThirdParty\GLFW\include;$(ProjectDir)ThirdParty\GL\include;$(ProjectDir)ThirdParty\assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)ThirdParty\SOIL\lib;$(ProjectDir)ThirdParty\GLFW\lib;$(ProjectDir)ThirdParty\GL\lib;$(ProjectDir)ThirdParty\assimp\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -92,7 +92,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\GL\include;$(ProjectDir)ThirdParty\Bullet\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\GL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActorFactory.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EnvironmentObject.cpp" />
     <ClCompile Include="FSM.cpp" />
@@ -160,28 +161,29 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="NormalEnemy.cpp" />
-    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinystr.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxml.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxml2.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxmlerror.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxmlparser.cpp" />
+    <ClCompile Include="SphereCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActorFactory.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EnvironmentObject.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="NormalEnemy.h" />
-    <ClInclude Include="Physics.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Source\3rdPartyTools\tinystr.h" />
     <ClInclude Include="Source\3rdPartyTools\tinyxml.h" />
     <ClInclude Include="Source\3rdPartyTools\tinyxml2.h" />
+    <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="String.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,8 +1,0 @@
-﻿  Building Custom Rule C:/bullet3-2.83.7/test/BulletDynamics/pendulum/CMakeLists.txt
-  CMake does not need to re-run because C:\bulletbuild\test\BulletDynamics\pendulum\CMakeFiles\generate.stamp is up-to-date.
-  Pendulum.cpp
-c:\bullet3-2.83.7\examples\multibody\../CommonInterfaces/CommonMultiBodyBase.h(338): warning C4316: 'btMultiBodyPoint2Point': object allocated on the heap may not be aligned 16
-C:\bullet3-2.83.7\examples\MultiBody\Pendulum.cpp(195): warning C4316: 'Pendulum': object allocated on the heap may not be aligned 16
-C:\bullet3-2.83.7\examples\MultiBody\Pendulum.cpp(225): warning C4316: 'Pendulum': object allocated on the heap may not be aligned 16
-  Test_BulletDynamics.vcxproj -> C:\bulletbuild\test\BulletDynamics\pendulum\Debug\Test_BulletDynamics.exe
-  Test_BulletDynamics.vcxproj -> C:/bulletbuild/test/BulletDynamics/pendulum/Debug/Test_BulletDynamics.pdb (Full PDB)
