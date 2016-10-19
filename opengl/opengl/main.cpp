@@ -50,6 +50,9 @@ vector<NormalEnemy*> physicsObjects;
 vector<Bullet*> bullets;
 // The MAIN function, from here we start our application and run our Game loop
 map<tuple<int,int,int>, int> mapPositions;
+
+float currentBulletFired = 0;
+float previousBulletFired = 0;
 int main()
 {
 	// Init GLFW
@@ -104,8 +107,14 @@ int main()
 		
 		for (int i = 0; i < physicsObjects.size(); i++)
 		{
+			physicsObjects[i]->ProcessAI(camera.Position);
 			physicsObjects[i]->UpdateCollider();
 			physicsObjects[i]->Draw(&shader);
+			for (int j = 0; j < physicsObjects[i]->enemyBullets.size(); j++)
+			{
+				physicsObjects[i]->enemyBullets[j]->UpdateCollider();
+				physicsObjects[i]->enemyBullets[j]->Draw(&shader);
+			}
 		}
 
 		for (int i = 0; i < bullets.size(); i++)
@@ -113,6 +122,7 @@ int main()
 			bullets[i]->UpdateCollider();
 			bullets[i]->Draw(&shader);
 		}
+
 		
 		DetectCollisions();
 		// Swap the buffers
@@ -150,7 +160,14 @@ void Do_Movement()
 	}
 	if (keys[GLFW_KEY_SPACE])
 	{
-		Shoot();
+		currentBulletFired = glfwGetTime();
+		float shootInterval = currentBulletFired - previousBulletFired;
+		if (shootInterval > 0.1f)
+		{
+			Shoot();
+		}
+
+		previousBulletFired = currentBulletFired;
 	}
 }
 
@@ -283,10 +300,16 @@ void Shoot()
 {
 	Bullet *enemy = new Bullet();
 	enemy->InitPath("Models/Bullet/Bullet.obj");
-	enemy->SetPosition(camera.GetPosition());
+	glm::vec3 shootPosition = glm::vec3(camera.GetPosition().x, camera.GetPosition().y - 1.0f, camera.GetPosition().z);
+	enemy->SetPosition(shootPosition);
 	enemy->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	enemy->AddSphereCollider(2.0f, enemy->GetPosition());
-	enemy->SetVelocity(glm::normalize(camera.Front));
+	glm::vec3 bulletDirection = glm::normalize(camera.Front);
+	float bulletSpeed = 4.0f;
+	bulletDirection = glm::vec3(bulletDirection.x * bulletSpeed,
+								bulletDirection.y * bulletSpeed,
+								bulletDirection.z * bulletSpeed);
+	enemy->SetVelocity(bulletDirection);
 	bullets.push_back(enemy);
 }
 
@@ -321,7 +344,7 @@ void GenerateEnvironment()
 
 	NormalEnemy *enemy1 = new NormalEnemy();
 	enemy1->InitPath("Models/SpaceShip/SpaceShip.obj");
-	enemy1->SetPosition(glm::vec3(5,0,0));
+	enemy1->SetPosition(glm::vec3(5,0,-20));
 	enemy1->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	enemy1->AddSphereCollider(2.0f, enemy1->GetPosition());
 	enemy1->SetVelocity(glm::vec3(0, 0, 0));

@@ -13,5 +13,6 @@ public:
 private:
 	SphereCollider *sphereCollider;
 	glm::vec3 velocityOfBullet;
+	
 };
 
