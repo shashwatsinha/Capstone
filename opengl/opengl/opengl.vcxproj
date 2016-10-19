@@ -180,11 +180,16 @@
     <ClInclude Include="NormalEnemy.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="Source\3rdPartyTools\tinystr.h" />
     <ClInclude Include="Source\3rdPartyTools\tinyxml.h" />
     <ClInclude Include="Source\3rdPartyTools\tinyxml2.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="String.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\fragmentShader_Skybox.frag" />
+    <None Include="Shaders\vertexShader_Skybox.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

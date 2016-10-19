@@ -12,6 +12,7 @@
 #include <map>
 #include <tuple>
 #include "Bullet.h"
+#include "Skybox.h"
 
 #pragma comment(lib, "glfw3.lib")
 #pragma comment(lib, "opengl32.lib")
@@ -34,6 +35,7 @@ void InitGLFW();
 bool IsPositionValid(std::tuple<int, int, int>);
 void DetectCollisions();
 void Shoot();
+void SetViewAndProjection(Shader shader, glm::mat4 view);
 
 // Camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -54,9 +56,13 @@ int main()
 	InitGLFW();
 	// Setup and compile our shaders
 	Shader shader("Shaders/nanosuit.vs", "Shaders/nanosuit.frag");
+	Shader skyboxShader("Shaders/vertexShader_Skybox.vs", "Shaders/fragmentShader_Skybox.frag");
+
 	srand(time(NULL));
 
-	
+	Skybox skybox;
+	skybox.setupMesh();
+
 	GenerateEnvironment();
 	//ac1->AddAI();
 	
@@ -82,12 +88,18 @@ int main()
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		// Draw skybox first
+		glDepthMask(GL_FALSE);// Remember to turn depth writing off
+		skyboxShader.Use();
+		glm::mat4 view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix
+		SetViewAndProjection(skyboxShader, view);
+		skybox.Draw(&skyboxShader);
+		glDepthMask(GL_TRUE);
+		
 		shader.Use();   // <-- Don't forget this one!
 						// Transformation matrices
-		glm::mat4 projection = glm::perspective(camera.Zoom, (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
-		glm::mat4 view = camera.GetViewMatrix();
-		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		view = camera.GetViewMatrix();
+		SetViewAndProjection(shader, view);
 		// Draw the loaded model
 		
 		for (int i = 0; i < physicsObjects.size(); i++)
@@ -110,6 +122,12 @@ int main()
 	
 	glfwTerminate();
 	return 0;
+}
+
+void SetViewAndProjection(Shader shader, glm::mat4 view) {
+	glm::mat4 projection = glm::perspective(camera.Zoom, (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 }
 
 #pragma region "User input"
