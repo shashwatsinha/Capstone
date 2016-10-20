@@ -13,6 +13,7 @@
 #include <tuple>
 #include "Bullet.h"
 #include "Skybox.h"
+#include "Lights.h"
 
 #pragma comment(lib, "glfw3.lib")
 #pragma comment(lib, "opengl32.lib")
@@ -58,13 +59,23 @@ int main()
 	// Init GLFW
 	InitGLFW();
 	// Setup and compile our shaders
-	Shader shader("Shaders/nanosuit.vs", "Shaders/nanosuit.frag");
+	Shader shader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag");
 	Shader skyboxShader("Shaders/vertexShader_Skybox.vs", "Shaders/fragmentShader_Skybox.frag");
 
 	srand(time(NULL));
 
 	Skybox skybox;
 	skybox.setupMesh();
+
+	glm::vec3 direction = glm::vec3(-0.2f, -1.0f, -0.3f);
+	glm::vec3 ambient = glm::vec3(0.3f, 0.3f, 0.3f);
+	glm::vec3 diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
+	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	Lights directionalLight(direction, ambient, diffuse, specular);
+
+	// Load models
+	Model ourModel; 
+	ourModel.InitPath("Models/Nanosuit/nanosuit.obj");
 
 	GenerateEnvironment();
 	//ac1->AddAI();
@@ -103,7 +114,14 @@ int main()
 						// Transformation matrices
 		view = camera.GetViewMatrix();
 		SetViewAndProjection(shader, view);
+		
+		// Set Light properties
+		directionalLight.setUpDirectionalLight(&shader, camera);
+
 		// Draw the loaded model
+		ourModel.SetPosition(glm::vec3(0.0f, -1.75f, 0.0f)); // Translate it down a bit so it's at the center of the scene
+		ourModel.SetScale(glm::vec3(0.2f, 0.2f, 0.2f));	// It's a bit too big for our scene, so scale it down
+		ourModel.Draw(&shader);
 		
 		for (int i = 0; i < physicsObjects.size(); i++)
 		{

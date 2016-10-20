@@ -175,6 +175,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EnvironmentObject.h" />
     <ClInclude Include="FSM.h" />
+    <ClInclude Include="Lights.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="NormalEnemy.h" />
@@ -188,7 +189,9 @@
     <ClInclude Include="String.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\fragmentShader_default.frag" />
     <None Include="Shaders\fragmentShader_Skybox.frag" />
+    <None Include="Shaders\vertexShader_default.vs" />
     <None Include="Shaders\vertexShader_Skybox.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
