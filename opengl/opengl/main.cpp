@@ -68,14 +68,17 @@ int main()
 	skybox.setupMesh();
 
 	glm::vec3 direction = glm::vec3(-0.2f, -1.0f, -0.3f);
-	glm::vec3 ambient = glm::vec3(0.3f, 0.3f, 0.3f);
+	glm::vec3 ambient = glm::vec3(0.2f, 0.2f, 0.2f);
 	glm::vec3 diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
 	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
 	Lights directionalLight(direction, ambient, diffuse, specular);
 
 	// Load models
-	Model ourModel; 
-	ourModel.InitPath("Models/Nanosuit/nanosuit.obj");
+	//Model ourModel; 
+	//ourModel.InitPath("Models/Nanosuit/nanosuit.obj");
+
+	Model ourModel1;
+	ourModel1.InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
 
 	GenerateEnvironment();
 	//ac1->AddAI();
@@ -119,9 +122,13 @@ int main()
 		directionalLight.setUpDirectionalLight(&shader, camera);
 
 		// Draw the loaded model
-		ourModel.SetPosition(glm::vec3(0.0f, -1.75f, 0.0f)); // Translate it down a bit so it's at the center of the scene
-		ourModel.SetScale(glm::vec3(0.2f, 0.2f, 0.2f));	// It's a bit too big for our scene, so scale it down
-		ourModel.Draw(&shader);
+		//ourModel.SetPosition(glm::vec3(0.0f, -1.75f, 0.0f)); // Translate it down a bit so it's at the center of the scene
+		//ourModel.SetScale(glm::vec3(0.2f, 0.2f, 0.2f));	// It's a bit too big for our scene, so scale it down
+		//ourModel.Draw(&shader);
+
+		ourModel1.SetPosition(glm::vec3(0.0f, -1.75f, 0.0f)); // Translate it down a bit so it's at the center of the scene
+		ourModel1.SetScale(glm::vec3(0.01f, 0.01f, 0.01f));	// It's a bit too big for our scene, so scale it down
+		ourModel1.Draw(&shader);
 		
 		for (int i = 0; i < physicsObjects.size(); i++)
 		{
@@ -361,9 +368,9 @@ void GenerateEnvironment()
 	ac1->SetScale(glm::vec3(1, 1, 1));*/
 
 	NormalEnemy *enemy1 = new NormalEnemy();
-	enemy1->InitPath("Models/SpaceShip/SpaceShip.obj");
+	enemy1->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
 	enemy1->SetPosition(glm::vec3(5,0,-20));
-	enemy1->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
+	enemy1->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
 	enemy1->AddSphereCollider(2.0f, enemy1->GetPosition());
 	enemy1->SetVelocity(glm::vec3(0, 0, 0));
 	enemy1->SetHealth(100);
