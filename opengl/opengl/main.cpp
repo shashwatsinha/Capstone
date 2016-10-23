@@ -133,18 +133,18 @@ int main()
 		for (int i = 0; i < physicsObjects.size(); i++)
 		{
 			physicsObjects[i]->ProcessAI(camera.Position);
-			physicsObjects[i]->UpdateCollider();
+			physicsObjects[i]->UpdateCollider(deltaTime);
 			physicsObjects[i]->Draw(&shader);
 			for (int j = 0; j < physicsObjects[i]->enemyBullets.size(); j++)
 			{
-				physicsObjects[i]->enemyBullets[j]->UpdateCollider();
+				physicsObjects[i]->enemyBullets[j]->UpdateCollider(deltaTime);
 				physicsObjects[i]->enemyBullets[j]->Draw(&shader);
 			}
 		}
 
 		for (int i = 0; i < bullets.size(); i++)
 		{
-			bullets[i]->UpdateCollider();
+			bullets[i]->UpdateCollider(deltaTime);
 			bullets[i]->Draw(&shader);
 		}
 
@@ -295,9 +295,10 @@ bool IsPositionValid(std::tuple<int,int,int> positionTuple)
 
 void DetectCollisions()
 {
-	for (int i = 0; i < physicsObjects.size(); i++)
+	for (int i = 0; i < physicsObjects.size(); )
 	{
-		for (int j = 0; j < bullets.size(); j++)
+		bool delObj = false;
+		for (int j = 0; j < bullets.size(); )
 		{
 			glm::vec3 distance = physicsObjects[i]->GetPosition() - bullets[j]->GetPosition();
 			float sumOfRadii = physicsObjects[i]->GetCollider()->GetRadius() + bullets[j]->GetCollider()->GetRadius();
@@ -308,15 +309,25 @@ void DetectCollisions()
 				bullets.erase(bullets.begin() + j);
 				cout << "Collision Happened";
 				delete bullet;
-
 				physicsObjects[i]->ReduceHealth(10);
-				if (physicsObjects[i]->GetHealth() <= 0)
-				{
-					NormalEnemy *enemy = physicsObjects[i];
-					physicsObjects.erase(physicsObjects.begin() + i);
-					delete enemy;
-				}
 			}
+
+			else
+			{
+				++j;
+			}
+		}
+
+		if (physicsObjects[i]->GetHealth() <= 0)
+		{
+			delObj = true;
+			NormalEnemy *enemy = physicsObjects[i];
+			physicsObjects.erase(physicsObjects.begin() + i);
+			delete enemy;
+		}
+		else
+		{
+			++i;
 		}
 	}
 }
@@ -326,15 +337,12 @@ void Shoot()
 	Bullet *enemy = new Bullet();
 	enemy->InitPath("Models/Bullet/Bullet.obj");
 	glm::vec3 shootPosition = glm::vec3(camera.GetPosition().x, camera.GetPosition().y - 1.0f, camera.GetPosition().z);
-	enemy->SetPosition(shootPosition);
 	enemy->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	enemy->AddSphereCollider(2.0f, enemy->GetPosition());
 	glm::vec3 bulletDirection = glm::normalize(camera.Front);
 	float bulletSpeed = 4.0f;
-	bulletDirection = glm::vec3(bulletDirection.x * bulletSpeed,
-								bulletDirection.y * bulletSpeed,
-								bulletDirection.z * bulletSpeed);
-	enemy->SetVelocity(bulletDirection);
+	bulletDirection = glm::vec3(bulletDirection * bulletSpeed);
+	enemy->SetValues(shootPosition, bulletDirection);
 	bullets.push_back(enemy);
 }
 
@@ -375,12 +383,6 @@ void GenerateEnvironment()
 	enemy1->SetVelocity(glm::vec3(0, 0, 0));
 	enemy1->SetHealth(100);
 	physicsObjects.push_back(enemy1);
-
-	Bullet *enemy = new Bullet();
-	enemy->InitPath("Models/Bullet/Bullet.obj");
-	enemy->SetPosition(glm::vec3(-5, 0, 0));
-	enemy->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
-	enemy->AddSphereCollider(2.0f, enemy->GetPosition());
-	enemy->SetVelocity(glm::vec3(0.001, 0, 0));
-	bullets.push_back(enemy);
 }
+
+

@@ -18,7 +18,7 @@ public:
 	void Chasing();
 	void Attacking();
 	void AddSphereCollider(float radius,glm::vec3 position);
-	void UpdateCollider();
+	void UpdateCollider(float deltaTime);
 	void SetVelocity(glm::vec3 velocity);
 	SphereCollider* GetCollider();
 	void SetHealth(int h);

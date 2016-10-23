@@ -55,30 +55,28 @@ NormalEnemy::~NormalEnemy()
 
 void NormalEnemy::Patrolling()
 {
-	std::cout << "Patrolling" << endl;
 	SetVelocity(glm::vec3(0, 0, 0));
 }
 
 void NormalEnemy::Chasing()
 {
-	std::cout << "Chasing" << endl;
 	glm::vec3 speedDirection = glm::normalize(positionOfPlayer - this->GetPosition());
-	float speed = 0.01f;
+	float speed = 2.0f;
 	speedDirection = glm::vec3(speedDirection * speed);
 	SetVelocity(speedDirection);
 }
 
 void NormalEnemy::Attacking()
 {
-	std::cout << "Attacking" << endl;
 	SetVelocity(glm::vec3(0, 0, 0));
 	currentBulletFired = glfwGetTime();
 	float shootInterval = currentBulletFired - previousBulletFired;
-	if (shootInterval > 0.01f)
+	if (shootInterval > 0.5f)
 	{
 		Shoot();
+		previousBulletFired = currentBulletFired;
 	}
-	previousBulletFired = currentBulletFired;
+	
 }
 
 void NormalEnemy::AddSphereCollider(float radius, glm::vec3 position)
@@ -87,9 +85,10 @@ void NormalEnemy::AddSphereCollider(float radius, glm::vec3 position)
 	sphereCollider->InitParameters(radius, position);
 }
 
-void NormalEnemy::UpdateCollider()
+void NormalEnemy::UpdateCollider(float deltaTime)
 {
-	sphereCollider->SetPosition(sphereCollider->GetPosition() + velocityOfEnemy);
+	glm::vec3 vel = glm::vec3(velocityOfEnemy * deltaTime);
+	sphereCollider->SetPosition(sphereCollider->GetPosition() + vel);
 	this->SetPosition(sphereCollider->GetPosition());
 }
 
@@ -123,12 +122,11 @@ void NormalEnemy::Shoot()
 	Bullet *enemy = new Bullet();
 	enemy->InitPath("Models/Bullet/Bullet.obj");
 	glm::vec3 shootPosition = glm::vec3(this->GetPosition());
-	enemy->SetPosition(shootPosition);
 	enemy->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	enemy->AddSphereCollider(2.0f, enemy->GetPosition());
 	glm::vec3 bulletDirection = glm::normalize(positionOfPlayer - shootPosition);
 	float bulletSpeed = 4.0f;
 	bulletDirection = glm::vec3(bulletDirection * bulletSpeed);
-	enemy->SetVelocity(bulletDirection);
+	enemy->SetValues(shootPosition, bulletDirection);
 	enemyBullets.push_back(enemy);
 }
