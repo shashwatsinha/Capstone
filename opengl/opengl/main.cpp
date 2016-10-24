@@ -33,7 +33,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void Do_Movement();
 void GenerateEnvironment();
 void InitGLFW();
-bool IsPositionValid(std::tuple<int, int, int>);
+bool IsPositionValid(std::tuple<int, int, int>, int typeOfObject);
 void DetectCollisions();
 void Shoot();
 void SetViewAndProjection(Shader shader, glm::mat4 view);
@@ -77,8 +77,7 @@ int main()
 	//Model ourModel; 
 	//ourModel.InitPath("Models/Nanosuit/nanosuit.obj");
 
-	Model ourModel1;
-	ourModel1.InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
+	
 
 	GenerateEnvironment();
 	//ac1->AddAI();
@@ -126,9 +125,7 @@ int main()
 		//ourModel.SetScale(glm::vec3(0.2f, 0.2f, 0.2f));	// It's a bit too big for our scene, so scale it down
 		//ourModel.Draw(&shader);
 
-		ourModel1.SetPosition(glm::vec3(0.0f, -1.75f, 0.0f)); // Translate it down a bit so it's at the center of the scene
-		ourModel1.SetScale(glm::vec3(0.01f, 0.01f, 0.01f));	// It's a bit too big for our scene, so scale it down
-		ourModel1.Draw(&shader);
+		
 		
 		for (int i = 0; i < physicsObjects.size(); i++)
 		{
@@ -264,9 +261,14 @@ void InitGLFW()
 
 }
 
-bool IsPositionValid(std::tuple<int,int,int> positionTuple)
+//typeOfObject : 2 means its enemy, 3 means its an obstacle
+bool IsPositionValid(std::tuple<int,int,int> positionTuple, int typeOfObject)
 {
 	bool flag = false;
+	int minDistanceBetweenEnemies = 25;
+	int minDistanceBetweenObstacles = 25;
+	int minDistanceBetweenOE = 15;
+
 	if (mapPositions[positionTuple] == NULL)
 	{
 		flag = true;
@@ -279,13 +281,61 @@ bool IsPositionValid(std::tuple<int,int,int> positionTuple)
 			int d1 = pow(x1 - x2, 2);
 			int d2 = pow(y1 - y2, 2);
 			int d3 = pow(z1 - z2, 2);
+			int value = it->second;
+			switch (typeOfObject)
+			{
+			case 2: 
+				if (value == 2)
+				{
+					if ((d1 + d2 + d3) < minDistanceBetweenEnemies && (d1 + d2 + d3)>0)
+					{
+						mapPositions.erase(positionTuple);
+						flag = false;
+						return flag;
+					}
+				}
 
-			if ((d1 + d2 + d3) < 25 && (d1 + d2 + d3)>0)
+				else if (value == 3)
+				{
+					if ((d1 + d2 + d3) < minDistanceBetweenOE && (d1 + d2 + d3)>0)
+					{
+						mapPositions.erase(positionTuple);
+						flag = false;
+						return flag;
+					}
+				}
+				break;
+
+			case 3:
+				if (value == 2)
+				{
+					if ((d1 + d2 + d3) < minDistanceBetweenOE && (d1 + d2 + d3)>0)
+					{
+						mapPositions.erase(positionTuple);
+						flag = false;
+						return flag;
+					}
+				}
+
+				else if (value == 3)
+				{
+					if ((d1 + d2 + d3) < minDistanceBetweenObstacles && (d1 + d2 + d3)>0)
+					{
+						mapPositions.erase(positionTuple);
+						flag = false;
+						return flag;
+					}
+				}
+				break;
+
+			}
+			
+			/*if ((d1 + d2 + d3) < 25 && (d1 + d2 + d3)>0)
 			{
 				mapPositions.erase(positionTuple);
 				flag = false;
 				return flag;
-			}
+			}*/
 		}
 		return flag;
 	}
@@ -348,17 +398,20 @@ void Shoot()
 
 void GenerateEnvironment()
 {
-	/*bool checkPositionValidity = true;
-	int numberOfObjects = 20;
+	bool checkPositionValidity = true;
+	int numberOfObjects = 10;
+	NormalEnemy *masterEnemy = new NormalEnemy();
+	masterEnemy->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
 	for (int i = 0; i < numberOfObjects; i++)
 	{
 		NormalEnemy *enemy = new NormalEnemy();
-		enemy->InitPath("Models/SpaceShip/SpaceShip.obj");
+		//enemy->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
+		*enemy = *masterEnemy;
 		while (checkPositionValidity == true)
 		{
-			enemy->SetPosition(glm::vec3(rand() % 10, (rand() % 5 - 5), (rand() % 50) * -1));
+			enemy->SetValues(glm::vec3(rand() % 10, (rand() % 5 - 5), (rand() % 50) * -1),glm::vec3(0,0,0));
 			auto positionTuple = make_tuple(enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z);
-			if (IsPositionValid(positionTuple) == true)
+			if (IsPositionValid(positionTuple,3) == true)
 			{
 				checkPositionValidity = false;
 			}
@@ -366,24 +419,16 @@ void GenerateEnvironment()
 		checkPositionValidity = true;
 		auto positionTuple = make_tuple(enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z);
 		mapPositions[positionTuple] = 2;
-		enemy->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 		enemy->AddSphereCollider(2.0f, enemy->GetPosition());
-		enemies.push_back(enemy);
-	}*/
+		enemy->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+		enemy->SetHealth(100);
+		physicsObjects.push_back(enemy);
+	}
 	
 	/*enemy->InitActor("Models/Bullet/Bullet.obj", 0, 0);
 	ac1->SetPosition(glm::vec3(0, 0, -5));
 	ac1->SetScale(glm::vec3(1, 1, 1));*/
 
-	NormalEnemy *enemy1 = new NormalEnemy();
-	enemy1->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
-//	enemy1->SetPosition(glm::vec3(5,0,-20));
-	enemy1->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-	enemy1->AddSphereCollider(2.0f, enemy1->GetPosition());
-//	enemy1->SetVelocity(glm::vec3(0, 0, 0));
-	enemy1->SetHealth(100);
-	enemy1->SetValues(glm::vec3(5, 0, -20), glm::vec3(0, 0, 0));
-	physicsObjects.push_back(enemy1);
 }
 
 
