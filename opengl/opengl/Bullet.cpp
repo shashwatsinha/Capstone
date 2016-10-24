@@ -77,9 +77,6 @@ Bullet :: Derivative Bullet::Evaluate(State & initial, double t, double dt, Deri
 	state.pos.x = pArray1[0]; state.pos.y = pArray1[1]; state.pos.z = pArray1[2];
 	double pArray3[3] = { velocityOfBullet.x,velocityOfBullet.y,velocityOfBullet.z };
 	double pArray4[3] = { d.dVel.x * dt,d.dVel.y * dt,d.dVel.z *dt };
-	//using simd instead of the below addition
-	// state.vel = initial.vel + d.dVel*dt;
-	//simdAddition(pArray3, pArray4);
 	velocityOfBullet.x = pArray3[0]; velocityOfBullet.y = pArray3[1]; velocityOfBullet.z = pArray3[2];
 
 

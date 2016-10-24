@@ -13,7 +13,7 @@ public:
 	void ProcessAI(glm::vec3 playerPos);
 	NormalEnemy();
 	~NormalEnemy();
-	enum State { Patrol, Chase, Attack };
+	enum FSMState { Patrol, Chase, Attack };
 	void Patrolling();
 	void Chasing();
 	void Attacking();
@@ -27,9 +27,32 @@ public:
 	void Shoot();
 	vector<Bullet*> enemyBullets;
 
+	struct State
+	{
+		glm::vec3 pos;
+		glm::vec3 vel;
+	}previous, current;
+
+	void Integrate(double dt);
+
+	struct Derivative
+	{
+		glm::vec3 dPos;
+		glm::vec3 dVel;
+	};
+
+	Derivative Evaluate(State &initial, double t, double dt, Derivative &d);
+	Derivative Evaluate(State &initial, double t);
+
+	void SimdAddition(double *pArray1, double *pArray2);
+
+	glm::vec3 Acceleration(State &state, double t);
+
+	void SetValues(glm::vec3 pos, glm::vec3 vel);
+
 private:
-	State currentState = Patrol;
-	State previousState = Patrol;
+	FSMState currentState = Patrol;
+	FSMState previousState = Patrol;
 	SphereCollider *sphereCollider;
 	glm::vec3 velocityOfEnemy;
 	glm::vec3 positionOfPlayer;

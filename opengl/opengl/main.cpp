@@ -377,11 +377,12 @@ void GenerateEnvironment()
 
 	NormalEnemy *enemy1 = new NormalEnemy();
 	enemy1->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
-	enemy1->SetPosition(glm::vec3(5,0,-20));
+//	enemy1->SetPosition(glm::vec3(5,0,-20));
 	enemy1->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
 	enemy1->AddSphereCollider(2.0f, enemy1->GetPosition());
-	enemy1->SetVelocity(glm::vec3(0, 0, 0));
+//	enemy1->SetVelocity(glm::vec3(0, 0, 0));
 	enemy1->SetHealth(100);
+	enemy1->SetValues(glm::vec3(5, 0, -20), glm::vec3(0, 0, 0));
 	physicsObjects.push_back(enemy1);
 }
 

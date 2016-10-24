@@ -87,8 +87,12 @@ void NormalEnemy::AddSphereCollider(float radius, glm::vec3 position)
 
 void NormalEnemy::UpdateCollider(float deltaTime)
 {
-	glm::vec3 vel = glm::vec3(velocityOfEnemy * deltaTime);
-	sphereCollider->SetPosition(sphereCollider->GetPosition() + vel);
+	previous.pos = this->GetPosition();
+	Integrate(deltaTime);
+	double alpha = 1.0f;
+	State state;
+	state.pos = previous.pos*(float)(1 - alpha) + current.pos*(float)alpha;
+	sphereCollider->SetPosition(state.pos);
 	this->SetPosition(sphereCollider->GetPosition());
 }
 
@@ -129,4 +133,77 @@ void NormalEnemy::Shoot()
 	bulletDirection = glm::vec3(bulletDirection * bulletSpeed);
 	enemy->SetValues(shootPosition, bulletDirection);
 	enemyBullets.push_back(enemy);
+}
+
+void NormalEnemy::Integrate(double dt)
+{
+	previous = current;
+	Derivative a, b, c, d;
+	int t = 0;
+	a = Evaluate(current, t);
+	b = Evaluate(current, t, dt*0.5f, a);
+	c = Evaluate(current, t, dt*0.5f, b);
+	d = Evaluate(current, t, dt, c);
+
+	double temp = 1.0f / 6.0f;
+
+	glm::vec3 dPosdt = glm::vec3((glm::vec3((a.dPos + (b.dPos + c.dPos)) * 2.0f) + d.dPos) * (float)temp);
+
+	glm::vec3 dVeldt = (a.dVel + (b.dVel + c.dVel) * 2.0f + d.dVel)* (float)temp;
+
+	current.pos = current.pos + dPosdt * (float)dt;
+	// current.vel = current.vel + dVeldt * dt;
+	velocityOfEnemy = velocityOfEnemy + dVeldt*(float)dt;
+}
+
+NormalEnemy :: Derivative NormalEnemy::Evaluate(State & initial, double t, double dt, Derivative & d)
+{
+	State state;
+	double pArray1[3] = { initial.pos.x,initial.pos.y,initial.pos.z };
+	double pArray2[3] = { d.dPos.x * dt,d.dPos.y * dt,d.dPos.z *dt };
+
+	state.pos.x = pArray1[0]; state.pos.y = pArray1[1]; state.pos.z = pArray1[2];
+	double pArray3[3] = { velocityOfEnemy.x,velocityOfEnemy.y,velocityOfEnemy.z };
+	double pArray4[3] = { d.dVel.x * dt,d.dVel.y * dt,d.dVel.z *dt };
+	velocityOfEnemy.x = pArray3[0]; velocityOfEnemy.y = pArray3[1]; velocityOfEnemy.z = pArray3[2];
+
+
+	Derivative output;
+	output.dPos = velocityOfEnemy;//state.vel;
+	output.dVel = Acceleration(state, dt);
+	return output;
+}
+
+NormalEnemy :: Derivative NormalEnemy::Evaluate(State & initial, double t)
+{
+	Derivative output;
+	output.dPos = velocityOfEnemy;
+	return output;
+}
+
+void NormalEnemy::SimdAddition(double * pArray1, double * pArray2)
+{
+	__m128d X = _mm_loadu_pd(pArray1);
+	__m128d Y = _mm_loadu_pd(pArray2);
+	__m128d result = _mm_add_pd(Y, X);
+	_mm_storeu_pd(pArray1, result);
+}
+
+glm::vec3 NormalEnemy::Acceleration(State & state, double t)
+{
+	const double k = 0.01;
+	const double b = 0;
+	glm::vec3 gravity;
+	gravity.x = gravity.z = 0;
+	gravity.y = 0.00f;
+	state.vel = velocityOfEnemy;
+	return gravity;
+}
+
+void NormalEnemy::SetValues(glm::vec3 pos, glm::vec3 vel)
+{
+	previous.pos = pos;
+	previous.vel = vel;
+	velocityOfEnemy = vel;
+	current = previous;
 }
