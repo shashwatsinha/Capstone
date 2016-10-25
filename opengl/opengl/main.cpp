@@ -58,6 +58,7 @@ int main()
 {
 	// Init GLFW
 	InitGLFW();
+
 	// Setup and compile our shaders
 	Shader shader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag");
 	Shader skyboxShader("Shaders/vertexShader_Skybox.vs", "Shaders/fragmentShader_Skybox.frag");
@@ -89,18 +90,10 @@ int main()
 		// Clear the colorbuffer
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// Draw skybox first
-		glDepthMask(GL_FALSE);// Remember to turn depth writing off
-		skyboxShader.Use();
-		glm::mat4 view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix
-		SetViewAndProjection(skyboxShader, view);
-		skybox.Draw(&skyboxShader);
-		glDepthMask(GL_TRUE);
 		
 		shader.Use();   // <-- Don't forget this one!
 						// Transformation matrices
-		view = camera.GetViewMatrix();
+		glm::mat4 view = camera.GetViewMatrix();
 		SetViewAndProjection(shader, view);
 		
 		// Set Light properties
@@ -124,6 +117,13 @@ int main()
 			bullets[i]->Draw(&shader);
 		}
 
+		// Draw skybox last
+		glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
+		skyboxShader.Use();
+		view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix
+		SetViewAndProjection(skyboxShader, view);
+		skybox.Draw(&skyboxShader);
+		glDepthFunc(GL_LESS); // Set depth function back to default
 		
 		DetectCollisions();
 		// Swap the buffers
@@ -240,6 +240,7 @@ void InitGLFW()
 
 	// Setup some OpenGL options
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 
 }
 
