@@ -26,6 +26,7 @@ public:
 	void ReduceHealth(int h);
 	void Shoot();
 	vector<Bullet*> enemyBullets;
+	void DestroyBullets();
 
 	struct State
 	{

@@ -94,6 +94,7 @@ void NormalEnemy::UpdateCollider(float deltaTime)
 	state.pos = previous.pos*(float)(1 - alpha) + current.pos*(float)alpha;
 	sphereCollider->SetPosition(state.pos);
 	this->SetPosition(sphereCollider->GetPosition());
+	DestroyBullets();
 }
 
 void NormalEnemy::SetVelocity(glm::vec3 velocity)
@@ -133,6 +134,26 @@ void NormalEnemy::Shoot()
 	bulletDirection = glm::vec3(bulletDirection * bulletSpeed);
 	enemy->SetValues(shootPosition, bulletDirection);
 	enemyBullets.push_back(enemy);
+}
+
+void NormalEnemy::DestroyBullets()
+{
+	for (int i = 0; i < enemyBullets.size();)
+	{
+		if (enemyBullets[i]->GetPosition().x > 20 || enemyBullets[i]->GetPosition().x < -20 ||
+			enemyBullets[i]->GetPosition().y > 20 || enemyBullets[i]->GetPosition().y < -20 ||
+			enemyBullets[i]->GetPosition().z > 20 || enemyBullets[i]->GetPosition().z < -20)
+			{
+				Bullet *bullet = enemyBullets[i];
+				enemyBullets.erase(enemyBullets.begin() + i);
+				delete bullet;
+			}
+
+		else
+		{
+			i++;
+		}
+	}
 }
 
 void NormalEnemy::Integrate(double dt)

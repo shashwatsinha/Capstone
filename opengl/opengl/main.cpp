@@ -73,21 +73,7 @@ int main()
 	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
 	Lights directionalLight(direction, ambient, diffuse, specular);
 
-	// Load models
-	//Model ourModel; 
-	//ourModel.InitPath("Models/Nanosuit/nanosuit.obj");
-
-	
-
 	GenerateEnvironment();
-	//ac1->AddAI();
-	
-	// Draw in wireframe
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//glm::mat4 model[1];
-	// Game loop
-
-
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -120,13 +106,6 @@ int main()
 		// Set Light properties
 		directionalLight.setUpDirectionalLight(&shader, camera);
 
-		// Draw the loaded model
-		//ourModel.SetPosition(glm::vec3(0.0f, -1.75f, 0.0f)); // Translate it down a bit so it's at the center of the scene
-		//ourModel.SetScale(glm::vec3(0.2f, 0.2f, 0.2f));	// It's a bit too big for our scene, so scale it down
-		//ourModel.Draw(&shader);
-
-		
-		
 		for (int i = 0; i < physicsObjects.size(); i++)
 		{
 			physicsObjects[i]->ProcessAI(camera.Position);
@@ -162,6 +141,8 @@ void SetViewAndProjection(Shader shader, glm::mat4 view) {
 	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 }
 
+
+
 #pragma region "User input"
 
 // Moves/alters the camera positions based on user input
@@ -191,6 +172,7 @@ void Do_Movement()
 
 		previousBulletFired = currentBulletFired;
 	}
+	
 }
 
 // Is called whenever a key is pressed/released via GLFW
@@ -329,13 +311,6 @@ bool IsPositionValid(std::tuple<int,int,int> positionTuple, int typeOfObject)
 				break;
 
 			}
-			
-			/*if ((d1 + d2 + d3) < 25 && (d1 + d2 + d3)>0)
-			{
-				mapPositions.erase(positionTuple);
-				flag = false;
-				return flag;
-			}*/
 		}
 		return flag;
 	}
@@ -345,6 +320,7 @@ bool IsPositionValid(std::tuple<int,int,int> positionTuple, int typeOfObject)
 
 void DetectCollisions()
 {
+	//Check for collision between bullets by player and enemy objects
 	for (int i = 0; i < physicsObjects.size(); )
 	{
 		bool delObj = false;
@@ -353,11 +329,23 @@ void DetectCollisions()
 			glm::vec3 distance = physicsObjects[i]->GetPosition() - bullets[j]->GetPosition();
 			float sumOfRadii = physicsObjects[i]->GetCollider()->GetRadius() + bullets[j]->GetCollider()->GetRadius();
 			float length = (distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z);
+			
+			//Destroy the bullet
 			if (length < (sumOfRadii * sumOfRadii))
+			{
+				//Clean way to destroy the bullet
+				Bullet *bullet = bullets[j];
+				bullets.erase(bullets.begin() + j);
+				delete bullet;
+				physicsObjects[i]->ReduceHealth(10);
+			}
+
+			else if (bullets[j]->GetPosition().x > 20 || bullets[j]->GetPosition().x < -20 ||
+				     bullets[j]->GetPosition().y > 20 || bullets[j]->GetPosition().y < -20 ||
+					 bullets[j]->GetPosition().z > 20 || bullets[j]->GetPosition().z < -20)
 			{
 				Bullet *bullet = bullets[j];
 				bullets.erase(bullets.begin() + j);
-				cout << "Collision Happened";
 				delete bullet;
 				physicsObjects[i]->ReduceHealth(10);
 			}
@@ -368,6 +356,7 @@ void DetectCollisions()
 			}
 		}
 
+		//Destroy the enemy
 		if (physicsObjects[i]->GetHealth() <= 0)
 		{
 			delObj = true;
@@ -399,13 +388,12 @@ void Shoot()
 void GenerateEnvironment()
 {
 	bool checkPositionValidity = true;
-	int numberOfObjects = 10;
+	int numberOfObjects = 20;
 	NormalEnemy *masterEnemy = new NormalEnemy();
 	masterEnemy->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
 	for (int i = 0; i < numberOfObjects; i++)
 	{
 		NormalEnemy *enemy = new NormalEnemy();
-		//enemy->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
 		*enemy = *masterEnemy;
 		while (checkPositionValidity == true)
 		{
@@ -424,11 +412,6 @@ void GenerateEnvironment()
 		enemy->SetHealth(100);
 		physicsObjects.push_back(enemy);
 	}
-	
-	/*enemy->InitActor("Models/Bullet/Bullet.obj", 0, 0);
-	ac1->SetPosition(glm::vec3(0, 0, -5));
-	ac1->SetScale(glm::vec3(1, 1, 1));*/
-
 }
 
 
