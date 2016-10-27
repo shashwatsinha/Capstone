@@ -32,10 +32,10 @@ public:
 		light.specular = specular;
 	}
 
-	void setUpDirectionalLight(Shader *shader, Camera camera) {
+	void setUpDirectionalLight(Shader *shader, Camera *camera) {
 		// Pass view position to calculate specular light
 		GLint viewPosLoc = glGetUniformLocation(shader->Program, "viewPos");
-		glUniform3f(viewPosLoc, camera.Position.x, camera.Position.y, camera.Position.z);
+		glUniform3f(viewPosLoc, Camera::instance()->Position.x, Camera::instance()->Position.y, Camera::instance()->Position.z);
 
 		// Set the Light Properties
 		GLint lightDirPos = glGetUniformLocation(shader->Program, "directionalLight.direction");

@@ -39,7 +39,8 @@ void Shoot();
 void SetViewAndProjection(Shader shader, glm::mat4 view);
 
 // Camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+//Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
 bool keys[1024];
 GLfloat lastX = 400, lastY = 300;
 bool firstMouse = true;
@@ -49,6 +50,7 @@ GLfloat lastFrame = 0.0f;
 GLFWwindow* window;
 vector<NormalEnemy*> physicsObjects;
 vector<Bullet*> bullets;
+Bullet *masterBullet;
 // The MAIN function, from here we start our application and run our Game loop
 map<tuple<int,int,int>, int> mapPositions;
 
@@ -58,11 +60,12 @@ int main()
 {
 	// Init GLFW
 	InitGLFW();
-
+	masterBullet = new Bullet();
+	masterBullet->InitPath("Models/Bullet/Bullet.obj");
 	// Setup and compile our shaders
 	Shader shader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag");
 	Shader skyboxShader("Shaders/vertexShader_Skybox.vs", "Shaders/fragmentShader_Skybox.frag");
-
+	Camera::instance()->InitValues();
 	srand(time(NULL));
 
 	Skybox skybox;
@@ -93,15 +96,15 @@ int main()
 		
 		shader.Use();   // <-- Don't forget this one!
 						// Transformation matrices
-		glm::mat4 view = camera.GetViewMatrix();
+		glm::mat4 view = Camera::instance()->GetViewMatrix();
 		SetViewAndProjection(shader, view);
 		
 		// Set Light properties
-		directionalLight.setUpDirectionalLight(&shader, camera);
+		directionalLight.setUpDirectionalLight(&shader, Camera::instance());
 
 		for (int i = 0; i < physicsObjects.size(); i++)
 		{
-			physicsObjects[i]->ProcessAI(camera.Position);
+			physicsObjects[i]->ProcessAI(Camera::instance()->Position);
 			physicsObjects[i]->UpdateCollider(deltaTime);
 			physicsObjects[i]->Draw(&shader);
 			for (int j = 0; j < physicsObjects[i]->enemyBullets.size(); j++)
@@ -120,7 +123,7 @@ int main()
 		// Draw skybox last
 		glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
 		skyboxShader.Use();
-		view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix
+		view = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
 		SetViewAndProjection(skyboxShader, view);
 		skybox.Draw(&skyboxShader);
 		glDepthFunc(GL_LESS); // Set depth function back to default
@@ -130,13 +133,13 @@ int main()
 		glfwSwapBuffers(window);
 	}
 
-	
+	delete masterBullet;
 	glfwTerminate();
 	return 0;
 }
 
 void SetViewAndProjection(Shader shader, glm::mat4 view) {
-	glm::mat4 projection = glm::perspective(camera.Zoom, (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(Camera::instance()->Zoom, (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
 	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 	glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 }
@@ -150,17 +153,14 @@ void Do_Movement()
 {
 	// Camera controls
 	if (keys[GLFW_KEY_W])
-		camera.ProcessKeyboard(FORWARD, deltaTime);
+		Camera::instance()->ProcessKeyboard(FORWARD, deltaTime);
 	if (keys[GLFW_KEY_S])
-		camera.ProcessKeyboard(BACKWARD, deltaTime);
+		Camera::instance()->ProcessKeyboard(BACKWARD, deltaTime);
 	if (keys[GLFW_KEY_A])
-		camera.ProcessKeyboard(LEFT, deltaTime);
+		Camera::instance()->ProcessKeyboard(LEFT, deltaTime);
 	if (keys[GLFW_KEY_D])
-		camera.ProcessKeyboard(RIGHT, deltaTime);
-	if (keys[GLFW_KEY_P])
-	{
-		cout<<camera.GetPosition().x<< " " << camera.GetPosition().y<<" "<< camera.GetPosition().z<<endl;
-	}
+		Camera::instance()->ProcessKeyboard(RIGHT, deltaTime);
+	
 	if (keys[GLFW_KEY_SPACE])
 	{
 		currentBulletFired = glfwGetTime();
@@ -202,12 +202,12 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	lastX = xpos;
 	lastY = ypos;
 
-	camera.ProcessMouseMovement(xoffset, yoffset,true);
+	Camera::instance()->ProcessMouseMovement(xoffset, yoffset,true);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	camera.ProcessMouseScroll(yoffset);
+	Camera::instance()->ProcessMouseScroll(yoffset);
 }
 
 #pragma endregion
@@ -375,11 +375,11 @@ void DetectCollisions()
 void Shoot()
 {
 	Bullet *enemy = new Bullet();
-	enemy->InitPath("Models/Bullet/Bullet.obj");
-	glm::vec3 shootPosition = glm::vec3(camera.GetPosition().x, camera.GetPosition().y - 1.0f, camera.GetPosition().z);
+	*enemy = *masterBullet;
+	glm::vec3 shootPosition = glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y - 1.0f, Camera::instance()->GetPosition().z);
 	enemy->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	enemy->AddSphereCollider(2.0f, enemy->GetPosition());
-	glm::vec3 bulletDirection = glm::normalize(camera.Front);
+	glm::vec3 bulletDirection = glm::normalize(Camera::instance()->Front);
 	float bulletSpeed = 4.0f;
 	bulletDirection = glm::vec3(bulletDirection * bulletSpeed);
 	enemy->SetValues(shootPosition, bulletDirection);

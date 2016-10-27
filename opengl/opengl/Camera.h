@@ -61,6 +61,8 @@ public:
 		this->Pitch = pitch;
 		this->updateCameraVectors();
 	}
+
+	void InitValues();
 	
 	// Returns the view matrix calculated using Eular Angles and the LookAt Matrix
 	glm::mat4 GetViewMatrix();
@@ -77,9 +79,18 @@ public:
 
 	// Processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
 	void ProcessMouseScroll(GLfloat yoffset);
+
+	static Camera *instance()
+	{
+		if (!player_instance)
+			player_instance = new Camera;
+
+		return player_instance;
+	}
 	
 private:
 	// Calculates the front vector from the Camera's (updated) Eular Angles
 	void updateCameraVectors();
 	
+	static Camera *player_instance;
 };

@@ -1,5 +1,6 @@
 #include "Camera.h"
 
+Camera* Camera::player_instance = 0;
 void Camera :: ProcessKeyboard(Camera_Movement direction, GLfloat deltaTime)
 {
 	GLfloat velocity = this->MovementSpeed * deltaTime;
@@ -55,6 +56,18 @@ void Camera :: updateCameraVectors()
 	// Also re-calculate the Right and Up vector
 	this->Right = glm::normalize(glm::cross(this->Front, this->WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
 	this->Up = glm::normalize(glm::cross(this->Right, this->Front));
+}
+
+void Camera::InitValues()
+{
+	this->Position = glm::vec3(0, 0, 0);
+	this->WorldUp = glm::vec3(0, 1, 0);
+	this->Yaw = YAW;
+	this->Pitch = PITCH;
+	this->MovementSpeed = SPEED;
+	this->MouseSensitivity = SENSITIVTY;
+	this->Zoom = ZOOM;
+	this->updateCameraVectors();
 }
 
 glm::mat4 Camera ::  GetViewMatrix()
