@@ -11,6 +11,8 @@ using namespace std;
 #include <GL/glew.h> // Contains all the necessery OpenGL includes
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp> 
+#include <glm/gtx/quaternion.hpp>
 #include <SOIL.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -46,6 +48,12 @@ public:
 	//Get the scale of the model
 	glm::vec3 GetScale();
 
+	//Set the rotation of the model
+	void SetRotation(glm::quat);
+
+	//Get the rotation of the model
+	glm::quat GetRotation();
+
 	//virtual function
 	virtual void ProcessAI() {};
 	
@@ -76,7 +84,8 @@ private:
 	//Scale of the model
 	glm::vec3 scale;
 
-	
+	//Rotaion of the model
+	glm::quat rotation;
 	
 };
 

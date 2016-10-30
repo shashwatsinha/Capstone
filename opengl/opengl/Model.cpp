@@ -14,8 +14,7 @@ void Model::InitPath(GLchar * path)
 void Model :: Draw(Shader *shader)
 {
 	glm::mat4 model;
-	model = glm::translate(model, position); // Translate it down a bit so it's at the center of the scene
-	model = glm::scale(model, scale);	// It's a bit too big for our scene, so scale it down
+	model = glm::translate(model, position) * glm::scale(model, scale) * glm::toMat4(rotation);
 	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
 	for (GLuint i = 0; i < this->meshes.size(); i++)
@@ -40,6 +39,16 @@ void Model::SetScale(glm::vec3 sc)
 glm::vec3 Model::GetScale()
 {
 	return this->scale;
+}
+
+void Model::SetRotation(glm::quat rot)
+{
+	rotation = rot;
+}
+
+glm::quat Model::GetRotation()
+{
+	return this->rotation;
 }
 
 void Model ::  loadModel(string path)

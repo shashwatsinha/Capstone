@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/quaternion.hpp> 
+#include <glm/gtx/quaternion.hpp>
 #include <SOIL.h>
 #include "Camera.h"
 #include "ActorFactory.h"
@@ -37,6 +39,7 @@ bool IsPositionValid(std::tuple<int, int, int>, int typeOfObject);
 void DetectCollisions();
 void Shoot();
 void SetViewAndProjection(Shader shader, glm::mat4 view);
+double calcFPS(double theTimeInterval, string theWindowTitle);
 
 // Camera
 //Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -56,6 +59,9 @@ map<tuple<int,int,int>, int> mapPositions;
 
 float currentBulletFired = 0;
 float previousBulletFired = 0;
+
+string windowTitle = "Space Game";
+
 int main()
 {
 	// Init GLFW
@@ -79,8 +85,13 @@ int main()
 
 	GenerateEnvironment();
 
+	//Model ourModel;
+	//ourModel.InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
+
 	while (!glfwWindowShouldClose(window))
 	{
+		calcFPS(1.0, windowTitle);
+		
 		// Set frame time
 		GLfloat currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
@@ -120,6 +131,19 @@ int main()
 			bullets[i]->Draw(&shader);
 		}
 
+		// Do not delete the below commented
+		// This is how you set the quarternion rotation
+		/*
+		ourModel.SetPosition(glm::vec3(0.0f, -1.75f, -2.0f));
+		ourModel.SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+		glm::quat myQuat;
+		glm::quat key_quat = glm::quat(glm::vec3(0.0f, (GLfloat)glfwGetTime() * glm::radians(20.0f), 0.0f));
+		myQuat = key_quat * myQuat;
+		myQuat = glm::normalize(myQuat);
+		ourModel.SetRotation(myQuat);
+		ourModel.Draw(&shader);
+		*/
+
 		// Draw skybox last
 		glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
 		skyboxShader.Use();
@@ -127,7 +151,7 @@ int main()
 		SetViewAndProjection(skyboxShader, view);
 		skybox.Draw(&skyboxShader);
 		glDepthFunc(GL_LESS); // Set depth function back to default
-		
+
 		DetectCollisions();
 		// Swap the buffers
 		glfwSwapBuffers(window);
@@ -413,6 +437,66 @@ void GenerateEnvironment()
 		enemy->SetHealth(100);
 		physicsObjects.push_back(enemy);
 	}
+}
+
+double calcFPS(double theTimeInterval, string theWindowTitle)
+{
+	// Static values which only get initialised the first time the function runs
+	static double t0Value = glfwGetTime(); // Set the initial time to now
+	static int    fpsFrameCount = 0;             // Set the initial FPS frame count to 0
+	static double fps = 0.0;           // Set the initial FPS value to 0.0
+
+									   // Get the current time in seconds since the program started (non-static, so executed every time)
+	double currentTime = glfwGetTime();
+
+	// Ensure the time interval between FPS checks is sane (low cap = 0.1s, high-cap = 10.0s)
+	// Negative numbers are invalid, 10 fps checks per second at most, 1 every 10 secs at least.
+	if (theTimeInterval < 0.1)
+	{
+		theTimeInterval = 0.1;
+	}
+	if (theTimeInterval > 10.0)
+	{
+		theTimeInterval = 10.0;
+	}
+
+	// Calculate and display the FPS every specified time interval
+	if ((currentTime - t0Value) > theTimeInterval)
+	{
+		// Calculate the FPS as the number of frames divided by the interval in seconds
+		fps = (double)fpsFrameCount / (currentTime - t0Value);
+
+		// If the user specified a window title to append the FPS value to...
+		if (theWindowTitle != "NONE")
+		{
+			// Convert the fps value into a string using an output stringstream
+			std::ostringstream stream;
+			stream << fps;
+			std::string fpsString = stream.str();
+
+			// Append the FPS value to the window title details
+			theWindowTitle += " | FPS: " + fpsString;
+
+			// Convert the new window title to a c_str and set it
+			const char* pszConstString = theWindowTitle.c_str();
+			glfwSetWindowTitle(window, pszConstString);
+		}
+		else // If the user didn't specify a window to append the FPS to then output the FPS to the console
+		{
+			std::cout << "FPS: " << fps << std::endl;
+		}
+
+		// Reset the FPS frame counter and set the initial time to be now
+		fpsFrameCount = 0;
+		t0Value = glfwGetTime();
+	}
+	else // FPS calculation time interval hasn't elapsed yet? Simply increment the FPS frame counter
+	{
+		fpsFrameCount++;
+	}
+
+	// Return the current FPS - doesn't have to be used if you don't want it!
+	return fps;
 }
 
 
