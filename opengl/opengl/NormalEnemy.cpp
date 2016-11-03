@@ -13,33 +13,36 @@ float NormalEnemy::DistanceFromPlayer(glm::vec3 playerPos)
 
 void NormalEnemy::ProcessAI(glm::vec3 playerPos)
 {
-	positionOfPlayer = playerPos;
-	if (DistanceFromPlayer(playerPos) < 50.0f && DistanceFromPlayer(playerPos) > 30.0f &&(currentState==Patrol || currentState==Attack))
+	if (type == 1)
 	{
-		currentState = Chase;
-	}
+		positionOfPlayer = playerPos;
+		if (DistanceFromPlayer(playerPos) < 50.0f && DistanceFromPlayer(playerPos) > 30.0f && (currentState == Patrol || currentState == Attack))
+		{
+			currentState = Chase;
+		}
 
-	else if (DistanceFromPlayer(playerPos) < 30.0f && currentState == Chase)
-	{
-		currentState = Attack;
-	}
+		else if (DistanceFromPlayer(playerPos) < 30.0f && currentState == Chase)
+		{
+			currentState = Attack;
+		}
 
-	else if (DistanceFromPlayer(playerPos) > 50.0f)
-	{
-		currentState = Patrol;
-	}
+		else if (DistanceFromPlayer(playerPos) > 50.0f)
+		{
+			currentState = Patrol;
+		}
 
-	switch (currentState)
-	{
-	case Attack:
-		Attacking();
-		break;
-	case Chase:
-		Chasing();
-		break;
-	case Patrol:
-		Patrolling();
-		break;
+		switch (currentState)
+		{
+		case Attack:
+			Attacking();
+			break;
+		case Chase:
+			Chasing();
+			break;
+		case Patrol:
+			Patrolling();
+			break;
+		}
 	}
 }
 
@@ -227,4 +230,14 @@ void NormalEnemy::SetValues(glm::vec3 pos, glm::vec3 vel)
 	previous.vel = vel;
 	velocityOfEnemy = vel;
 	current = previous;
+}
+
+void NormalEnemy::SetType(int t)
+{
+	type = t;
+}
+
+int NormalEnemy::GetType()
+{
+	return type;
 }

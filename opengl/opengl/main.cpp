@@ -1,6 +1,7 @@
 #define GLEW_STATIC
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
+#include <fstream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -412,7 +413,58 @@ void Shoot()
 
 void GenerateEnvironment()
 {
-	bool checkPositionValidity = true;
+	ifstream inputFile;
+	inputFile.open("EnvironmentCoordinates/TrainedValues.txt");
+	vector< vector<int> > coordinates;
+
+	NormalEnemy *masterEnemy = new NormalEnemy();
+	masterEnemy->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
+	masterEnemy->SetType(1);
+
+	NormalEnemy *masterAsteroid = new NormalEnemy();
+	masterAsteroid->InitPath("Models/Asteroid/Asteroid.obj");
+	masterAsteroid->SetType(0);
+
+	for (int i = 0; i < 23; i++)
+	{
+		vector<int> temp;
+		char tempString = NULL;
+		for (int j = 0; j < 40; j++)
+		{
+			inputFile >> tempString;
+			int input = tempString - '0';
+			if (input == 1)
+			{
+				NormalEnemy *enemy = new NormalEnemy();
+				*enemy = *masterEnemy;
+				enemy->SetValues(glm::vec3(i*5, (rand() % 5 - 5), j * -10), glm::vec3(0, 0, 0));
+				enemy->AddSphereCollider(2.0f, enemy->GetPosition());
+				enemy->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+				enemy->SetHealth(100);
+				physicsObjects.push_back(enemy);
+			}
+
+			if (input == 2)
+			{
+				NormalEnemy *enemy = new NormalEnemy();
+				*enemy = *masterAsteroid;
+				enemy->SetValues(glm::vec3(i*5, (rand() % 5 - 5), j * -10), glm::vec3(0, 0, 0));
+				enemy->AddSphereCollider(2.0f, enemy->GetPosition());
+				enemy->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+				enemy->SetHealth(100);
+				physicsObjects.push_back(enemy);
+			}
+
+			temp.push_back(input);
+			tempString = NULL;
+		}
+		coordinates.push_back(temp);
+		temp.clear();
+	}
+	int k = 0;
+
+
+	/*bool checkPositionValidity = true;
 	int numberOfObjects = 20;
 	NormalEnemy *masterEnemy = new NormalEnemy();
 	masterEnemy->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
@@ -436,7 +488,7 @@ void GenerateEnvironment()
 		enemy->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
 		enemy->SetHealth(100);
 		physicsObjects.push_back(enemy);
-	}
+	}*/
 }
 
 double calcFPS(double theTimeInterval, string theWindowTitle)

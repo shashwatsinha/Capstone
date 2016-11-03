@@ -50,6 +50,8 @@ public:
 	glm::vec3 Acceleration(State &state, double t);
 
 	void SetValues(glm::vec3 pos, glm::vec3 vel);
+	void SetType(int t);
+	int GetType();
 
 private:
 	FSMState currentState = Patrol;
@@ -60,5 +62,6 @@ private:
 	int health;
 	float currentBulletFired = 0;
 	float previousBulletFired = 0;
+	int type;
 };
 
