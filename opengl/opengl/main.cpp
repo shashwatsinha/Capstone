@@ -366,9 +366,9 @@ void DetectCollisions()
 				physicsObjects[i]->ReduceHealth(10);
 			}
 
-			else if (bullets[j]->GetPosition().x > 20 || bullets[j]->GetPosition().x < -20 ||
-				     bullets[j]->GetPosition().y > 20 || bullets[j]->GetPosition().y < -20 ||
-					 bullets[j]->GetPosition().z > 20 || bullets[j]->GetPosition().z < -20)
+			else if (bullets[j]->GetPosition().x > 100 || bullets[j]->GetPosition().x < -100 ||
+				     bullets[j]->GetPosition().y > 100 || bullets[j]->GetPosition().y < -100 ||
+					 bullets[j]->GetPosition().z > 100 || bullets[j]->GetPosition().z < -100)
 			{
 				Bullet *bullet = bullets[j];
 				bullets.erase(bullets.begin() + j);
@@ -437,7 +437,7 @@ void GenerateEnvironment()
 			{
 				NormalEnemy *enemy = new NormalEnemy();
 				*enemy = *masterEnemy;
-				enemy->SetValues(glm::vec3(i*5, (rand() % 5 - 5), j * -10), glm::vec3(0, 0, 0));
+				enemy->SetValues(glm::vec3(i*5, (rand() % 5 - 5), j*-10), glm::vec3(0, 0, 0));
 				enemy->AddSphereCollider(2.0f, enemy->GetPosition());
 				enemy->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
 				enemy->SetHealth(100);
@@ -448,7 +448,7 @@ void GenerateEnvironment()
 			{
 				NormalEnemy *enemy = new NormalEnemy();
 				*enemy = *masterAsteroid;
-				enemy->SetValues(glm::vec3(i*5, (rand() % 5 - 5), j * -10), glm::vec3(0, 0, 0));
+				enemy->SetValues(glm::vec3(i * 5, (rand() % 5 - 5), j * -10), glm::vec3(0, 0, 0));
 				enemy->AddSphereCollider(2.0f, enemy->GetPosition());
 				enemy->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
 				enemy->SetHealth(100);

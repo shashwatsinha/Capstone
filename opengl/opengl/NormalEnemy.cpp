@@ -143,9 +143,9 @@ void NormalEnemy::DestroyBullets()
 {
 	for (int i = 0; i < enemyBullets.size();)
 	{
-		if (enemyBullets[i]->GetPosition().x > 20 || enemyBullets[i]->GetPosition().x < -20 ||
-			enemyBullets[i]->GetPosition().y > 20 || enemyBullets[i]->GetPosition().y < -20 ||
-			enemyBullets[i]->GetPosition().z > 20 || enemyBullets[i]->GetPosition().z < -20)
+		if (enemyBullets[i]->GetPosition().x > 100 || enemyBullets[i]->GetPosition().x < -100 ||
+			enemyBullets[i]->GetPosition().y > 100 || enemyBullets[i]->GetPosition().y < -100 ||
+			enemyBullets[i]->GetPosition().z > 100 || enemyBullets[i]->GetPosition().z < -100)
 			{
 				Bullet *bullet = enemyBullets[i];
 				enemyBullets.erase(enemyBullets.begin() + i);
