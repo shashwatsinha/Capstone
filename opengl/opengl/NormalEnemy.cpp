@@ -16,17 +16,17 @@ void NormalEnemy::ProcessAI(glm::vec3 playerPos)
 	if (type == 1)
 	{
 		positionOfPlayer = playerPos;
-		if (DistanceFromPlayer(playerPos) < 50.0f && DistanceFromPlayer(playerPos) > 30.0f && (currentState == Patrol || currentState == Attack))
+		if (DistanceFromPlayer(playerPos) < 200.0f && DistanceFromPlayer(playerPos) > 50.0f && (currentState == Patrol || currentState == Attack))
 		{
 			currentState = Chase;
 		}
 
-		else if (DistanceFromPlayer(playerPos) < 30.0f && currentState == Chase)
+		else if (DistanceFromPlayer(playerPos) < 50.0f && currentState == Chase)
 		{
 			currentState = Attack;
 		}
 
-		else if (DistanceFromPlayer(playerPos) > 50.0f)
+		else if (DistanceFromPlayer(playerPos) > 200.0f)
 		{
 			currentState = Patrol;
 		}
@@ -37,7 +37,9 @@ void NormalEnemy::ProcessAI(glm::vec3 playerPos)
 			Attacking();
 			break;
 		case Chase:
-			Chasing();
+			startPosition = GetPosition();
+			endPosition = positionOfPlayer;
+			ChasingBezier();
 			break;
 		case Patrol:
 			Patrolling();
@@ -159,6 +161,24 @@ void NormalEnemy::DestroyBullets()
 	}
 }
 
+void NormalEnemy::ChasingBezier()
+{
+	cout << "Bezier " << GetPosition().x<<" "<<GetPosition().y<<" "<<GetPosition().z<<endl;
+	float x = center.x + radius * cos(t);
+	float y = center.y + radius * sin(t);
+	float currentTime = glfwGetTime();
+	float timeToTravel = 5.0f;
+	glm::vec3 bending = glm::vec3(0, 1, 0);
+	//while (glfwGetTime() < currentTime + timeToTravel)
+	{
+		glm::vec3 currentPos = Lerp(startPosition, endPosition, (float)(glfwGetTime() - currentTime) / timeToTravel);
+		currentPos.x += bending.x * sin(Clamp(((glfwGetTime() - currentTime)/timeToTravel) * 3.14f,0,1));
+		currentPos.y += bending.y * sin(Clamp(((glfwGetTime() - currentTime) / timeToTravel) * 3.14f, 0, 1));
+		currentPos.z += bending.z * sin(Clamp(((glfwGetTime() - currentTime) / timeToTravel) * 3.14f, 0, 1));
+		SetValues(currentPos,glm::vec3(0,0,0));
+	}
+}
+
 void NormalEnemy::Integrate(double dt)
 {
 	previous = current;
@@ -237,7 +257,19 @@ void NormalEnemy::SetType(int t)
 	type = t;
 }
 
+glm::vec3 NormalEnemy::Lerp(glm::vec3 a, glm::vec3 b, float t)
+{
+	return glm::vec3(a * (1 - t))  + glm::vec3(t *b);
+}
+
 int NormalEnemy::GetType()
 {
 	return type;
+}
+
+double NormalEnemy::Clamp(double a, int b, int c)
+{ 
+	a = a < b ? b : a;
+	a = a > c ? c : a;
+	return a;
 }

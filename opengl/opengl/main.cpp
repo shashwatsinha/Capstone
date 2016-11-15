@@ -413,7 +413,7 @@ void Shoot()
 
 void GenerateEnvironment()
 {
-	ifstream inputFile;
+	/*ifstream inputFile;
 	inputFile.open("EnvironmentCoordinates/TrainedValues.txt");
 	vector< vector<int> > coordinates;
 
@@ -461,7 +461,16 @@ void GenerateEnvironment()
 		coordinates.push_back(temp);
 		temp.clear();
 	}
-	int k = 0;
+	int k = 0;*/
+
+	NormalEnemy *masterEnemy = new NormalEnemy();
+	masterEnemy->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
+	masterEnemy->SetType(1);
+	masterEnemy->SetValues(glm::vec3(0 * 5, (rand() % 5 - 5), 1*-10), glm::vec3(0, 0, 0));
+	masterEnemy->AddSphereCollider(2.0f, masterEnemy->GetPosition());
+	masterEnemy->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+	masterEnemy->SetHealth(100);
+	physicsObjects.push_back(masterEnemy);
 
 
 	/*bool checkPositionValidity = true;
