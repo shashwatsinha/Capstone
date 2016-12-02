@@ -128,7 +128,7 @@ public:
 	{
 		glBindVertexArray(this->skyboxVAO);
 		glActiveTexture(GL_TEXTURE0);
-		glUniform1i(glGetUniformLocation(shader->Program, "skybox"), 0);
+		glUniform1i(glGetUniformLocation(shader->ID, "skybox"), 0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, this->cubemapTexture);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);

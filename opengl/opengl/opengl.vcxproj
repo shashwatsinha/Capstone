@@ -157,10 +157,12 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EnvironmentObject.cpp" />
     <ClCompile Include="FSM.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="NormalEnemy.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinystr.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxml.cpp" />
@@ -168,6 +170,7 @@
     <ClCompile Include="Source\3rdPartyTools\tinyxmlerror.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxmlparser.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActorFactory.h" />
@@ -175,11 +178,13 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EnvironmentObject.h" />
     <ClInclude Include="FSM.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Lights.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="NormalEnemy.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Source\3rdPartyTools\tinystr.h" />
@@ -187,6 +192,7 @@
     <ClInclude Include="Source\3rdPartyTools\tinyxml2.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="String.h" />
+    <ClInclude Include="Texture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fragmentShader_default.frag" />

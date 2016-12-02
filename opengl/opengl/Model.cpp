@@ -15,7 +15,7 @@ void Model :: Draw(Shader *shader)
 {
 	glm::mat4 model;
 	model = glm::translate(model, position) * glm::scale(model, scale) * glm::toMat4(rotation);
-	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
 	for (GLuint i = 0; i < this->meshes.size(); i++)
 		this->meshes[i].Draw(shader);
