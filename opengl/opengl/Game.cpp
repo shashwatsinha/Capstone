@@ -15,29 +15,55 @@ Game::~Game()
 
 void Game::Init()
 {
+	// Load Default Shader
 	ResourceManager::LoadShader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag", nullptr, "default");
 	spaceShip.InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
-	spaceShip.SetPosition(glm::vec3(0.0f, -1.75f, 10.0f));
+	spaceShip.SetPosition(glm::vec3(0.0f, -1.75f, 2.0f));
 	spaceShip.SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
 
+	// Load Skybox Shader
 	ResourceManager::LoadShader("Shaders/vertexShader_Skybox.vs", "Shaders/fragmentShader_Skybox.frag", nullptr, "skybox");
 	skybox.setupMesh();
 
+	// Setup Directional Light
 	glm::vec3 direction = glm::vec3(-0.2f, -1.0f, -0.3f);
 	glm::vec3 ambient = glm::vec3(0.2f, 0.2f, 0.2f);
 	glm::vec3 diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
 	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
 	directionalLight.initializeDirectionalLightParameters(direction, ambient, diffuse, specular);
 
+	// Initialize Point Light (Initialize as many point lights as requires and push the lights into the pointLights vector)
+	// Cuurently the max number of point lights is set as 10 in fragment shader. For more lights change the value in fragment shader
+	Lights pointLight;
+	pointLights.push_back(pointLight);
+
 	masterBullet = new Bullet();
 	masterBullet->InitPath("Models/Bullet/Bullet.obj");
 	GenerateEnvironment();
-	
+
+	// Point Light Container Shader
+	ResourceManager::LoadShader("Shaders/vertexShader_LightContainer.vs", "Shaders/fragmentShader_LightContainer.frag", nullptr, "lightContainerShader");
+	pointLightContainer.InitPath("Models/Bullet/Bullet.obj");
+	pointLightContainer.SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
+	pointLightContainer.SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 }
 
 void Game::Update(GLfloat dt)
 {
+	for (int i = 0; i < physicsObjects.size(); i++)
+	{
+		physicsObjects[i]->ProcessAI(Camera::instance()->Position);
+		physicsObjects[i]->UpdateCollider(dt);
+		for (int j = 0; j < physicsObjects[i]->enemyBullets.size(); j++)
+		{
+			physicsObjects[i]->enemyBullets[j]->UpdateCollider(dt);
+		}
+	}
 
+	for (int i = 0; i < bullets.size(); i++)
+	{
+		bullets[i]->UpdateCollider(dt);
+	}
 }
 
 
@@ -69,41 +95,66 @@ void Game::ProcessInput(GLfloat dt)
 	}
 }
 
-void Game::Render(GLfloat dt)
+void Game::Render()
 {	
 	glm::mat4 view = Camera::instance()->GetViewMatrix();
 	glm::mat4 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 100.0f);
-
+	
 	Shader shader = ResourceManager::GetShader("default");
 	shader.Use();
 	shader.SetMatrix4("view", view);
 	shader.SetMatrix4("projection", projection);
+	
+	// Setup Directional Light
 	directionalLight.setUpDirectionalLight(&ResourceManager::GetShader("default"), Camera::instance());
+
+	// Setup Point Light. Properties of Point Light can be changed over time if required.
+	// Get the Point Light whose values need to be changed using the vector pointLights and change the properties as required
+	glm::vec3 position = glm::vec3(sin(glfwGetTime() * 1.0f), 0.0f, cos(glfwGetTime() * 1.0f));
+	glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f);
+	glm::vec3 diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	float constant = 1.0f;
+	float linear = 0.09f;
+	float quadratic = 0.032f;
+	pointLightContainer.SetPosition(glm::vec3(sin(glfwGetTime() * 1.0f), 0.0f, cos(glfwGetTime() * 1.0f)));
+	for (int i = 0; i < pointLights.size(); i++)
+	{
+		// Note that the 4th parameter is the distance the point light should affect (set the distance from the pre initialized pointLightDistance array)
+		pointLights[i].setPointLightParameters(position, ambient, diffuse, specular, pointLightDistance[4]);
+		pointLights[i].setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance());
+	}
+	ResourceManager::GetShader("default").SetInteger("NO_OF_POINT_LIGHTS", pointLights.size());
+	
 	glm::quat myQuat;
 	glm::quat key_quat = glm::quat(glm::vec3(0.0f, (GLfloat)glfwGetTime() * glm::radians(20.0f), 0.0f));
 	myQuat = key_quat * myQuat;
 	myQuat = glm::normalize(myQuat);
-	spaceShip.SetRotation(myQuat);
+	//spaceShip.SetRotation(myQuat);
 	spaceShip.Draw(&shader);
-
+	
 	for (int i = 0; i < physicsObjects.size(); i++)
 	{
-		physicsObjects[i]->ProcessAI(Camera::instance()->Position);
-		physicsObjects[i]->UpdateCollider(dt);
 		physicsObjects[i]->Draw(&ResourceManager::GetShader("default"));
 		for (int j = 0; j < physicsObjects[i]->enemyBullets.size(); j++)
 		{
-			physicsObjects[i]->enemyBullets[j]->UpdateCollider(dt);
 			physicsObjects[i]->enemyBullets[j]->Draw(&ResourceManager::GetShader("default"));
 		}
 	}
 
 	for (int i = 0; i < bullets.size(); i++)
 	{
-		bullets[i]->UpdateCollider(dt);
 		bullets[i]->Draw(&ResourceManager::GetShader("default"));
 	}
+
+	// Also draw the point light object, again binding the appropriate shader
+	Shader lampShader = ResourceManager::GetShader("lightContainerShader");
+	lampShader.Use();
+	lampShader.SetMatrix4("view", view);
+	lampShader.SetMatrix4("projection", projection);
+	pointLightContainer.Draw(&lampShader);
 	
+	// Draw the skybox last
 	glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
 	Shader skyboxShader = ResourceManager::GetShader("skybox");
 	skyboxShader.Use();

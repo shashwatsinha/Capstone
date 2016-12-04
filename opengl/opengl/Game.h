@@ -48,7 +48,7 @@ public:
 	// GameLoop
 	void ProcessInput(GLfloat dt);
 	void Update(GLfloat dt);
-	void Render(GLfloat dt);
+	void Render();
 
 	// Other methods specific for our game
 	void GenerateEnvironment();
@@ -58,8 +58,10 @@ public:
 
 private:
 	Model spaceShip;
+	Model pointLightContainer;
 	Skybox skybox;
 	Lights directionalLight;
+	vector<Lights> pointLights;
 
 	vector<NormalEnemy*> physicsObjects;
 	vector<Bullet*> bullets;
@@ -69,6 +71,9 @@ private:
 
 	float currentBulletFired = 0;
 	float previousBulletFired = 0;
+
+	// Point Light Distance array. Do not add distances manually. The pre initialized array is based on the point light properties.
+	int pointLightDistance[9] = {7,13,20,32,50,65,100,160,200};
 };
 
 #endif

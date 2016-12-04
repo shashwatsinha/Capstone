@@ -148,5 +148,11 @@
     <None Include="Shaders\fragmentShader_default.frag">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="Shaders\vertexShader_LightContainer.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Shaders\fragmentShader_LightContainer.frag">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
