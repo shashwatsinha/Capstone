@@ -154,5 +154,11 @@
     <None Include="Shaders\fragmentShader_LightContainer.frag">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="Shaders\vertexShader_Skysphere.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Shaders\fragmentShader_Skysphere.frag">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -198,9 +198,11 @@
     <None Include="Shaders\fragmentShader_default.frag" />
     <None Include="Shaders\fragmentShader_LightContainer.frag" />
     <None Include="Shaders\fragmentShader_Skybox.frag" />
+    <None Include="Shaders\fragmentShader_Skysphere.frag" />
     <None Include="Shaders\vertexShader_default.vs" />
     <None Include="Shaders\vertexShader_LightContainer.vs" />
     <None Include="Shaders\vertexShader_Skybox.vs" />
+    <None Include="Shaders\vertexShader_Skysphere.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

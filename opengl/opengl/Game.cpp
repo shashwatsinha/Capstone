@@ -22,8 +22,8 @@ void Game::Init()
 	spaceShip.SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
 
 	// Load Skybox Shader
-	ResourceManager::LoadShader("Shaders/vertexShader_Skybox.vs", "Shaders/fragmentShader_Skybox.frag", nullptr, "skybox");
-	skybox.setupMesh();
+	//ResourceManager::LoadShader("Shaders/vertexShader_Skybox.vs", "Shaders/fragmentShader_Skybox.frag", nullptr, "skybox");
+	//skybox.setupMesh();
 
 	// Setup Directional Light
 	glm::vec3 direction = glm::vec3(-0.2f, -1.0f, -0.3f);
@@ -46,6 +46,11 @@ void Game::Init()
 	pointLightContainer.InitPath("Models/Bullet/Bullet.obj");
 	pointLightContainer.SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
 	pointLightContainer.SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+	ResourceManager::LoadShader("Shaders/vertexShader_Skysphere.vs", "Shaders/fragmentShader_Skysphere.frag", nullptr, "skySphere");
+	sphere.InitPath("Models/Sphere/sphere.obj");
+	sphere.SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
+	sphere.SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 }
 
 void Game::Update(GLfloat dt)
@@ -153,16 +158,27 @@ void Game::Render()
 	lampShader.SetMatrix4("view", view);
 	lampShader.SetMatrix4("projection", projection);
 	pointLightContainer.Draw(&lampShader);
+
+	glDepthFunc(GL_LEQUAL);
+	Shader skySphereShader = ResourceManager::GetShader("skySphere");
+	skySphereShader.Use();
+	view = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
+	skySphereShader.SetMatrix4("view", view);
+	skySphereShader.SetMatrix4("projection", projection);
+	GLfloat timeValue = glfwGetTime();
+	skySphereShader.SetFloat("iGlobalTime", timeValue);
+	sphere.Draw(&skySphereShader);
+	glDepthFunc(GL_LESS);
 	
 	// Draw the skybox last
-	glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
-	Shader skyboxShader = ResourceManager::GetShader("skybox");
-	skyboxShader.Use();
-	view = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
-	skyboxShader.SetMatrix4("view", view);
-	skyboxShader.SetMatrix4("projection", projection);
-	skybox.Draw(&skyboxShader);
-	glDepthFunc(GL_LESS); // Set depth function back to default
+	//glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
+	//Shader skyboxShader = ResourceManager::GetShader("skybox");
+	//skyboxShader.Use();
+	//view = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
+	//skyboxShader.SetMatrix4("view", view);
+	//skyboxShader.SetMatrix4("projection", projection);
+	//skybox.Draw(&skyboxShader);
+	//glDepthFunc(GL_LESS); // Set depth function back to default
 	
 	DetectCollisions();
 }
