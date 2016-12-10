@@ -60,6 +60,7 @@ private:
 	Model spaceShip;
 	Model pointLightContainer;
 	Model sphere;
+	Model planet;
 	//Skybox skybox;
 	Lights directionalLight;
 	vector<Lights> pointLights;
