@@ -27,6 +27,7 @@ public:
 	~ParticleSystem();
 	void Update(GLfloat dt, GLuint newParticles);
 	void Draw();
+	void DrawVR();
 	void    SetMatrix(const GLchar *name, const glm::mat4 &matrix, GLboolean useShader = false);
 	void	SetModelMatrix();
 	glm::vec4 color = glm::vec4(1, 1, 1, 1);

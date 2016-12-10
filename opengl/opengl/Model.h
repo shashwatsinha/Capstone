@@ -9,6 +9,9 @@
 using namespace std;
 // GL Includes
 #include <GL/glew.h> // Contains all the necessery OpenGL includes
+
+#include "Win32_GLAppUtil.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp> 
@@ -27,17 +30,46 @@ GLint TextureFromFile(const char* path, string directory);
 class Model
 {
 public:
+	vector<Vertex> GetVertices();
+	vector<GLuint> GetIndices();
+	vector<Texture> GetTextures();
+
+	Matrix4f & GetMatrix();
+	Vector3f        Pos;
+	Quatf           Rot;
+	Matrix4f        Mat;
+
+	int             numVertices, numIndices;
+	Vertex       Vertices[2000]; //Note fixed maximum
+	uint16_t     Indices[2000];
+	ShaderFill * Fill;
+
+
 	/*  Functions   */
 	// Constructor, expects a filepath to a 3D model.
 	Model();
 
+	void AllocateBuffers();
+
+	void SetShaderFill(ShaderFill * Fill);
+
+
+
 	void InitPath(GLchar* path);
-	
+
 	// Draws the model, and thus all its meshes
 	void Draw(Shader *shader);
 
+	void DrawVR(Shader * shader);
+
 	//Set the position of the model
 	void SetPosition(glm::vec3);
+
+	void AddVertex(const Vertex & v);
+
+	void AddIndex(GLushort a);
+
+	void AddSolidColorBox(float x1, float y1, float z1, float x2, float y2, float z2, DWORD c);
 
 	//Get the position of the model
 	glm::vec3 GetPosition();
@@ -57,8 +89,6 @@ public:
 	//virtual function
 	virtual void ProcessAI() {};
 
-
-	
 private:
 	/*  Model Data  */
 	vector<Mesh> meshes;
@@ -68,13 +98,13 @@ private:
 										/*  Functions   */
 										// Loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
 	void loadModel(string path);
-	
+
 
 	// Processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
 	void processNode(aiNode* node, const aiScene* scene);
 
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-	
+
 
 	// Checks all material textures of a given type and loads the textures if they're not loaded yet.
 	// The required info is returned as a Texture struct.
@@ -88,7 +118,7 @@ private:
 
 	//Rotaion of the model
 	glm::quat rotation;
-	
+
 };
 
 

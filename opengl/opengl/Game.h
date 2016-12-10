@@ -12,17 +12,30 @@
 #include <glm/gtx/quaternion.hpp>
 #include <SOIL.h>
 #include "Camera.h"
-#include "Coral.h"
 #include "ActorFactory.h"
 #include <stdlib.h>    
 #include <time.h>
 #include <map>
 #include <tuple>
 #include "Bullet.h"
+#include "Coral.h"
+#include "ParticleSystem.h"
 #include "Skybox.h"
 #include "Lights.h"
 #include "ResourceManager.h"
-#include "ParticleSystem.h"
+
+// Include the Oculus SDK
+#include "GL/CAPI_GLE.h"
+#include "ThirdParty\OculusSDK\LibOVR\Include\Extras\OVR_Math.h"
+#include "ThirdParty\OculusSDK\LibOVR\Include\OVR_CAPI_GL.h"
+
+#if defined(_WIN32)
+#include <dxgi.h> // for GetDefaultAdapterLuid
+#pragma comment(lib, "dxgi.lib")
+#endif
+
+
+using namespace OVR;
 
 
 // Represents the current state of the game
@@ -51,6 +64,7 @@ public:
 	void ProcessInput(GLfloat dt);
 	void Update(GLfloat dt);
 	void Render();
+	void RenderVR();
 
 	// Other methods specific for our game
 	void GenerateEnvironment();

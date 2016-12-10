@@ -92,13 +92,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\GL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\GL\include;$(ProjectDir)ThirdParty\OculusSDK\LibOVRKernel\Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)ThirdParty\OculusSDK\LibOVR\Lib\LibOVR.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -173,6 +173,7 @@
     <ClCompile Include="Source\3rdPartyTools\tinyxmlparser.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Texture2D.cpp" />
+    <ClCompile Include="ThirdParty\OculusSDK\LibOVRKernel\Src\GL\CAPI_GLE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActorFactory.h" />
@@ -197,6 +198,9 @@
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Texture2D.h" />
+    <ClInclude Include="ThirdParty\OculusSDK\LibOVRKernel\Src\GL\CAPI_GLE.h" />
+    <ClInclude Include="ThirdParty\OculusSDK\LibOVRKernel\Src\GL\CAPI_GLE_GL.h" />
+    <ClInclude Include="Win32_GLAppUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\fragmentShader_default.frag" />

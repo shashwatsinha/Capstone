@@ -91,6 +91,40 @@ void ParticleSystem::respawnParticle(Particle & particle)
 
 }
 
+void ParticleSystem::DrawVR()
+{
+	if (emittingParticles)
+	{
+		glEnable(GL_BLEND);
+		// SRC_ALPHA, and ONE give additive blending
+
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+		for (Particle particle : this->particles)
+		{
+
+			//this->shader.Use();
+			if (particle.Life > 0.0f)
+			{
+
+				this->shader.SetInteger("ourTexture", 0);
+				this->shader.SetVector3f("position", particle.Position);
+				this->shader.SetVector4f("ourColor", color);
+				this->shader.SetFloat("scale", scale);
+
+				this->texture.Bind();
+				glBindVertexArray(this->VAO);
+				glDrawArrays(GL_TRIANGLES, 0, 6);
+				glBindVertexArray(0);
+
+			}
+			//this->shader.UnBind();
+		}
+
+		glDisable(GL_BLEND);
+	}
+}
+
 void ParticleSystem::Draw()
 {
 	if (emittingParticles)

@@ -6,14 +6,59 @@ Model::Model()
 {
 }
 
+
+void Model::SetShaderFill(ShaderFill * fill)
+{
+	this->Fill = fill;
+}
+
+Matrix4f& Model::GetMatrix()
+{
+	Mat = Matrix4f(Rot);
+	Mat = Matrix4f::Translation(Pos) * Mat;
+	return Mat;
+}
+
+vector<Vertex> Model::GetVertices()
+{
+	vector<Vertex> allvertices;
+	for (int i = 0; i<meshes.size(); i++)
+	{
+
+		allvertices.insert(allvertices.end(), meshes.at(i).vertices.begin(), meshes.at(i).vertices.end());
+	}
+	return allvertices;
+}
+
+vector<GLuint> Model::GetIndices()
+{
+	vector<GLuint> allIndices;
+	for (int i = 0; i<meshes.size(); i++)
+	{
+
+		allIndices.insert(allIndices.end(), meshes.at(i).indices.begin(), meshes.at(i).indices.end());
+	}
+	return allIndices;
+}
+
+vector<Texture> Model::GetTextures()
+{
+	vector<Texture> allTextures;
+	for (int i = 0; i<meshes.size(); i++)
+	{
+
+		allTextures.insert(allTextures.end(), meshes.at(i).textures.begin(), meshes.at(i).textures.end());
+	}
+	return allTextures;
+}
+
 void Model::InitPath(GLchar * path)
 {
 	this->loadModel(path);
 }
 
-void Model :: Draw(Shader *shader)
+void Model::Draw(Shader *shader)
 {
-
 	glm::mat4 model;
 	model = glm::translate(model, position) * glm::scale(model, scale) * glm::toMat4(rotation);
 	glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
@@ -22,9 +67,33 @@ void Model :: Draw(Shader *shader)
 		this->meshes[i].Draw(shader);
 }
 
+void Model::DrawVR(Shader *shader)
+{
+
+	glm::mat4 model;
+	model = glm::translate(model, position) * glm::scale(model, scale) * glm::toMat4(rotation);
+
+	glUseProgram(shader->ID);
+	glUniform1i(glGetUniformLocation(shader->ID, "Texture0"), 0);
+	glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+	for (GLuint i = 0; i < this->meshes.size(); i++)
+		this->meshes[i].Draw(shader);
+
+}
+
 void Model::SetPosition(glm::vec3 pos)
 {
 	position = pos;
+	Pos = (Vector3f(pos.x, pos.y, pos.z));
+}
+
+void Model::AddVertex(const Vertex& v) { Vertices[numVertices++] = v; }
+void Model::AddIndex(GLushort a) { Indices[numIndices++] = a; }
+
+void Model::AddSolidColorBox(float x1, float y1, float z1, float x2, float y2, float z2, DWORD c)
+{
+	
 }
 
 glm::vec3 Model::GetPosition()
@@ -52,7 +121,7 @@ glm::quat Model::GetRotation()
 	return this->rotation;
 }
 
-void Model ::  loadModel(string path)
+void Model::loadModel(string path)
 {
 	// Read file via ASSIMP
 	Assimp::Importer importer;
@@ -70,7 +139,7 @@ void Model ::  loadModel(string path)
 	this->processNode(scene->mRootNode, scene);
 }
 
-void Model ::  processNode(aiNode* node, const aiScene* scene)
+void Model::processNode(aiNode* node, const aiScene* scene)
 {
 	// Process each mesh located at the current node
 	for (GLuint i = 0; i < node->mNumMeshes; i++)
@@ -88,7 +157,7 @@ void Model ::  processNode(aiNode* node, const aiScene* scene)
 
 }
 
-Mesh Model ::  processMesh(aiMesh* mesh, const aiScene* scene)
+Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 {
 	// Data to fill
 	vector<Vertex> vertices;
@@ -155,7 +224,7 @@ Mesh Model ::  processMesh(aiMesh* mesh, const aiScene* scene)
 	return Mesh(vertices, indices, textures);
 }
 
-vector<Texture> Model :: loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
+vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
 {
 	vector<Texture> textures;
 	for (GLuint i = 0; i < mat->GetTextureCount(type); i++)

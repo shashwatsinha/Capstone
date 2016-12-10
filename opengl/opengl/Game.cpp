@@ -217,6 +217,136 @@ void Game::ProcessInput(GLfloat dt)
 	}
 }
 
+void Game::RenderVR()
+{
+	glm::mat4 view = Camera::instance()->GetViewMatrix();
+	glm::mat4 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 100.0f);
+
+	Shader shader = ResourceManager::GetShader("default");
+	shader.Use();
+	shader.SetMatrix4("view", view);
+	shader.SetMatrix4("projection", projection);
+
+	// Setup Directional Light
+	directionalLight.setUpDirectionalLight(&ResourceManager::GetShader("default"), Camera::instance());
+
+	// Setup Point Light. Properties of Point Light can be changed over time if required.
+	// Get the Point Light whose values need to be changed using the vector pointLights and change the properties as required
+	glm::vec3 position = glm::vec3(sin(glfwGetTime() * 1.0f), 0.0f, cos(glfwGetTime() * 1.0f));
+	glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f);
+	glm::vec3 diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	float constant = 1.0f;
+	float linear = 0.09f;
+	float quadratic = 0.032f;
+	pointLightContainer.SetPosition(glm::vec3(sin(glfwGetTime() * 1.0f), 0.0f, cos(glfwGetTime() * 1.0f)));
+	for (int i = 0; i < pointLights.size(); i++)
+	{
+		// Note that the 4th parameter is the distance the point light should affect (set the distance from the pre initialized pointLightDistance array)
+		pointLights[i].setPointLightParameters(position, ambient, diffuse, specular, pointLightDistance[4]);
+		pointLights[i].setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance());
+	}
+	ResourceManager::GetShader("default").SetInteger("NO_OF_POINT_LIGHTS", pointLights.size());
+
+	glm::quat myQuat;
+	glm::quat key_quat = glm::quat(glm::vec3(0.0f, (GLfloat)glfwGetTime() * glm::radians(20.0f), 0.0f));
+	myQuat = key_quat * myQuat;
+	myQuat = glm::normalize(myQuat);
+	//spaceShip.SetRotation(myQuat);
+	spaceShip.DrawVR(&shader);
+
+	planet.DrawVR(&shader);
+
+	Shader coralShader = ResourceManager::GetShader("coralShader");
+	coralShader.Use();
+	coralShader.SetMatrix4("view", view);
+	coralShader.SetMatrix4("projection", projection);
+
+	for (int i = 0; i < corals.size(); i++)
+	{
+		if (corals[i]->GetLerpColorStatus() == false)
+		{
+			mixValue = 0.0f;
+			coralShader.SetFloat("mixValue", mixValue);
+		}
+		else
+		{
+			mixValue = mixValue + (glfwGetTime() * 0.009f);
+			if (mixValue > 1.0f)
+				mixValue = 1.0f;
+			coralShader.SetFloat("mixValue", mixValue);
+		}
+		corals[i]->DrawVR(&coralShader);
+		corals[i]->IsParticleActivated(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
+		coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());
+	}
+
+	Shader particleShader = ResourceManager::GetShader("particle");
+	particleShader.Use();
+	view = Camera::instance()->GetViewMatrix();
+	particleShader.SetMatrix4("view", view);
+	particleShader.SetMatrix4("projection", projection);
+	glm::mat4 model;
+	//model = glm::translate(model, particle.Position);
+	model[0][0] = view[0][0];
+	model[0][1] = view[1][0];
+	model[0][2] = view[2][0];
+	model[1][0] = view[0][1];
+	model[1][1] = view[1][1];
+	model[1][2] = view[2][1];
+	model[2][0] = view[0][2];
+	model[2][1] = view[1][2];
+	model[2][2] = view[2][2];
+	particleShader.SetMatrix4("model", model);
+
+	particlesystem1->DrawVR();
+	particlesystem2->DrawVR();
+
+	for (int i = 0; i < physicsObjects.size(); i++)
+	{
+		physicsObjects[i]->DrawVR(&ResourceManager::GetShader("default"));
+		for (int j = 0; j < physicsObjects[i]->enemyBullets.size(); j++)
+		{
+			physicsObjects[i]->enemyBullets[j]->DrawVR(&ResourceManager::GetShader("default"));
+		}
+	}
+
+	for (int i = 0; i < bullets.size(); i++)
+	{
+		bullets[i]->DrawVR(&ResourceManager::GetShader("default"));
+	}
+
+	// Also draw the point light object, again binding the appropriate shader
+	Shader lampShader = ResourceManager::GetShader("lightContainerShader");
+	lampShader.Use();
+	lampShader.SetMatrix4("view", view);
+	lampShader.SetMatrix4("projection", projection);
+	pointLightContainer.DrawVR(&lampShader);
+
+	glDepthFunc(GL_LEQUAL);
+	Shader skySphereShader = ResourceManager::GetShader("skySphere");
+	skySphereShader.Use();
+	view = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
+	skySphereShader.SetMatrix4("view", view);
+	skySphereShader.SetMatrix4("projection", projection);
+	GLfloat timeValue = glfwGetTime();
+	skySphereShader.SetFloat("iGlobalTime", timeValue);
+	sphere.DrawVR(&skySphereShader);
+	glDepthFunc(GL_LESS);
+
+	// Draw the skybox last
+	//glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
+	//Shader skyboxShader = ResourceManager::GetShader("skybox");
+	//skyboxShader.Use();
+	//view = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
+	//skyboxShader.SetMatrix4("view", view);
+	//skyboxShader.SetMatrix4("projection", projection);
+	//skybox.Draw(&skyboxShader);
+	//glDepthFunc(GL_LESS); // Set depth function back to default
+
+	DetectCollisions();
+}
+
 void Game::Render()
 {	
 	glm::mat4 view = Camera::instance()->GetViewMatrix();

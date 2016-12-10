@@ -1,32 +1,34 @@
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\vc140.pdb
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\vc140.idb
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\bullet.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\camera.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\coral.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\environmentobject.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\fsm.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\game.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\main.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\mesh.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\model.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\normalenemy.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\particlesystem.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\resourcemanager.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\shader.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\tinystr.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\tinyxml.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\tinyxml2.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\tinyxmlerror.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\tinyxmlparser.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\spherecollider.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\texture2d.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\actorfactory.obj
-c:\users\uday shanker\desktop\github\capstone\opengl\debug\opengl.ilk
-c:\users\uday shanker\desktop\github\capstone\opengl\debug\opengl.exe
-c:\users\uday shanker\desktop\github\capstone\opengl\debug\opengl.pdb
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\opengl.tlog\cl.command.1.tlog
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\opengl.tlog\cl.read.1.tlog
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\opengl.tlog\cl.write.1.tlog
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\opengl.tlog\link.command.1.tlog
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\opengl.tlog\link.read.1.tlog
-c:\users\uday shanker\desktop\github\capstone\opengl\opengl\debug\opengl.tlog\link.write.1.tlog
+d:\playtest\opengl\opengl\debug\vc140.pdb
+d:\playtest\opengl\opengl\debug\vc140.idb
+d:\playtest\opengl\opengl\debug\bullet.obj
+d:\playtest\opengl\opengl\debug\camera.obj
+d:\playtest\opengl\opengl\debug\coral.obj
+d:\playtest\opengl\opengl\debug\environmentobject.obj
+d:\playtest\opengl\opengl\debug\fsm.obj
+d:\playtest\opengl\opengl\debug\game.obj
+d:\playtest\opengl\opengl\debug\main.obj
+d:\playtest\opengl\opengl\debug\mesh.obj
+d:\playtest\opengl\opengl\debug\model.obj
+d:\playtest\opengl\opengl\debug\normalenemy.obj
+d:\playtest\opengl\opengl\debug\particlesystem.obj
+d:\playtest\opengl\opengl\debug\resourcemanager.obj
+d:\playtest\opengl\opengl\debug\shader.obj
+d:\playtest\opengl\opengl\debug\tinystr.obj
+d:\playtest\opengl\opengl\debug\tinyxml.obj
+d:\playtest\opengl\opengl\debug\tinyxml2.obj
+d:\playtest\opengl\opengl\debug\tinyxmlerror.obj
+d:\playtest\opengl\opengl\debug\tinyxmlparser.obj
+d:\playtest\opengl\opengl\debug\spherecollider.obj
+d:\playtest\opengl\opengl\debug\texture2d.obj
+d:\playtest\opengl\opengl\debug\actorfactory.obj
+d:\playtest\opengl\debug\opengl.pdb
+d:\playtest\opengl\opengl\debug\opengl.tlog\cl.command.1.tlog
+d:\playtest\opengl\opengl\debug\opengl.tlog\cl.read.1.tlog
+d:\playtest\opengl\opengl\debug\opengl.tlog\cl.write.1.tlog
+d:\playtest\opengl\opengl\debug\opengl.tlog\link-cvtres.read.1.tlog
+d:\playtest\opengl\opengl\debug\opengl.tlog\link-cvtres.write.1.tlog
+d:\playtest\opengl\opengl\debug\opengl.tlog\link-rc.read.1.tlog
+d:\playtest\opengl\opengl\debug\opengl.tlog\link-rc.write.1.tlog
+d:\playtest\opengl\opengl\debug\opengl.tlog\link.command.1.tlog
+d:\playtest\opengl\opengl\debug\opengl.tlog\link.read.1.tlog
+d:\playtest\opengl\opengl\debug\opengl.tlog\link.write.1.tlog
