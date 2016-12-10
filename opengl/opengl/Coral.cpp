@@ -24,7 +24,7 @@ float Coral::DistanceFromPlayer(glm::vec3 playerPos)
 void Coral::IsParticleActivated(glm::vec3 pos)
 {
 	playerPos = pos;
-	if (DistanceFromPlayer(playerPos) > 100)
+	if (DistanceFromPlayer(playerPos) > 2000)
 	{
 		emitParticles = false;
 	}

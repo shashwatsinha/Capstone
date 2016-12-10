@@ -9,6 +9,11 @@ ParticleSystem::ParticleSystem(Shader shader, Texture2D texture, GLuint amount)
 
 }
 
+void ParticleSystem::ActivateParticles(bool Ap)
+{
+	emittingParticles = Ap;
+}
+
 void ParticleSystem::init()
 {
 	//glGenBuffers(1, &m_vertexBuffer);
@@ -88,63 +93,65 @@ void ParticleSystem::respawnParticle(Particle & particle)
 
 void ParticleSystem::Draw()
 {
-
-	glEnable(GL_BLEND);
-	// SRC_ALPHA, and ONE give additive blending
-
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	//this->shader.Use();
-	//glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-	//glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES*sizeof(Particle), m_particle, GL_STATIC_DRAW);
-	//glEnableVertexAttribArray(0);
-	//glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)0);
-	//glEnableVertexAttribArray(1);
-	//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(GLfloat)*4));
-	//glEnableVertexAttribArray(2);
-	//glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(GLfloat) * 8));
-	//glEnableVertexAttribArray(3);
-	//glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(GLfloat) * 12));
-	//glEnableVertexAttribArray(4);
-	//glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(GLfloat) * 13));
-	//glEnableVertexAttribArray(5);
-	//glVertexAttribPointer(5, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(GLfloat) * 14));
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	//this->shader.SetInteger("ourTexture", 0);
-	////this->shader.SetVector3f("position",m_particle->Position);
-	////this->shader.SetVector4f("ourColor", color);
-	//this->shader.SetVector2f("particleSize", particleSize);
-	//this->shader.SetVector2f("viewport", viewportDimensions);
-	//this->texture.Bind();
-
-	//glDrawArrays(GL_POINTS, 0, MAX_PARTICLES);
-
-	for (Particle particle : this->particles)
+	if (emittingParticles)
 	{
+		glEnable(GL_BLEND);
+		// SRC_ALPHA, and ONE give additive blending
 
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		//this->shader.Use();
-		if (particle.Life > 0.0f)
+		//glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+		//glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES*sizeof(Particle), m_particle, GL_STATIC_DRAW);
+		//glEnableVertexAttribArray(0);
+		//glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)0);
+		//glEnableVertexAttribArray(1);
+		//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(GLfloat)*4));
+		//glEnableVertexAttribArray(2);
+		//glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(GLfloat) * 8));
+		//glEnableVertexAttribArray(3);
+		//glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(GLfloat) * 12));
+		//glEnableVertexAttribArray(4);
+		//glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(GLfloat) * 13));
+		//glEnableVertexAttribArray(5);
+		//glVertexAttribPointer(5, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)(sizeof(GLfloat) * 14));
+		//glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		//this->shader.SetInteger("ourTexture", 0);
+		////this->shader.SetVector3f("position",m_particle->Position);
+		////this->shader.SetVector4f("ourColor", color);
+		//this->shader.SetVector2f("particleSize", particleSize);
+		//this->shader.SetVector2f("viewport", viewportDimensions);
+		//this->texture.Bind();
+
+		//glDrawArrays(GL_POINTS, 0, MAX_PARTICLES);
+
+		for (Particle particle : this->particles)
 		{
 
-			this->shader.SetInteger("ourTexture", 0);
-			this->shader.SetVector3f("position", particle.Position);
-			this->shader.SetVector4f("ourColor", color);
-			this->shader.SetFloat("scale", scale);
+			//this->shader.Use();
+			if (particle.Life > 0.0f)
+			{
 
-			this->texture.Bind();
-			glBindVertexArray(this->VAO);
-			glDrawArrays(GL_TRIANGLES, 0, 6);
-			glBindVertexArray(0);
+				this->shader.SetInteger("ourTexture", 0);
+				this->shader.SetVector3f("position", particle.Position);
+				this->shader.SetVector4f("ourColor", color);
+				this->shader.SetFloat("scale", scale);
 
+				this->texture.Bind();
+				glBindVertexArray(this->VAO);
+				glDrawArrays(GL_TRIANGLES, 0, 6);
+				glBindVertexArray(0);
+
+			}
+			//this->shader.UnBind();
 		}
-		//this->shader.UnBind();
+		/*for (int i = 0;i < 6;i++)
+		{
+		glDisableVertexAttribArray(i);
+		}*/
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_BLEND);
 	}
-	/*for (int i = 0;i < 6;i++)
-	{
-	glDisableVertexAttribArray(i);
-	}*/
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDisable(GL_BLEND);
 }
 
 void ParticleSystem::SetMatrix(const GLchar * name, const glm::mat4 & matrix, GLboolean useShader)
@@ -178,21 +185,24 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::Update(GLfloat dt, GLuint newParticles)
 {
-	for (GLuint i = 0;i < newParticles;++i)
+	if (emittingParticles)
 	{
-		int unusedParticle = this->firstUnusedParticle();
-		this->respawnParticle(this->particles[unusedParticle]);
-	}
-	for (GLuint i = 0;i < this->amount;++i)
-	{
-		//this->shader.Use();
-		Particle &p = this->particles[i];
-		p.Life -= dt;
-		if (p.Life > 0.0f)
+		for (GLuint i = 0;i < newParticles;++i)
 		{
-			p.Position += p.Velocity*dt;
-			p.Velocity += acceleration*dt;
-			//p.Velocity += acceleration*dt;p.m_velocity += glm::vec4(m_acceleration, 0) * dt;
+			int unusedParticle = this->firstUnusedParticle();
+			this->respawnParticle(this->particles[unusedParticle]);
+		}
+		for (GLuint i = 0;i < this->amount;++i)
+		{
+			//this->shader.Use();
+			Particle &p = this->particles[i];
+			p.Life -= dt;
+			if (p.Life > 0.0f)
+			{
+				p.Position += p.Velocity*dt;
+				p.Velocity += acceleration*dt;
+				//p.Velocity += acceleration*dt;p.m_velocity += glm::vec4(m_acceleration, 0) * dt;
+			}
 		}
 	}
 }

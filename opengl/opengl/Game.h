@@ -12,6 +12,7 @@
 #include <glm/gtx/quaternion.hpp>
 #include <SOIL.h>
 #include "Camera.h"
+#include "Coral.h"
 #include "ActorFactory.h"
 #include <stdlib.h>    
 #include <time.h>
@@ -83,39 +84,11 @@ private:
 	ParticleSystem*  particlesystem1;
 	ParticleSystem*  particlesystem2;
 	//coral particlesystem
-	ParticleSystem* coralParticle1;
-	ParticleSystem* coralParticle2;
-	ParticleSystem* coralParticle3;
-	ParticleSystem* coralParticle4;
-	ParticleSystem* coralParticle5;
-	ParticleSystem* coralParticle6;
-	ParticleSystem* coralParticle7;
-	ParticleSystem* coralParticle8;
-	ParticleSystem* coralParticle9;
-	ParticleSystem* coralParticle10;
-	//coral models
-	Model coral1;
-	Model coral2;
-	Model coral3;
-	Model coral4;
-	Model coral5;
-	Model coral6;
-	Model coral7;
-	Model coral8;
-	Model coral9;
-	Model coral10;
 
-	//coral positions
-	glm::vec3 coralPosition1 = glm::vec3(1, 12, 23.75);
-	glm::vec3 coralPosition2 = glm::vec3(1, 15.5, 20.25);
-	glm::vec3 coralPosition3 = glm::vec3(5.5, 15.25, 19.25);
-	glm::vec3 coralPosition4 = glm::vec3(7, 18.5, 15.25);
-	glm::vec3 coralPosition5 = glm::vec3(-1.75, 21, 15.25);
-	glm::vec3 coralPosition6 = glm::vec3(-0.75, 22.25, 12.25);
-	glm::vec3 coralPosition7 = glm::vec3(-1.75, 23.75, 9);
-	glm::vec3 coralPosition8 = glm::vec3(-4.5, 23.25, 7.5);
-	glm::vec3 coralPosition9 = glm::vec3(-2.25, 24, 4.5);
-	glm::vec3 coralPosition10 = glm::vec3(2,24.25, 2);
+	//coral models
+	
+	vector<Coral* >corals;
+	vector<ParticleSystem*> coralParticles;
 
 };
 

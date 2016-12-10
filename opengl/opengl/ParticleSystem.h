@@ -41,7 +41,7 @@ public:
 	glm::vec2 particleSize = glm::vec2(100, 100);
 	glm::vec2 viewportDimensions = glm::vec2(800, 600);
 	glm::vec2 rotationalRange = glm::vec2(0, 0);
-
+	void ActivateParticles(bool Ap);
 
 
 private:
@@ -63,6 +63,8 @@ private:
 	/*static const int MAX_PARTICLES = 8000;
 	Particle m_particle[MAX_PARTICLES];
 	GLuint m_vertexBuffer;*/
+
+	bool emittingParticles;
 
 };
 #endif
