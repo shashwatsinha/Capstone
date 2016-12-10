@@ -95,9 +95,9 @@ void Game::Init()
 	ResourceManager::LoadShader("Shaders/particle.vs", "Shaders/particle.frag", nullptr, "particle");
 	ResourceManager::LoadTexture("Textures/fireParticle.png", GL_TRUE, "particle");
 	particlesystem1 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
-	particlesystem1->age = 1.0f;
+	particlesystem1->age = 10.0f;
 	particlesystem1->initialPosition = glm::vec3(0.5, 0.5, 60.0);
-	particlesystem1->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	//particlesystem1->acceleration = glm::vec3(0.0, 1.0, 0.0);
 	particlesystem1->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
 	particlesystem1->startVelocityMin = 0.1f;
 	particlesystem1->startVelocityRange = 0.1f;
@@ -119,7 +119,7 @@ void Game::Init()
 	ParticleSystem *masterCoralParticle = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
 	masterCoralParticle->age = 10.0f;
 	masterCoralParticle->acceleration = glm::vec3(0.0, 1.0, 0.0);
-	masterCoralParticle->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	masterCoralParticle->color = glm::vec4(0.1f, 0.8f, 0.4f, 1.0f);
 	masterCoralParticle->startVelocityMin = 0.1f;
 	masterCoralParticle->startVelocityRange = 0.1f;
 	masterCoralParticle->scale = 0.1f;
@@ -262,8 +262,21 @@ void Game::Render()
 	coralShader.Use();
 	coralShader.SetMatrix4("view", view);
 	coralShader.SetMatrix4("projection", projection);
+	
 	for (int i = 0;i < corals.size();i++)
 	{
+		if (corals[i]->GetLerpColorStatus() == false)
+		{
+			mixValue = 0.0f;
+			coralShader.SetFloat("mixValue", mixValue);
+		}
+		else
+		{
+			mixValue = mixValue + (glfwGetTime() * 0.009f);
+			if (mixValue > 1.0f)
+				mixValue = 1.0f;
+			coralShader.SetFloat("mixValue", mixValue);
+		}
 		corals[i]->Draw(&coralShader);
 		corals[i]->IsParticleActivated(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
 		coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());

@@ -22,7 +22,7 @@
 #include "Skybox.h"
 #include "Lights.h"
 #include "ResourceManager.h"
-#include"ParticleSystem.h"
+#include "ParticleSystem.h"
 
 
 // Represents the current state of the game
@@ -88,6 +88,7 @@ private:
 	//coral models
 	
 	vector<Coral* >corals;
+	float mixValue;
 	vector<ParticleSystem*> coralParticles;
 
 };

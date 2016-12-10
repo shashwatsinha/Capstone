@@ -4,6 +4,7 @@
 
 Coral::Coral()
 {
+	lerpColor = false;
 }
 
 
@@ -24,16 +25,29 @@ float Coral::DistanceFromPlayer(glm::vec3 playerPos)
 void Coral::IsParticleActivated(glm::vec3 pos)
 {
 	playerPos = pos;
-	if (DistanceFromPlayer(playerPos) > 2000)
+	if (DistanceFromPlayer(playerPos) > 200)
 	{
 		emitParticles = false;
 	}
 
 	else
+	{
 		emitParticles = true;
+		lerpColor = true;
+	}
 }
 
 bool Coral::ActivateParticles()
 {
 	return emitParticles;
+}
+
+void Coral::SetLerpColorStatus(bool status)
+{
+	lerpColor = status;
+}
+
+bool Coral::GetLerpColorStatus()
+{
+	return lerpColor;
 }

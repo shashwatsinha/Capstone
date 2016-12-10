@@ -15,8 +15,13 @@ public:
 
 	bool ActivateParticles();
 
+	bool GetLerpColorStatus();
+
+	void SetLerpColorStatus(bool status);
+
 private:
 	bool emitParticles;
+	bool lerpColor;
 	glm::vec3 playerPos;
 };
 
