@@ -72,6 +72,9 @@
     <ClCompile Include="Texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -134,6 +137,9 @@
     <ClInclude Include="Texture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\vertexShader_Skybox.vs">
@@ -159,6 +165,12 @@
     </None>
     <None Include="Shaders\fragmentShader_Skysphere.frag">
       <Filter>Source Files</Filter>
+    </None>
+    <None Include="Shaders\particle.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\particle.frag">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -162,6 +162,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="NormalEnemy.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinystr.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="NormalEnemy.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Shader.h" />
@@ -199,6 +201,8 @@
     <None Include="Shaders\fragmentShader_LightContainer.frag" />
     <None Include="Shaders\fragmentShader_Skybox.frag" />
     <None Include="Shaders\fragmentShader_Skysphere.frag" />
+    <None Include="Shaders\particle.frag" />
+    <None Include="Shaders\particle.vs" />
     <None Include="Shaders\vertexShader_default.vs" />
     <None Include="Shaders\vertexShader_LightContainer.vs" />
     <None Include="Shaders\vertexShader_Skybox.vs" />

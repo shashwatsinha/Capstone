@@ -56,6 +56,30 @@ void Game::Init()
 	sphere.InitPath("Models/Sphere/sphere.obj");
 	sphere.SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
 	sphere.SetScale(glm::vec3(3.0f, 3.0f, 3.0f));
+
+	//loading resources
+	ResourceManager::LoadShader("Shaders/particle.vs", "Shaders/particle.frag", nullptr, "particle");
+	ResourceManager::LoadTexture("Textures/fireParticle.png", GL_TRUE, "particle");
+	particlesystem1 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	particlesystem1->age = 1.0f;
+	particlesystem1->initialPosition = glm::vec3(0.5, 0.5, 60.0);
+	particlesystem1->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	particlesystem1->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	particlesystem1->startVelocityMin = 0.1f;
+	particlesystem1->startVelocityRange = 0.1f;
+	particlesystem1->scale = 0.1f;
+
+
+
+	particlesystem2 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	particlesystem2->age = 10.0f;
+	particlesystem2->initialPosition = glm::vec3(-3, 3, 50);
+	//particlesystem2->acceleration = glm::vec2(0.0, 0.0);
+	particlesystem2->color = glm::vec4(0.1f, 0.8f, 0.4f, 1.0f);
+	particlesystem2->startVelocityMin = 0.1f;
+	particlesystem2->startVelocityRange = 0.1f;
+	particlesystem2->scale = 0.1f;
+
 }
 
 void Game::Update(GLfloat dt)
@@ -74,6 +98,8 @@ void Game::Update(GLfloat dt)
 	{
 		bullets[i]->UpdateCollider(dt);
 	}*/
+	particlesystem1->Update(dt, 2);
+	particlesystem2->Update(dt, 2);
 }
 
 
@@ -177,6 +203,54 @@ void Game::Render()
 	skySphereShader.SetFloat("iGlobalTime", timeValue);
 	sphere.Draw(&skySphereShader);
 	glDepthFunc(GL_LESS);
+
+	//add particles here
+
+	Shader particleShader = ResourceManager::GetShader("particle");
+	particleShader.Use();
+	view = Camera::instance()->GetViewMatrix();
+	particleShader.SetMatrix4("view", view);
+	particleShader.SetMatrix4("projection", projection);
+	glm::mat4 model;
+	//model = glm::translate(model, particle.Position);
+	model[0][0] = view[0][0];
+	model[0][1] = view[1][0];
+	model[0][2] = view[2][0];
+	model[1][0] = view[0][1];
+	model[1][1] = view[1][1];
+	model[1][2] = view[2][1];
+	model[2][0] = view[0][2];
+	model[2][1] = view[1][2];
+	model[2][2] = view[2][2];
+	particleShader.SetMatrix4("model", model);
+
+
+
+	/*particlesystem1->SetModelMatrix();
+	particlesystem1->SetMatrix("view", view);
+	particlesystem1->SetMatrix("projection", projection);*/
+
+	/*glm::mat4 model1;
+	model1[0][0] = view[0][0];
+	model1[0][1] = view[1][0];
+	model1[0][2] = view[2][0];
+	model1[1][0] = view[0][1];
+	model1[1][1] = view[1][1];
+	model1[1][2] = view[2][1];
+	model1[2][0] = view[0][2];
+	model1[2][1] = view[1][2];
+	model1[2][2] = view[2][2];*/
+
+
+	//particlesystem2->SetMatrix("view", view);
+	//particlesystem2->SetMatrix("projection", projection);
+	//particlesystem2->SetModelMatrix();
+	//particlesystem2->SetMatrix("model", model1);
+
+
+
+	particlesystem1->Draw();
+	particlesystem2->Draw();
 	
 	// Draw the skybox last
 	//glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content

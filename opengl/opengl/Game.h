@@ -21,6 +21,7 @@
 #include "Skybox.h"
 #include "Lights.h"
 #include "ResourceManager.h"
+#include"ParticleSystem.h"
 
 
 // Represents the current state of the game
@@ -76,6 +77,10 @@ private:
 
 	// Point Light Distance array. Do not add distances manually. The pre initialized array is based on the point light properties.
 	int pointLightDistance[9] = {7,13,20,32,50,65,100,160,200};
+
+	GLuint texture1;
+	ParticleSystem*  particlesystem1;
+	ParticleSystem*  particlesystem2;
 };
 
 #endif
