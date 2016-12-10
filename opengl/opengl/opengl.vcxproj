@@ -155,6 +155,7 @@
     <ClCompile Include="ActorFactory.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Coral.cpp" />
     <ClCompile Include="EnvironmentObject.cpp" />
     <ClCompile Include="FSM.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="ActorFactory.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Coral.h" />
     <ClInclude Include="EnvironmentObject.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="Game.h" />

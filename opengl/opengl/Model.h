@@ -56,6 +56,8 @@ public:
 
 	//virtual function
 	virtual void ProcessAI() {};
+
+
 	
 private:
 	/*  Model Data  */

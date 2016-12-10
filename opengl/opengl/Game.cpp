@@ -15,12 +15,55 @@ Game::~Game()
 
 void Game::Init()
 {
+	
 	// Load Default Shader
 	ResourceManager::LoadShader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag", nullptr, "default");
 
 	planet.InitPath("Models/Pink Planet/untitled1.obj");
 	planet.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	planet.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	//initializing corals
+	coral1.InitPath("Models/Corals/coral0.obj");
+	coral1.SetPosition(coralPosition1);
+	coral1.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	coral2.InitPath("Models/Corals/coral0.obj");
+	coral2.SetPosition(coralPosition2);
+	coral2.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	coral3.InitPath("Models/Corals/coral0.obj");
+	coral3.SetPosition(coralPosition3);
+	coral3.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	coral4.InitPath("Models/Corals/coral0.obj");
+	coral4.SetPosition(coralPosition4);
+	coral4.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	coral5.InitPath("Models/Corals/coral0.obj");
+	coral5.SetPosition(coralPosition5);
+	coral5.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	coral6.InitPath("Models/Corals/coral0.obj");
+	coral6.SetPosition(coralPosition6);
+	coral6.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	coral7.InitPath("Models/Corals/coral0.obj");
+	coral7.SetPosition(coralPosition7);
+	coral7.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	coral8.InitPath("Models/Corals/coral0.obj");
+	coral8.SetPosition(coralPosition8);
+	coral8.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	coral9.InitPath("Models/Corals/coral0.obj");
+	coral9.SetPosition(coralPosition9);
+	coral9.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	coral10.InitPath("Models/Corals/coral0.obj");
+	coral10.SetPosition(coralPosition10);
+	coral10.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
 
 	//spaceShip.InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
 	//spaceShip.SetPosition(glm::vec3(0.0f, -1.75f, 2.0f));
@@ -80,6 +123,97 @@ void Game::Init()
 	particlesystem2->startVelocityRange = 0.1f;
 	particlesystem2->scale = 0.1f;
 
+	//coral particle system
+	coralParticle1 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	coralParticle1->age = 10.0f;
+	coralParticle1->initialPosition = coralPosition1;
+	coralParticle1->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	coralParticle1->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	coralParticle1->startVelocityMin = 0.1f;
+	coralParticle1->startVelocityRange = 0.1f;
+	coralParticle1->scale = 0.1f;
+
+	coralParticle2 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	coralParticle2->age = 10.0f;
+	coralParticle2->initialPosition = coralPosition2;
+	coralParticle2->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	coralParticle2->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	coralParticle2->startVelocityMin = 0.1f;
+	coralParticle2->startVelocityRange = 0.1f;
+	coralParticle2->scale = 0.1f;
+
+	coralParticle3 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	coralParticle3->age = 10.0f;
+	coralParticle3->initialPosition = coralPosition3;
+	coralParticle3->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	coralParticle3->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	coralParticle3->startVelocityMin = 0.1f;
+	coralParticle3->startVelocityRange = 0.1f;
+	coralParticle3->scale = 0.1f;
+
+	coralParticle4 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	coralParticle4->age = 10.0f;
+	coralParticle4->initialPosition = coralPosition4;
+	coralParticle4->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	coralParticle4->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	coralParticle4->startVelocityMin = 0.1f;
+	coralParticle4->startVelocityRange = 0.1f;
+	coralParticle4->scale = 0.1f;
+
+	coralParticle5 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	coralParticle5->age = 10.0f;
+	coralParticle5->initialPosition = coralPosition5;
+	coralParticle5->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	coralParticle5->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	coralParticle5->startVelocityMin = 0.1f;
+	coralParticle5->startVelocityRange = 0.1f;
+	coralParticle5->scale = 0.1f;
+
+	coralParticle6 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	coralParticle6->age = 10.0f;
+	coralParticle6->initialPosition = coralPosition6;
+	coralParticle6->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	coralParticle6->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	coralParticle6->startVelocityMin = 0.1f;
+	coralParticle6->startVelocityRange = 0.1f;
+	coralParticle6->scale = 0.1f;
+
+	coralParticle7 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	coralParticle7->age = 10.0f;
+	coralParticle7->initialPosition = coralPosition7;
+	coralParticle7->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	coralParticle7->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	coralParticle7->startVelocityMin = 0.1f;
+	coralParticle7->startVelocityRange = 0.1f;
+	coralParticle7->scale = 0.1f;
+
+	coralParticle8 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	coralParticle8->age = 10.0f;
+	coralParticle8->initialPosition = coralPosition8;
+	coralParticle8->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	coralParticle8->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	coralParticle8->startVelocityMin = 0.1f;
+	coralParticle8->startVelocityRange = 0.1f;
+	coralParticle8->scale = 0.1f;
+
+	coralParticle9 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	coralParticle9->age = 10.0f;
+	coralParticle9->initialPosition = coralPosition9;
+	coralParticle9->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	coralParticle9->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	coralParticle9->startVelocityMin = 0.1f;
+	coralParticle9->startVelocityRange = 0.1f;
+	coralParticle9->scale = 0.1f;
+
+	coralParticle10 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	coralParticle10->age = 10.0f;
+	coralParticle10->initialPosition = coralPosition10;
+	coralParticle10->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	coralParticle10->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	coralParticle10->startVelocityMin = 0.1f;
+	coralParticle10->startVelocityRange = 0.1f;
+	coralParticle10->scale = 0.1f;
+
 }
 
 void Game::Update(GLfloat dt)
@@ -100,6 +234,18 @@ void Game::Update(GLfloat dt)
 	}*/
 	particlesystem1->Update(dt, 2);
 	particlesystem2->Update(dt, 2);
+	//coral particle update
+	coralParticle1->Update(dt, 2);
+	coralParticle2->Update(dt, 2);
+	coralParticle3->Update(dt, 2);
+	coralParticle4->Update(dt, 2);
+	coralParticle5->Update(dt, 2);
+	coralParticle6->Update(dt, 2);
+	coralParticle7->Update(dt, 2);
+	coralParticle8->Update(dt, 2);
+	coralParticle9->Update(dt, 2);
+	coralParticle10->Update(dt, 2);
+	//coral.SetPosition(coralPosition);
 }
 
 
@@ -116,17 +262,43 @@ void Game::ProcessInput(GLfloat dt)
 			Camera::instance()->ProcessKeyboard(LEFT, dt);
 		if (this->Keys[GLFW_KEY_D])
 			Camera::instance()->ProcessKeyboard(RIGHT, dt);
+		/*if (this->Keys[GLFW_KEY_I])
+		{
+			coralPosition.y += .25;
+		}
+		if (this->Keys[GLFW_KEY_K])
+		{
+			coralPosition.y -= .25;
+		}
+		if (this->Keys[GLFW_KEY_J])
+		{
+			coralPosition.z += .25;
+		}
+		if (this->Keys[GLFW_KEY_L])
+		{
+			coralPosition.z -= .25;
+		}
+		if (this->Keys[GLFW_KEY_U])
+		{
+			coralPosition.x += .25;
+		}
+		if (this->Keys[GLFW_KEY_O])
+		{
+			coralPosition.x -= .25;
+		}*/
 		
 		if (this->Keys[GLFW_KEY_SPACE])
 		{
-			currentBulletFired = glfwGetTime();
+			/*currentBulletFired = glfwGetTime();
 			float shootInterval = currentBulletFired - previousBulletFired;
 			if (shootInterval > 0.1f)
 			{
 				Shoot();
 			}
 
-			previousBulletFired = currentBulletFired;
+			previousBulletFired = currentBulletFired;*/
+			//std::cout << coralPosition.x << coralPosition.y << coralPosition.z << std::endl;
+			//cout << "Bezier " << coralPosition.x << " " << coralPosition.y << " " << coralPosition.z << endl;
 		}
 	}
 }
@@ -171,6 +343,17 @@ void Game::Render()
 	//spaceShip.Draw(&shader);
 
 	planet.Draw(&shader);
+	coral1.Draw(&shader);
+	coral2.Draw(&shader);
+	coral3.Draw(&shader);
+	coral4.Draw(&shader);
+	coral5.Draw(&shader);
+	coral6.Draw(&shader);
+	coral7.Draw(&shader);
+	coral8.Draw(&shader);
+	coral9.Draw(&shader);
+	coral10.Draw(&shader);
+
 	
 	/*for (int i = 0; i < physicsObjects.size(); i++)
 	{
@@ -251,6 +434,17 @@ void Game::Render()
 
 	particlesystem1->Draw();
 	particlesystem2->Draw();
+	//coral particle draw
+	coralParticle1->Draw();
+	coralParticle2->Draw();
+	coralParticle3->Draw();
+	coralParticle4->Draw();
+	coralParticle5->Draw();
+	coralParticle6->Draw();
+	coralParticle7->Draw();
+	coralParticle8->Draw();
+	coralParticle9->Draw();
+	coralParticle10->Draw();
 	
 	// Draw the skybox last
 	//glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
