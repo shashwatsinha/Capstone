@@ -34,42 +34,19 @@ public:
 	vector<GLuint> GetIndices();
 	vector<Texture> GetTextures();
 
-	Matrix4f & GetMatrix();
-	Vector3f        Pos;
-	Quatf           Rot;
-	Matrix4f        Mat;
-
-	int             numVertices, numIndices;
-	Vertex       Vertices[2000]; //Note fixed maximum
-	uint16_t     Indices[2000];
-	ShaderFill * Fill;
-
 
 	/*  Functions   */
 	// Constructor, expects a filepath to a 3D model.
 	Model();
-
-	void AllocateBuffers();
-
-	void SetShaderFill(ShaderFill * Fill);
-
-
 
 	void InitPath(GLchar* path);
 
 	// Draws the model, and thus all its meshes
 	void Draw(Shader *shader);
 
-	void DrawVR(Shader * shader);
-
 	//Set the position of the model
 	void SetPosition(glm::vec3);
 
-	void AddVertex(const Vertex & v);
-
-	void AddIndex(GLushort a);
-
-	void AddSolidColorBox(float x1, float y1, float z1, float x2, float y2, float z2, DWORD c);
 
 	//Get the position of the model
 	glm::vec3 GetPosition();

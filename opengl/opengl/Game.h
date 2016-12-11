@@ -55,6 +55,14 @@ public:
 	GameState              State;
 	GLboolean              Keys[1024];
 	GLuint                 Width, Height;
+	bool isVR = false;
+	bool Running = true;
+	GLFWwindow* window;
+	string windowTitle ;
+	GLfloat deltaTime = 0.0f;
+	GLfloat lastFrame = 0.0f;
+	bool retryCreate = true;
+
 	// Constructor/Destructor
 	Game(GLuint width, GLuint height);
 	~Game();
@@ -64,10 +72,15 @@ public:
 	void ProcessInput(GLfloat dt);
 	void Update(GLfloat dt);
 	void Render();
-	void RenderVR();
 
 	// Other methods specific for our game
 	void GenerateEnvironment();
+	ovrGraphicsLuid GetDefaultAdapterLuid();
+	int Compare(const ovrGraphicsLuid & lhs, const ovrGraphicsLuid & rhs);
+	bool RenderOculus();
+	void RunVR();
+	//void Run(bool(*MainLoop)(bool retryCreate));
+	double calcFPS(double theTimeInterval, string theWindowTitle);
 	bool IsPositionValid(std::tuple<int, int, int>, int typeOfObject);
 	void DetectCollisions();
 	void Shoot();

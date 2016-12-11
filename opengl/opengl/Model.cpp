@@ -7,17 +7,8 @@ Model::Model()
 }
 
 
-void Model::SetShaderFill(ShaderFill * fill)
-{
-	this->Fill = fill;
-}
 
-Matrix4f& Model::GetMatrix()
-{
-	Mat = Matrix4f(Rot);
-	Mat = Matrix4f::Translation(Pos) * Mat;
-	return Mat;
-}
+
 
 vector<Vertex> Model::GetVertices()
 {
@@ -67,34 +58,13 @@ void Model::Draw(Shader *shader)
 		this->meshes[i].Draw(shader);
 }
 
-void Model::DrawVR(Shader *shader)
-{
 
-	glm::mat4 model;
-	model = glm::translate(model, position) * glm::scale(model, scale) * glm::toMat4(rotation);
-
-	glUseProgram(shader->ID);
-	glUniform1i(glGetUniformLocation(shader->ID, "Texture0"), 0);
-	glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
-
-	for (GLuint i = 0; i < this->meshes.size(); i++)
-		this->meshes[i].Draw(shader);
-
-}
 
 void Model::SetPosition(glm::vec3 pos)
 {
 	position = pos;
-	Pos = (Vector3f(pos.x, pos.y, pos.z));
 }
 
-void Model::AddVertex(const Vertex& v) { Vertices[numVertices++] = v; }
-void Model::AddIndex(GLushort a) { Indices[numIndices++] = a; }
-
-void Model::AddSolidColorBox(float x1, float y1, float z1, float x2, float y2, float z2, DWORD c)
-{
-	
-}
 
 glm::vec3 Model::GetPosition()
 {
