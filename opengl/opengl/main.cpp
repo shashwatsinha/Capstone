@@ -1,4 +1,8 @@
 #define GLEW_STATIC
+#include <al.h>
+#include <alc.h>
+#define NUM_BUFFERS 3
+#define BUFFER_SIZE 4096
 #include "Game.h"
 
 #pragma comment(lib, "glfw3.lib")
@@ -9,6 +13,9 @@
 #pragma comment(lib, "assimp-vc130-mt.lib")
 
 #include <iostream>
+
+#include "Framework.h"
+#define	TEST_WAVE_FILE		"Footsteps.wav"
 
 GLuint screenWidth = 800, screenHeight = 600;
 
@@ -30,10 +37,79 @@ string windowTitle = "OurGame";
 
 Game game(screenWidth, screenHeight);
 
-bool isVR = true;
+bool isVR = false;
 
-int main()
+static void list_audio_devices(const ALCchar *devices)
 {
+	const ALCchar *device = devices, *next = devices + 1;
+	size_t len = 0;
+
+	fprintf(stdout, "Devices list:\n");
+	fprintf(stdout, "----------\n");
+	while (device && *device != '\0' && next && *next != '\0') {
+		fprintf(stdout, "%s\n", device);
+		len = strlen(device);
+		device += (len + 1);
+		next += (len + 2);
+	}
+	fprintf(stdout, "----------\n");
+}
+
+int main(int argc, char **argv)
+{
+
+	
+	ALuint      uiBuffer;
+	ALuint      uiSource;
+	ALint       iState;
+
+	// Initialize Framework
+	ALFWInit();
+
+	ALFWprintf("PlayStatic Test Application\n");
+
+	if (!ALFWInitOpenAL())
+	{
+		ALFWprintf("Failed to initialize OpenAL\n");
+		ALFWShutdown();
+		return 0;
+	}
+
+	// Generate an AL Buffer
+	alGenBuffers(1, &uiBuffer);
+
+	// Load Wave file into OpenAL Buffer
+	if (!ALFWLoadWaveToBuffer((char*)ALFWaddMediaPath(TEST_WAVE_FILE), uiBuffer))
+	{
+		ALFWprintf("Failed to load %s\n", ALFWaddMediaPath(TEST_WAVE_FILE));
+	}
+
+	// Generate a Source to playback the Buffer
+	alGenSources(1, &uiSource);
+
+	// Attach Source to Buffer
+	alSourcei(uiSource, AL_BUFFER, uiBuffer);
+
+	// Play Source
+	alSourcePlay(uiSource);
+	ALFWprintf("Playing Source ");
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
 	// Start Game within Menu State
 	game.State = GAME_ACTIVE;
 
@@ -69,11 +145,20 @@ int main()
 	else
 	{
 
+		
+
 		// Initialize game
 		game.Init();
 
 		while (!glfwWindowShouldClose(window))
 		{
+			ALFWprintf(".");
+			// Get Source State
+			alGetSourcei(uiSource, AL_SOURCE_STATE, &iState);
+			if (iState != AL_PLAYING)
+				alSourcePlay(uiSource);
+
+
 			calcFPS(1.0, windowTitle);
 
 			// Set frame time
@@ -102,6 +187,16 @@ int main()
 	}
 
 	ResourceManager::Clear();
+
+
+	// Clean up by deleting Source(s) and Buffer(s)
+	alSourceStop(uiSource);
+	alDeleteSources(1, &uiSource);
+	alDeleteBuffers(1, &uiBuffer);
+
+	ALFWShutdownOpenAL();
+
+	ALFWShutdown();
 
 	glfwTerminate();
 	return 0;

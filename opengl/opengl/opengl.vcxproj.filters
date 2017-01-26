@@ -84,6 +84,18 @@
     <ClCompile Include="ThirdParty\OculusSDK\LibOVRKernel\Src\GL\CAPI_GLE.cpp">
       <Filter>GLE</Filter>
     </ClCompile>
+    <ClCompile Include="aldlist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CWaves.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadOAL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -160,6 +172,18 @@
     </ClInclude>
     <ClInclude Include="ThirdParty\OculusSDK\LibOVRKernel\Src\GL\CAPI_GLE_GL.h">
       <Filter>GLE</Filter>
+    </ClInclude>
+    <ClInclude Include="aldlist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CWaves.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadOAL.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
