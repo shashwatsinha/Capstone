@@ -1,7 +1,7 @@
 ﻿  CAPI_GLE.cpp
   Texture2D.cpp
   SphereCollider.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\spherecollider.cpp(22): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\spherecollider.cpp(22): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
   tinyxmlparser.cpp
   tinyxmlerror.cpp
   tinyxml2.cpp
@@ -11,48 +11,339 @@ z:\igmprofile\desktop\github\capstone\opengl\opengl\spherecollider.cpp(22): warn
   ResourceManager.cpp
   ParticleSystem.cpp
   NormalEnemy.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\normalenemy.cpp(77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\normalenemy.cpp(169): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\normalenemy.cpp(175): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\normalenemy.cpp(176): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\normalenemy.cpp(177): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\normalenemy.cpp(209): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\normalenemy.cpp(212): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\normalenemy.cpp(77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\normalenemy.cpp(169): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\normalenemy.cpp(175): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\normalenemy.cpp(176): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\normalenemy.cpp(177): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\normalenemy.cpp(209): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\normalenemy.cpp(212): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Model.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   Mesh.cpp
   main.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\main.cpp(2): fatal error C1083: Cannot open include file: 'al.h': No such file or directory
+d:\profiles\ss6638\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\main.cpp(120): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\main.cpp(165): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\main.cpp(226): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\main.cpp(227): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\main.cpp(231): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\main.cpp(232): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\main.cpp(234): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\main.cpp(235): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\main.cpp(242): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
   LoadOAL.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\loadoal.h(1): fatal error C1083: Cannot open include file: 'al.h': No such file or directory
   Game.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\game.cpp(390): warning C4267: 'argument': conversion from 'size_t' to 'GLint', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\game.cpp(415): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\game.cpp(464): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\game.cpp(556): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\game.cpp(557): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\game.cpp(558): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\game.cpp(623): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\game.cpp(958): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(415): warning C4267: 'argument': conversion from 'size_t' to 'GLint', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(444): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(493): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(585): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(586): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(587): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(652): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(987): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
   FSM.cpp
   Framework.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\framework.h(10): fatal error C1083: Cannot open include file: 'al.h': No such file or directory
+d:\profiles\ss6638\capstone\opengl\opengl\framework.cpp(209): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
   EnvironmentObject.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\environmentobject.cpp(22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Generating Code...
   Compiling...
   CWaves.cpp
   Coral.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   Camera.cpp
   Bullet.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\bullet.cpp(77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-z:\igmprofile\desktop\github\capstone\opengl\opengl\bullet.cpp(80): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\bullet.cpp(77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\bullet.cpp(80): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   aldlist.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\loadoal.h(1): fatal error C1083: Cannot open include file: 'al.h': No such file or directory
   ActorFactory.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\mesh.h(79): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   Generating Code...
+Game.obj : error LNK2001: unresolved external symbol __imp_wglDeleteContext
+main.obj : error LNK2001: unresolved external symbol __imp_wglDeleteContext
+Model.obj : error LNK2001: unresolved external symbol __imp_wglDeleteContext
+NormalEnemy.obj : error LNK2001: unresolved external symbol __imp_wglDeleteContext
+ActorFactory.obj : error LNK2001: unresolved external symbol __imp_wglDeleteContext
+Bullet.obj : error LNK2001: unresolved external symbol __imp_wglDeleteContext
+Coral.obj : error LNK2001: unresolved external symbol __imp_wglDeleteContext
+EnvironmentObject.obj : error LNK2001: unresolved external symbol __imp_wglDeleteContext
+Game.obj : error LNK2001: unresolved external symbol __imp_wglMakeCurrent
+main.obj : error LNK2001: unresolved external symbol __imp_wglMakeCurrent
+Model.obj : error LNK2001: unresolved external symbol __imp_wglMakeCurrent
+NormalEnemy.obj : error LNK2001: unresolved external symbol __imp_wglMakeCurrent
+ActorFactory.obj : error LNK2001: unresolved external symbol __imp_wglMakeCurrent
+Bullet.obj : error LNK2001: unresolved external symbol __imp_wglMakeCurrent
+Coral.obj : error LNK2001: unresolved external symbol __imp_wglMakeCurrent
+EnvironmentObject.obj : error LNK2001: unresolved external symbol __imp_wglMakeCurrent
+Game.obj : error LNK2001: unresolved external symbol __imp_UnregisterClassW
+main.obj : error LNK2001: unresolved external symbol __imp_UnregisterClassW
+Model.obj : error LNK2001: unresolved external symbol __imp_UnregisterClassW
+NormalEnemy.obj : error LNK2001: unresolved external symbol __imp_UnregisterClassW
+ActorFactory.obj : error LNK2001: unresolved external symbol __imp_UnregisterClassW
+Bullet.obj : error LNK2001: unresolved external symbol __imp_UnregisterClassW
+Coral.obj : error LNK2001: unresolved external symbol __imp_UnregisterClassW
+EnvironmentObject.obj : error LNK2001: unresolved external symbol __imp_UnregisterClassW
+Game.obj : error LNK2001: unresolved external symbol __imp_DestroyWindow
+main.obj : error LNK2001: unresolved external symbol __imp_DestroyWindow
+Model.obj : error LNK2001: unresolved external symbol __imp_DestroyWindow
+NormalEnemy.obj : error LNK2001: unresolved external symbol __imp_DestroyWindow
+ActorFactory.obj : error LNK2001: unresolved external symbol __imp_DestroyWindow
+Bullet.obj : error LNK2001: unresolved external symbol __imp_DestroyWindow
+Coral.obj : error LNK2001: unresolved external symbol __imp_DestroyWindow
+EnvironmentObject.obj : error LNK2001: unresolved external symbol __imp_DestroyWindow
+Game.obj : error LNK2001: unresolved external symbol __imp_ReleaseDC
+main.obj : error LNK2001: unresolved external symbol __imp_ReleaseDC
+Model.obj : error LNK2001: unresolved external symbol __imp_ReleaseDC
+NormalEnemy.obj : error LNK2001: unresolved external symbol __imp_ReleaseDC
+ActorFactory.obj : error LNK2001: unresolved external symbol __imp_ReleaseDC
+Bullet.obj : error LNK2001: unresolved external symbol __imp_ReleaseDC
+Coral.obj : error LNK2001: unresolved external symbol __imp_ReleaseDC
+EnvironmentObject.obj : error LNK2001: unresolved external symbol __imp_ReleaseDC
+Game.obj : error LNK2001: unresolved external symbol __imp___glewDeleteFramebuffers
+Model.obj : error LNK2001: unresolved external symbol __imp___glewDeleteFramebuffers
+NormalEnemy.obj : error LNK2001: unresolved external symbol __imp___glewDeleteFramebuffers
+ActorFactory.obj : error LNK2001: unresolved external symbol __imp___glewDeleteFramebuffers
+Bullet.obj : error LNK2001: unresolved external symbol __imp___glewDeleteFramebuffers
+Coral.obj : error LNK2001: unresolved external symbol __imp___glewDeleteFramebuffers
+EnvironmentObject.obj : error LNK2001: unresolved external symbol __imp___glewDeleteFramebuffers
+Framework.obj : error LNK2019: unresolved external symbol __imp_alGetError referenced in function "char __cdecl ALFWLoadWaveToBuffer(char const *,unsigned int,int)" (?ALFWLoadWaveToBuffer@@YADPEBDIH@Z)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alIsExtensionPresent referenced in function "char __cdecl ALFWIsXRAMSupported(void)" (?ALFWIsXRAMSupported@@YADXZ)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alGetProcAddress referenced in function "char __cdecl ALFWIsEFXSupported(void)" (?ALFWIsEFXSupported@@YADXZ)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alGetEnumValue referenced in function "char __cdecl ALFWIsXRAMSupported(void)" (?ALFWIsXRAMSupported@@YADXZ)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alBufferData referenced in function "char __cdecl ALFWLoadWaveToBuffer(char const *,unsigned int,int)" (?ALFWLoadWaveToBuffer@@YADPEBDIH@Z)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alcCreateContext referenced in function "char __cdecl ALFWInitOpenAL(void)" (?ALFWInitOpenAL@@YADXZ)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alcMakeContextCurrent referenced in function "char __cdecl ALFWInitOpenAL(void)" (?ALFWInitOpenAL@@YADXZ)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alcDestroyContext referenced in function "char __cdecl ALFWShutdownOpenAL(void)" (?ALFWShutdownOpenAL@@YADXZ)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alcGetCurrentContext referenced in function "char __cdecl ALFWIsEFXSupported(void)" (?ALFWIsEFXSupported@@YADXZ)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alcGetContextsDevice referenced in function "char __cdecl ALFWIsEFXSupported(void)" (?ALFWIsEFXSupported@@YADXZ)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alcOpenDevice referenced in function "char __cdecl ALFWInitOpenAL(void)" (?ALFWInitOpenAL@@YADXZ)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alcCloseDevice referenced in function "char __cdecl ALFWInitOpenAL(void)" (?ALFWInitOpenAL@@YADXZ)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alcIsExtensionPresent referenced in function "char __cdecl ALFWIsEFXSupported(void)" (?ALFWIsEFXSupported@@YADXZ)
+Framework.obj : error LNK2019: unresolved external symbol __imp_alcGetString referenced in function "char __cdecl ALFWInitOpenAL(void)" (?ALFWInitOpenAL@@YADXZ)
+Game.obj : error LNK2019: unresolved external symbol __imp_glBindTexture referenced in function "public: __cdecl DepthBuffer::DepthBuffer(class OVR::Size<int>,int)" (??0DepthBuffer@@QEAA@V?$Size@H@OVR@@H@Z)
+Model.obj : error LNK2001: unresolved external symbol __imp_glBindTexture
+Texture2D.obj : error LNK2001: unresolved external symbol __imp_glBindTexture
+Game.obj : error LNK2019: unresolved external symbol __imp_glClear referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+main.obj : error LNK2001: unresolved external symbol __imp_glClear
+Game.obj : error LNK2019: unresolved external symbol __imp_glClearColor referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+main.obj : error LNK2001: unresolved external symbol __imp_glClearColor
+Game.obj : error LNK2019: unresolved external symbol __imp_glDeleteTextures referenced in function "public: __cdecl DepthBuffer::~DepthBuffer(void)" (??1DepthBuffer@@QEAA@XZ)
+ResourceManager.obj : error LNK2001: unresolved external symbol __imp_glDeleteTextures
+Game.obj : error LNK2019: unresolved external symbol __imp_glDepthFunc referenced in function "public: void __cdecl Game::Render(void)" (?Render@Game@@QEAAXXZ)
+main.obj : error LNK2001: unresolved external symbol __imp_glDepthFunc
+Game.obj : error LNK2019: unresolved external symbol __imp_glEnable referenced in function "public: void __cdecl TextureBuffer::SetAndClearRenderSurface(struct DepthBuffer *)" (?SetAndClearRenderSurface@TextureBuffer@@QEAAXPEAUDepthBuffer@@@Z)
+main.obj : error LNK2001: unresolved external symbol __imp_glEnable
+ParticleSystem.obj : error LNK2001: unresolved external symbol __imp_glEnable
+Game.obj : error LNK2019: unresolved external symbol __imp_glGenTextures referenced in function "public: __cdecl DepthBuffer::DepthBuffer(class OVR::Size<int>,int)" (??0DepthBuffer@@QEAA@V?$Size@H@OVR@@H@Z)
+Model.obj : error LNK2001: unresolved external symbol __imp_glGenTextures
+Texture2D.obj : error LNK2001: unresolved external symbol __imp_glGenTextures
+Game.obj : error LNK2019: unresolved external symbol __imp_glTexImage2D referenced in function "public: __cdecl DepthBuffer::DepthBuffer(class OVR::Size<int>,int)" (??0DepthBuffer@@QEAA@V?$Size@H@OVR@@H@Z)
+Model.obj : error LNK2001: unresolved external symbol __imp_glTexImage2D
+Texture2D.obj : error LNK2001: unresolved external symbol __imp_glTexImage2D
+Game.obj : error LNK2019: unresolved external symbol __imp_glTexParameteri referenced in function "public: __cdecl DepthBuffer::DepthBuffer(class OVR::Size<int>,int)" (??0DepthBuffer@@QEAA@V?$Size@H@OVR@@H@Z)
+Model.obj : error LNK2001: unresolved external symbol __imp_glTexParameteri
+Texture2D.obj : error LNK2001: unresolved external symbol __imp_glTexParameteri
+Game.obj : error LNK2019: unresolved external symbol __imp_glViewport referenced in function "public: void __cdecl TextureBuffer::SetAndClearRenderSurface(struct DepthBuffer *)" (?SetAndClearRenderSurface@TextureBuffer@@QEAAXPEAUDepthBuffer@@@Z)
+main.obj : error LNK2001: unresolved external symbol __imp_glViewport
+Game.obj : error LNK2019: unresolved external symbol glfwWindowShouldClose referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+main.obj : error LNK2001: unresolved external symbol glfwWindowShouldClose
+Game.obj : error LNK2019: unresolved external symbol glfwSetWindowTitle referenced in function "public: double __cdecl Game::calcFPS(double,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?calcFPS@Game@@QEAANNV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+main.obj : error LNK2001: unresolved external symbol glfwSetWindowTitle
+Game.obj : error LNK2019: unresolved external symbol glfwPollEvents referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+main.obj : error LNK2001: unresolved external symbol glfwPollEvents
+Game.obj : error LNK2019: unresolved external symbol glfwGetTime referenced in function "public: void __cdecl Game::Render(void)" (?Render@Game@@QEAAXXZ)
+main.obj : error LNK2001: unresolved external symbol glfwGetTime
+NormalEnemy.obj : error LNK2001: unresolved external symbol glfwGetTime
+Game.obj : error LNK2019: unresolved external symbol glfwSwapBuffers referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+main.obj : error LNK2001: unresolved external symbol glfwSwapBuffers
+Game.obj : error LNK2019: unresolved external symbol __imp_MessageBoxA referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+main.obj : error LNK2001: unresolved external symbol __imp_MessageBoxA
+Game.obj : error LNK2019: unresolved external symbol ovr_GetHmdDesc referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_Create referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_Destroy referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_GetSessionStatus referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_SetTrackingOriginType referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_RecenterTrackingOrigin referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_GetTextureSwapChainLength referenced in function "public: __cdecl TextureBuffer::TextureBuffer(struct ovrHmdStruct *,bool,bool,class OVR::Size<int>,int,unsigned char *,int)" (??0TextureBuffer@@QEAA@PEAUovrHmdStruct@@_N1V?$Size@H@OVR@@HPEAEH@Z)
+Game.obj : error LNK2019: unresolved external symbol ovr_GetTextureSwapChainCurrentIndex referenced in function "public: void __cdecl TextureBuffer::SetAndClearRenderSurface(struct DepthBuffer *)" (?SetAndClearRenderSurface@TextureBuffer@@QEAAXPEAUDepthBuffer@@@Z)
+Game.obj : error LNK2019: unresolved external symbol ovr_CommitTextureSwapChain referenced in function "public: void __cdecl TextureBuffer::Commit(void)" (?Commit@TextureBuffer@@QEAAXXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_DestroyTextureSwapChain referenced in function "public: __cdecl TextureBuffer::~TextureBuffer(void)" (??1TextureBuffer@@QEAA@XZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_DestroyMirrorTexture referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_GetFovTextureSize referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_GetRenderDesc referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_SubmitFrame referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovrMatrix4f_Projection referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_GetEyePoses referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_CreateTextureSwapChainGL referenced in function "public: __cdecl TextureBuffer::TextureBuffer(struct ovrHmdStruct *,bool,bool,class OVR::Size<int>,int,unsigned char *,int)" (??0TextureBuffer@@QEAA@PEAUovrHmdStruct@@_N1V?$Size@H@OVR@@HPEAEH@Z)
+Game.obj : error LNK2019: unresolved external symbol ovr_GetTextureSwapChainBufferGL referenced in function "public: __cdecl TextureBuffer::TextureBuffer(struct ovrHmdStruct *,bool,bool,class OVR::Size<int>,int,unsigned char *,int)" (??0TextureBuffer@@QEAA@PEAUovrHmdStruct@@_N1V?$Size@H@OVR@@HPEAEH@Z)
+Game.obj : error LNK2019: unresolved external symbol ovr_CreateMirrorTextureGL referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol ovr_GetMirrorTextureBufferGL referenced in function "public: bool __cdecl Game::RenderOculus(void)" (?RenderOculus@Game@@QEAA_NXZ)
+Game.obj : error LNK2019: unresolved external symbol CreateDXGIFactory referenced in function "public: struct ovrGraphicsLuid_ __cdecl Game::GetDefaultAdapterLuid(void)" (?GetDefaultAdapterLuid@Game@@QEAA?AUovrGraphicsLuid_@@XZ)
+Game.obj : error LNK2001: unresolved external symbol __imp___glewGetUniformLocation
+Model.obj : error LNK2001: unresolved external symbol __imp___glewGetUniformLocation
+ParticleSystem.obj : error LNK2001: unresolved external symbol __imp___glewGetUniformLocation
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewGetUniformLocation
+Game.obj : error LNK2001: unresolved external symbol __imp___glewUniform1f
+Model.obj : error LNK2001: unresolved external symbol __imp___glewUniform1f
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewUniform1f
+Game.obj : error LNK2001: unresolved external symbol __imp___glewUniform3f
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewUniform3f
+Game.obj : error LNK2001: unresolved external symbol __imp___glewBindFramebuffer
+Game.obj : error LNK2001: unresolved external symbol __imp___glewBlitFramebuffer
+Game.obj : error LNK2001: unresolved external symbol __imp___glewFramebufferRenderbuffer
+Game.obj : error LNK2001: unresolved external symbol __imp___glewFramebufferTexture2D
+Game.obj : error LNK2001: unresolved external symbol __imp___glewGenFramebuffers
+Game.obj : error LNK2001: unresolved external symbol __imp___glewGenerateMipmap
+Model.obj : error LNK2001: unresolved external symbol __imp___glewGenerateMipmap
+LoadOAL.obj : error LNK2019: unresolved external symbol __imp_OutputDebugStringA referenced in function "char __cdecl LoadOAL10Library(char *,struct OPENALFNTABLE *)" (?LoadOAL10Library@@YADPEADPEAUOPENALFNTABLE@@@Z)
+LoadOAL.obj : error LNK2019: unresolved external symbol __imp_FreeLibrary referenced in function "void __cdecl UnloadOAL10Library(void)" (?UnloadOAL10Library@@YAXXZ)
+MSVCRTD.lib(_pdblkup_.obj) : error LNK2001: unresolved external symbol __imp_FreeLibrary
+LoadOAL.obj : error LNK2019: unresolved external symbol __imp_GetProcAddress referenced in function "char __cdecl LoadOAL10Library(char *,struct OPENALFNTABLE *)" (?LoadOAL10Library@@YADPEADPEAUOPENALFNTABLE@@@Z)
+MSVCRTD.lib(thread_safe_statics.obj) : error LNK2001: unresolved external symbol __imp_GetProcAddress
+MSVCRTD.lib(_pdblkup_.obj) : error LNK2001: unresolved external symbol __imp_GetProcAddress
+LoadOAL.obj : error LNK2019: unresolved external symbol __imp_LoadLibraryA referenced in function "char __cdecl LoadOAL10Library(char *,struct OPENALFNTABLE *)" (?LoadOAL10Library@@YADPEADPEAUOPENALFNTABLE@@@Z)
+main.obj : error LNK2019: unresolved external symbol __imp_alGenSources referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_alDeleteSources referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_alSourcei referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_alGetSourcei referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_alSourcePlay referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_alSourceStop referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_alGenBuffers referenced in function main
+main.obj : error LNK2019: unresolved external symbol __imp_alDeleteBuffers referenced in function main
+main.obj : error LNK2019: unresolved external symbol glewInit referenced in function "void __cdecl InitGLFW(void)" (?InitGLFW@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol glfwInit referenced in function "void __cdecl InitGLFW(void)" (?InitGLFW@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol glfwTerminate referenced in function main
+main.obj : error LNK2019: unresolved external symbol glfwWindowHint referenced in function "void __cdecl InitGLFW(void)" (?InitGLFW@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol glfwCreateWindow referenced in function "void __cdecl InitGLFW(void)" (?InitGLFW@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol glfwSetWindowShouldClose referenced in function "void __cdecl key_callback(struct GLFWwindow *,int,int,int,int)" (?key_callback@@YAXPEAUGLFWwindow@@HHHH@Z)
+main.obj : error LNK2019: unresolved external symbol glfwSetInputMode referenced in function "void __cdecl InitGLFW(void)" (?InitGLFW@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol glfwSetKeyCallback referenced in function "void __cdecl InitGLFW(void)" (?InitGLFW@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol glfwSetCursorPosCallback referenced in function "void __cdecl InitGLFW(void)" (?InitGLFW@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol glfwSetScrollCallback referenced in function "void __cdecl InitGLFW(void)" (?InitGLFW@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol glfwMakeContextCurrent referenced in function "void __cdecl InitGLFW(void)" (?InitGLFW@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol ovr_Initialize referenced in function main
+main.obj : error LNK2019: unresolved external symbol ovr_Shutdown referenced in function main
+main.obj : error LNK2001: unresolved external symbol __glewDeleteFramebuffers
+main.obj : error LNK2001: unresolved external symbol glewExperimental
+Model.obj : error LNK2019: unresolved external symbol __imp_glDrawElements referenced in function "public: void __cdecl Mesh::Draw(class Shader *)" (?Draw@Mesh@@QEAAXPEAVShader@@@Z)
+Model.obj : error LNK2019: unresolved external symbol SOIL_load_image referenced in function "int __cdecl TextureFromFile(char const *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?TextureFromFile@@YAHPEBDV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+ResourceManager.obj : error LNK2001: unresolved external symbol SOIL_load_image
+Model.obj : error LNK2019: unresolved external symbol SOIL_free_image_data referenced in function "int __cdecl TextureFromFile(char const *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?TextureFromFile@@YAHPEBDV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+ResourceManager.obj : error LNK2001: unresolved external symbol SOIL_free_image_data
+Model.obj : error LNK2019: unresolved external symbol "public: __cdecl Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QEAA@XZ) referenced in function "private: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?loadModel@Model@@AEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Model.obj : error LNK2019: unresolved external symbol "public: __cdecl Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QEAA@XZ) referenced in function "private: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?loadModel@Model@@AEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Model.obj : error LNK2019: unresolved external symbol "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(char const *,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@PEBDI@Z) referenced in function "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z)
+Model.obj : error LNK2019: unresolved external symbol "public: char const * __cdecl Assimp::Importer::GetErrorString(void)const " (?GetErrorString@Importer@Assimp@@QEBAPEBDXZ) referenced in function "private: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?loadModel@Model@@AEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Model.obj : error LNK2019: unresolved external symbol aiGetMaterialTextureCount referenced in function "public: unsigned int __cdecl aiMaterial::GetTextureCount(enum aiTextureType)const " (?GetTextureCount@aiMaterial@@QEBAIW4aiTextureType@@@Z)
+Model.obj : error LNK2019: unresolved external symbol aiGetMaterialTexture referenced in function "public: enum aiReturn __cdecl aiMaterial::GetTexture(enum aiTextureType,unsigned int,struct aiString *,enum aiTextureMapping *,unsigned int *,float *,enum aiTextureOp *,enum aiTextureMapMode *)const " (?GetTexture@aiMaterial@@QEBA?AW4aiReturn@@W4aiTextureType@@IPEAUaiString@@PEAW4aiTextureMapping@@PEAIPEAMPEAW4aiTextureOp@@PEAW4aiTextureMapMode@@@Z)
+Model.obj : error LNK2001: unresolved external symbol __imp___glewActiveTexture
+Model.obj : error LNK2001: unresolved external symbol __imp___glewBindBuffer
+ParticleSystem.obj : error LNK2001: unresolved external symbol __imp___glewBindBuffer
+Model.obj : error LNK2001: unresolved external symbol __imp___glewBufferData
+ParticleSystem.obj : error LNK2001: unresolved external symbol __imp___glewBufferData
+Model.obj : error LNK2001: unresolved external symbol __imp___glewGenBuffers
+ParticleSystem.obj : error LNK2001: unresolved external symbol __imp___glewGenBuffers
+Model.obj : error LNK2001: unresolved external symbol __imp___glewEnableVertexAttribArray
+ParticleSystem.obj : error LNK2001: unresolved external symbol __imp___glewEnableVertexAttribArray
+Model.obj : error LNK2001: unresolved external symbol __imp___glewUniform1i
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewUniform1i
+Model.obj : error LNK2001: unresolved external symbol __imp___glewUniformMatrix4fv
+ParticleSystem.obj : error LNK2001: unresolved external symbol __imp___glewUniformMatrix4fv
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewUniformMatrix4fv
+Model.obj : error LNK2001: unresolved external symbol __imp___glewVertexAttribPointer
+ParticleSystem.obj : error LNK2001: unresolved external symbol __imp___glewVertexAttribPointer
+Model.obj : error LNK2001: unresolved external symbol __imp___glewBindVertexArray
+ParticleSystem.obj : error LNK2001: unresolved external symbol __imp___glewBindVertexArray
+Model.obj : error LNK2001: unresolved external symbol __imp___glewGenVertexArrays
+ParticleSystem.obj : error LNK2001: unresolved external symbol __imp___glewGenVertexArrays
+ParticleSystem.obj : error LNK2019: unresolved external symbol __imp_glBlendFunc referenced in function "public: void __cdecl ParticleSystem::Draw(void)" (?Draw@ParticleSystem@@QEAAXXZ)
+ParticleSystem.obj : error LNK2019: unresolved external symbol __imp_glDisable referenced in function "public: void __cdecl ParticleSystem::Draw(void)" (?Draw@ParticleSystem@@QEAAXXZ)
+ParticleSystem.obj : error LNK2019: unresolved external symbol __imp_glDrawArrays referenced in function "public: void __cdecl ParticleSystem::Draw(void)" (?Draw@ParticleSystem@@QEAAXXZ)
+ResourceManager.obj : error LNK2001: unresolved external symbol __imp___glewDeleteProgram
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewAttachShader
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewCompileShader
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewCreateProgram
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewCreateShader
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewDeleteShader
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramInfoLog
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramiv
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderInfoLog
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderiv
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewLinkProgram
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewShaderSource
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewUniform2f
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewUniform4f
+Shader.obj : error LNK2001: unresolved external symbol __imp___glewUseProgram
+CAPI_GLE.obj : error LNK2019: unresolved external symbol __imp_wglGetCurrentDC referenced in function "public: void __cdecl OVR::GLEContext::InitPlatformExtensionSupport(void)" (?InitPlatformExtensionSupport@GLEContext@OVR@@QEAAXXZ)
+CAPI_GLE.obj : error LNK2019: unresolved external symbol __imp_wglGetProcAddress referenced in function "void * __cdecl OVR::GLEGetProcAddress(char const *)" (?GLEGetProcAddress@OVR@@YAPEAXPEBD@Z)
+CAPI_GLE.obj : error LNK2019: unresolved external symbol __imp_glGetError referenced in function "public: void __cdecl OVR::GLEContext::InitExtensionSupport(void)" (?InitExtensionSupport@GLEContext@OVR@@QEAAXXZ)
+CAPI_GLE.obj : error LNK2019: unresolved external symbol __imp_glGetIntegerv referenced in function "public: void __cdecl OVR::GLEContext::InitExtensionSupport(void)" (?InitExtensionSupport@GLEContext@OVR@@QEAAXXZ)
+CAPI_GLE.obj : error LNK2019: unresolved external symbol __imp_glGetString referenced in function "public: void __cdecl OVR::GLEContext::InitExtensionSupport(void)" (?InitExtensionSupport@GLEContext@OVR@@QEAAXXZ)
+MSVCRTD.lib(thread_safe_statics.obj) : error LNK2019: unresolved external symbol __imp_CloseHandle referenced in function "void __cdecl __scrt_uninitialize_thread_safe_statics(void)" (?__scrt_uninitialize_thread_safe_statics@@YAXXZ)
+MSVCRTD.lib(thread_safe_statics.obj) : error LNK2019: unresolved external symbol __imp_EnterCriticalSection referenced in function _Init_thread_lock
+MSVCRTD.lib(thread_safe_statics.obj) : error LNK2019: unresolved external symbol __imp_LeaveCriticalSection referenced in function _Init_thread_unlock
+MSVCRTD.lib(thread_safe_statics.obj) : error LNK2019: unresolved external symbol __imp_DeleteCriticalSection referenced in function "void __cdecl __scrt_uninitialize_thread_safe_statics(void)" (?__scrt_uninitialize_thread_safe_statics@@YAXXZ)
+MSVCRTD.lib(thread_safe_statics.obj) : error LNK2019: unresolved external symbol __imp_SetEvent referenced in function _Init_thread_notify
+MSVCRTD.lib(thread_safe_statics.obj) : error LNK2019: unresolved external symbol __imp_ResetEvent referenced in function _Init_thread_notify
+MSVCRTD.lib(thread_safe_statics.obj) : error LNK2019: unresolved external symbol __imp_WaitForSingleObjectEx referenced in function _Init_thread_wait
+MSVCRTD.lib(thread_safe_statics.obj) : error LNK2019: unresolved external symbol __imp_CreateEventW referenced in function "int __cdecl __scrt_initialize_thread_safe_statics(void)" (?__scrt_initialize_thread_safe_statics@@YAHXZ)
+MSVCRTD.lib(thread_safe_statics.obj) : error LNK2019: unresolved external symbol __imp_GetModuleHandleW referenced in function "int __cdecl __scrt_initialize_thread_safe_statics(void)" (?__scrt_initialize_thread_safe_statics@@YAHXZ)
+MSVCRTD.lib(utility_desktop.obj) : error LNK2001: unresolved external symbol __imp_GetModuleHandleW
+MSVCRTD.lib(_error_.obj) : error LNK2019: unresolved external symbol __imp_IsDebuggerPresent referenced in function "void __cdecl failwithmessage(void *,int,int,char const *)" (?failwithmessage@@YAXPEAXHHPEBD@Z)
+MSVCRTD.lib(utility_desktop.obj) : error LNK2001: unresolved external symbol __imp_IsDebuggerPresent
+MSVCRTD.lib(_error_.obj) : error LNK2019: unresolved external symbol __imp_RaiseException referenced in function "int __cdecl DebuggerProbe(unsigned long)" (?DebuggerProbe@@YAHK@Z)
+MSVCRTD.lib(_error_.obj) : error LNK2019: unresolved external symbol __imp_MultiByteToWideChar referenced in function "void __cdecl failwithmessage(void *,int,int,char const *)" (?failwithmessage@@YAXPEAXHHPEBD@Z)
+MSVCRTD.lib(_error_.obj) : error LNK2019: unresolved external symbol __imp_WideCharToMultiByte referenced in function "void __cdecl failwithmessage(void *,int,int,char const *)" (?failwithmessage@@YAXPEAXHHPEBD@Z)
+MSVCRTD.lib(gs_report.obj) : error LNK2019: unresolved external symbol __imp_RtlCaptureContext referenced in function capture_current_context
+MSVCRTD.lib(utility_desktop.obj) : error LNK2001: unresolved external symbol __imp_RtlCaptureContext
+MSVCRTD.lib(gs_report.obj) : error LNK2019: unresolved external symbol __imp_RtlLookupFunctionEntry referenced in function capture_current_context
+MSVCRTD.lib(utility_desktop.obj) : error LNK2001: unresolved external symbol __imp_RtlLookupFunctionEntry
+MSVCRTD.lib(gs_report.obj) : error LNK2019: unresolved external symbol __imp_RtlVirtualUnwind referenced in function capture_current_context
+MSVCRTD.lib(utility_desktop.obj) : error LNK2001: unresolved external symbol __imp_RtlVirtualUnwind
+MSVCRTD.lib(gs_report.obj) : error LNK2019: unresolved external symbol __imp_UnhandledExceptionFilter referenced in function __raise_securityfailure
+MSVCRTD.lib(utility_desktop.obj) : error LNK2001: unresolved external symbol __imp_UnhandledExceptionFilter
+MSVCRTD.lib(gs_report.obj) : error LNK2019: unresolved external symbol __imp_SetUnhandledExceptionFilter referenced in function __raise_securityfailure
+MSVCRTD.lib(utility_desktop.obj) : error LNK2001: unresolved external symbol __imp_SetUnhandledExceptionFilter
+MSVCRTD.lib(gs_report.obj) : error LNK2019: unresolved external symbol __imp_GetCurrentProcess referenced in function __raise_securityfailure
+MSVCRTD.lib(gs_report.obj) : error LNK2019: unresolved external symbol __imp_TerminateProcess referenced in function __raise_securityfailure
+MSVCRTD.lib(gs_report.obj) : error LNK2019: unresolved external symbol IsProcessorFeaturePresent referenced in function __report_gsfailure
+MSVCRTD.lib(utility_desktop.obj) : error LNK2001: unresolved external symbol IsProcessorFeaturePresent
+MSVCRTD.lib(utility_desktop.obj) : error LNK2019: unresolved external symbol __imp_GetStartupInfoW referenced in function __scrt_get_show_window_mode
+MSVCRTD.lib(_pdblkup_.obj) : error LNK2019: unresolved external symbol __imp_GetLastError referenced in function "struct HINSTANCE__ * __cdecl GetPdbDll(void)" (?GetPdbDll@@YAPEAUHINSTANCE__@@XZ)
+MSVCRTD.lib(_pdblkup_.obj) : error LNK2019: unresolved external symbol __imp_HeapAlloc referenced in function "int __cdecl _RTC_GetSrcLine(unsigned char *,wchar_t *,unsigned long,int *,wchar_t *,unsigned long)" (?_RTC_GetSrcLine@@YAHPEAEPEA_WKPEAH1K@Z)
+MSVCRTD.lib(_pdblkup_.obj) : error LNK2019: unresolved external symbol __imp_HeapFree referenced in function "int __cdecl _RTC_GetSrcLine(unsigned char *,wchar_t *,unsigned long,int *,wchar_t *,unsigned long)" (?_RTC_GetSrcLine@@YAHPEAEPEA_WKPEAH1K@Z)
+MSVCRTD.lib(_pdblkup_.obj) : error LNK2019: unresolved external symbol __imp_GetProcessHeap referenced in function "int __cdecl _RTC_GetSrcLine(unsigned char *,wchar_t *,unsigned long,int *,wchar_t *,unsigned long)" (?_RTC_GetSrcLine@@YAHPEAEPEA_WKPEAH1K@Z)
+MSVCRTD.lib(_pdblkup_.obj) : error LNK2019: unresolved external symbol __imp_VirtualQuery referenced in function "int __cdecl _RTC_GetSrcLine(unsigned char *,wchar_t *,unsigned long,int *,wchar_t *,unsigned long)" (?_RTC_GetSrcLine@@YAHPEAEPEA_WKPEAH1K@Z)
+MSVCRTD.lib(gs_support.obj) : error LNK2019: unresolved external symbol __imp_QueryPerformanceCounter referenced in function __security_init_cookie
+MSVCRTD.lib(gs_support.obj) : error LNK2019: unresolved external symbol __imp_GetCurrentProcessId referenced in function __security_init_cookie
+MSVCRTD.lib(gs_support.obj) : error LNK2019: unresolved external symbol __imp_GetCurrentThreadId referenced in function __security_init_cookie
+MSVCRTD.lib(gs_support.obj) : error LNK2019: unresolved external symbol __imp_GetSystemTimeAsFileTime referenced in function __security_init_cookie
+MSVCRTD.lib(tncleanup.obj) : error LNK2019: unresolved external symbol __imp_InitializeSListHead referenced in function "void __cdecl __scrt_initialize_type_info(void)" (?__scrt_initialize_type_info@@YAXXZ)
+D:\Profiles\ss6638\Capstone\opengl\opengl\ThirdParty\OculusSDK\LibOVR\Lib\LibOVR.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+D:\Profiles\ss6638\Capstone\opengl\opengl\ThirdParty\OpenAL\libs\Win32\OpenAL32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\kernel32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\user32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\gdi32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\winspool.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\comdlg32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\advapi32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\shell32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\ole32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\oleaut32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\uuid.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\odbc32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\odbccp32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\dxgi.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+D:\Profiles\ss6638\Capstone\opengl\opengl\ThirdParty\GLFW\lib\glfw3.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\opengl32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86\glu32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+D:\Profiles\ss6638\Capstone\opengl\opengl\ThirdParty\GL\lib\glew32s.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+D:\Profiles\ss6638\Capstone\opengl\opengl\ThirdParty\SOIL\lib\SOIL.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+D:\Profiles\ss6638\Capstone\opengl\opengl\ThirdParty\assimp\lib\assimp-vc130-mt.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+D:\Profiles\ss6638\Capstone\opengl\x64\Debug\opengl.exe : fatal error LNK1120: 167 unresolved externals

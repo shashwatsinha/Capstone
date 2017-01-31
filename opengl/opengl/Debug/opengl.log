@@ -1,4 +1,20 @@
-﻿  EnvironmentObject.cpp
-z:\igmprofile\desktop\github\capstone\opengl\opengl\environmentobject.cpp(22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  opengl.vcxproj -> Z:\IGMProfile\Desktop\GitHub\Capstone\opengl\Debug\opengl.exe
-  opengl.vcxproj -> Z:\IGMProfile\Desktop\GitHub\Capstone\opengl\Debug\opengl.pdb (Full PDB)
+﻿  Game.cpp
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(76): warning C4018: '<': signed/unsigned mismatch
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(156): warning C4018: '<': signed/unsigned mismatch
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(188): warning C4018: '<': signed/unsigned mismatch
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(420): warning C4018: '<': signed/unsigned mismatch
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(447): warning C4018: '<': signed/unsigned mismatch
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(456): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(505): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(559): warning C4018: '<': signed/unsigned mismatch
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(597): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(598): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(599): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(658): warning C4018: '<': signed/unsigned mismatch
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(661): warning C4018: '<': signed/unsigned mismatch
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(664): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\profiles\ss6638\capstone\opengl\opengl\game.cpp(999): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+  BGMovingObjects.cpp
+  Generating Code...
+  opengl.vcxproj -> D:\Profiles\ss6638\Capstone\opengl\Debug\opengl.exe
+  opengl.vcxproj -> D:\Profiles\ss6638\Capstone\opengl\Debug\opengl.pdb (Full PDB)

@@ -17,6 +17,12 @@ Game::~Game()
 
 void Game::Init()
 {
+
+	planet = new Model();
+	sphere = new Model();
+	pointLightContainer = new Model();
+	movingObj1 = new BGMovingObjects();
+
 	vector<glm::vec3> coralPositions;
 	//coral positions
 	glm::vec3 coralPosition1 = glm::vec3(1, 12, 23.75); coralPositions.push_back(coralPosition1);
@@ -35,9 +41,9 @@ void Game::Init()
 	// Load Default Shader
 	ResourceManager::LoadShader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag", nullptr, "default");
 
-	planet.InitPath("Models/Pink Planet/untitled1.obj");
-	planet.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	planet.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+	planet->InitPath("Models/Pink Planet/untitled1.obj");
+	planet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+	planet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
 	bgObject.InitPath("Models/Bullet/Bullet.obj");
 	bgObject.SetPosition(glm::vec3(10.0f, 0.0f, 25.0f));
@@ -54,6 +60,11 @@ void Game::Init()
 	bgObject4.InitPath("Models/Bullet/Bullet.obj");
 	bgObject4.SetPosition(glm::vec3(-20.0f, 0.0f, 25.0f));
 	bgObject4.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
+
+	movingObj1->InitPath("Models/Bullet/Bullet.obj");
+	movingObj1->SetPosition(glm::vec3(30.0f, 0.0f, 30.0f));
+	movingObj1->SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
+	movingObj1->SetVelocity(glm::vec3(0.0f, 0.0f, -0.1f));
 
 	ResourceManager::LoadShader("Shaders/vertexShader_LightContainer.vs", "Shaders/fragmentShader_LightContainer.frag", nullptr, "coralShader");
 	
@@ -105,9 +116,9 @@ void Game::Init()
 	pointLightContainer.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));*/
 
 	ResourceManager::LoadShader("Shaders/vertexShader_Skysphere.vs", "Shaders/fragmentShader_Skysphere.frag", nullptr, "skySphere");
-	sphere.InitPath("Models/Sphere/sphere.obj");
-	sphere.SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
-	sphere.SetScale(glm::vec3(3.0f, 3.0f, 3.0f));
+	sphere->InitPath("Models/Sphere/sphere.obj");
+	sphere->SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
+	sphere->SetScale(glm::vec3(3.0f, 3.0f, 3.0f));
 
 	//loading resources
 	ResourceManager::LoadShader("Shaders/particle.vs", "Shaders/particle.frag", nullptr, "particle");
@@ -421,11 +432,12 @@ void Game::Render()
 	//spaceShip.SetRotation(myQuat);
 	//spaceShip.Draw(&shader);
 
-	planet.Draw(&shader);
+	planet->Draw(&shader);
 	bgObject.Update(&shader, Camera::instance()->GetPosition());
 	bgObject2.Update(&shader, Camera::instance()->GetPosition());
 	bgObject3.Update(&shader, Camera::instance()->GetPosition());
 	bgObject4.Update(&shader, Camera::instance()->GetPosition());
+	movingObj1->Update(&shader);
 
 	Shader coralShader = ResourceManager::GetShader("coralShader");
 	coralShader.Use();
@@ -492,7 +504,7 @@ void Game::Render()
 	skySphereShader.SetMatrix4("projection", projection);
 	GLfloat timeValue = glfwGetTime();
 	skySphereShader.SetFloat("iGlobalTime", timeValue);
-	sphere.Draw(&skySphereShader);
+	sphere->Draw(&skySphereShader);
 	glDepthFunc(GL_LESS);
 
 	//add particles here

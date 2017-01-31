@@ -24,6 +24,7 @@
 #include "ParticleSystem.h"
 #include "Skybox.h"
 #include "Lights.h"
+#include "BGMovingObjects.h"
 #include "ResourceManager.h"
 
 // Include the Oculus SDK
@@ -88,10 +89,10 @@ public:
 	void Shoot();
 
 private:
-	Model spaceShip;
-	Model pointLightContainer;
-	Model sphere;
-	Model planet;
+	//Model spaceShip;
+	Model *pointLightContainer;
+	Model *sphere;
+	Model *planet;
 	
 	//Skybox skybox;
 	Lights directionalLight;
@@ -124,6 +125,8 @@ private:
 	EnvironmentObject bgObject2;
 	EnvironmentObject bgObject3;
 	EnvironmentObject bgObject4;
+
+	BGMovingObjects *movingObj1;
 };
 
 #endif
