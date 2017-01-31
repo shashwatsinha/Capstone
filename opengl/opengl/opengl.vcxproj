@@ -76,8 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)ThirdParty\glew\include;$(ProjectDir)ThirdParty\SOIL\include;$(ProjectDir)\ThirdParty\glm;$(ProjectDir)ThirdParty\GLFW\include;$(ProjectDir)ThirdParty\GL\include;$(ProjectDir)ThirdParty\assimp\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)ThirdParty\SOIL\lib;$(ProjectDir)ThirdParty\GLFW\lib;$(ProjectDir)ThirdParty\GL\lib;$(ProjectDir)ThirdParty\assimp\lib;$(WindowsSDK_LibraryPath_x86);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)ThirdParty\glew\include;$(ProjectDir)ThirdParty\SOIL\include;$(ProjectDir)\ThirdParty\glm;$(ProjectDir)ThirdParty\GLFW\include;$(ProjectDir)ThirdParty\GL\include;$(ProjectDir)ThirdParty\assimp\include;$(ProjectDir)ThirdParty\OpenAL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)ThirdParty\OpenAL\libs\Win32;$(ProjectDir)ThirdParty\SOIL\lib;$(ProjectDir)ThirdParty\GLFW\lib;$(ProjectDir)ThirdParty\GL\lib;$(ProjectDir)ThirdParty\assimp\lib;$(WindowsSDK_LibraryPath_x86);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -115,7 +115,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(ProjectDir)ThirdParty\OculusSDK\LibOVR\Lib\LibOVR.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)ThirdParty\OculusSDK\LibOVR\Lib\LibOVR.lib;$(ProjectDir)ThirdParty\OpenAL\libs\Win32\OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

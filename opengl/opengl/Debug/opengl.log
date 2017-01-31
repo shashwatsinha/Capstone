@@ -1,0 +1,4 @@
+﻿  EnvironmentObject.cpp
+z:\igmprofile\desktop\github\capstone\opengl\opengl\environmentobject.cpp(22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  opengl.vcxproj -> Z:\IGMProfile\Desktop\GitHub\Capstone\opengl\Debug\opengl.exe
+  opengl.vcxproj -> Z:\IGMProfile\Desktop\GitHub\Capstone\opengl\Debug\opengl.pdb (Full PDB)

@@ -1,7 +1,9 @@
 #include "Game.h"
 //#include "resource_manager.h"
 
-
+float bgX = 0.0f;
+float bgY = 0.0f;
+float bgZ = 0.0f;
 Game::Game(GLuint width, GLuint height)
 	: State(GAME_ACTIVE), Keys(), Width(width), Height(height)
 {
@@ -36,6 +38,22 @@ void Game::Init()
 	planet.InitPath("Models/Pink Planet/untitled1.obj");
 	planet.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	planet.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	bgObject.InitPath("Models/Bullet/Bullet.obj");
+	bgObject.SetPosition(glm::vec3(10.0f, 0.0f, 25.0f));
+	bgObject.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
+	
+	bgObject2.InitPath("Models/Bullet/Bullet.obj");
+	bgObject2.SetPosition(glm::vec3(20.0f, 0.0f, 25.0f));
+	bgObject2.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
+
+	bgObject3.InitPath("Models/Bullet/Bullet.obj");
+	bgObject3.SetPosition(glm::vec3(-10.0f, 0.0f, 25.0f));
+	bgObject3.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
+
+	bgObject4.InitPath("Models/Bullet/Bullet.obj");
+	bgObject4.SetPosition(glm::vec3(-20.0f, 0.0f, 25.0f));
+	bgObject4.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
 
 	ResourceManager::LoadShader("Shaders/vertexShader_LightContainer.vs", "Shaders/fragmentShader_LightContainer.frag", nullptr, "coralShader");
 	
@@ -176,6 +194,13 @@ void Game::ProcessInput(GLfloat dt)
 			Camera::instance()->ProcessKeyboard(LEFT, dt);
 		if (this->Keys[GLFW_KEY_D])
 			Camera::instance()->ProcessKeyboard(RIGHT, dt);
+
+		if (this->Keys[GLFW_KEY_I])
+		{
+			bgY += 0.25;
+		}
+			//bgObject.SetPosition(glm::vec3(bgObject.GetPosition().x,))
+
 		/*if (this->Keys[GLFW_KEY_I])
 		{
 			coralPosition.y += .25;
@@ -397,6 +422,10 @@ void Game::Render()
 	//spaceShip.Draw(&shader);
 
 	planet.Draw(&shader);
+	bgObject.Update(&shader, Camera::instance()->GetPosition());
+	bgObject2.Update(&shader, Camera::instance()->GetPosition());
+	bgObject3.Update(&shader, Camera::instance()->GetPosition());
+	bgObject4.Update(&shader, Camera::instance()->GetPosition());
 
 	Shader coralShader = ResourceManager::GetShader("coralShader");
 	coralShader.Use();

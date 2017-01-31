@@ -120,6 +120,10 @@ private:
 	float mixValue;
 	vector<ParticleSystem*> coralParticles;
 
+	EnvironmentObject bgObject;
+	EnvironmentObject bgObject2;
+	EnvironmentObject bgObject3;
+	EnvironmentObject bgObject4;
 };
 
 #endif
