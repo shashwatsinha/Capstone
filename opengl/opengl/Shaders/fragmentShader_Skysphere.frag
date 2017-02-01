@@ -2,6 +2,7 @@
 in vec3 ourPosition;
 
 uniform float iGlobalTime;
+uniform float isColor;
 
 out vec4 color;
 
@@ -68,8 +69,15 @@ void main() {
 
     float f = fbm(st+b+c);
 
-    color1 = mix(vec3(0.445,0.002,0.419), vec3(1.000,0.467,0.174), clamp((f*f),0.2, 1.0));
-    color1 = mix(color1, vec3(0.413,0.524,0.880), clamp(length(c.x),0.480, 0.92));
+    //color1 = mix(vec3(0.445,0.002,0.419), vec3(1.000,0.467,0.174), clamp((f*f),0.2, 1.0));
+    //color1 = mix(color1, vec3(0.413,0.524,0.880), clamp(length(c.x),0.480, 0.92));
+	if(isColor == 0.0) {
+		color1 = mix(vec3(0.502,0.502,0.502), vec3(0.25,0.25,0.25), clamp((f*f),0.2, 1.0));
+		color1 = mix(color1, vec3(0.125,0.125,0.125), clamp(length(c.x),0.480, 0.92));
+	} else if(isColor == 1.0) {
+		color1 = mix(vec3(0.445,0.002,0.419), vec3(1.000,0.467,0.174), clamp((f*f),0.2, 1.0));
+		color1 = mix(color1, vec3(0.413,0.524,0.880), clamp(length(c.x),0.480, 0.92));
+	}
     
     st = st/3.5;
     

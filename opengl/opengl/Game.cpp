@@ -19,6 +19,7 @@ void Game::Init()
 {
 
 	planet = new Model();
+	pinkPlanet = new Model();
 	sphere = new Model();
 	pointLightContainer = new Model();
 	movingObj1 = new BGMovingObjects();
@@ -41,9 +42,13 @@ void Game::Init()
 	// Load Default Shader
 	ResourceManager::LoadShader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag", nullptr, "default");
 
-	planet->InitPath("Models/Pink Planet/untitled1.obj");
+	planet->InitPath("Models/Gray Planet/untitled1.obj");
 	planet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	planet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	pinkPlanet->InitPath("Models/Pink Planet/untitled1.obj");
+	pinkPlanet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+	pinkPlanet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
 	bgObject.InitPath("Models/Bullet/Bullet.obj");
 	bgObject.SetPosition(glm::vec3(10.0f, 0.0f, 25.0f));
@@ -432,7 +437,11 @@ void Game::Render()
 	//spaceShip.SetRotation(myQuat);
 	//spaceShip.Draw(&shader);
 
-	planet->Draw(&shader);
+	if(!changePlanet)
+		planet->Draw(&shader);
+	else {
+		pinkPlanet->Draw(&shader);
+	}
 	bgObject.Update(&shader, Camera::instance()->GetPosition());
 	bgObject2.Update(&shader, Camera::instance()->GetPosition());
 	bgObject3.Update(&shader, Camera::instance()->GetPosition());
@@ -504,6 +513,20 @@ void Game::Render()
 	skySphereShader.SetMatrix4("projection", projection);
 	GLfloat timeValue = glfwGetTime();
 	skySphereShader.SetFloat("iGlobalTime", timeValue);
+	for (int i = 0; i < corals.size(); i++)
+	{
+		if (corals[i]->GetLerpColorStatus() == true)
+			noOfCoralsActivated++;
+	}
+	if (noOfCoralsActivated == corals.size()) {
+		noOfCoralsActivated = 0;
+		skySphereShader.SetFloat("isColor", 1.0f);
+		changePlanet = true;
+	}
+	else {
+		noOfCoralsActivated = 0;
+		skySphereShader.SetFloat("isColor", 0.0f);
+	}
 	sphere->Draw(&skySphereShader);
 	glDepthFunc(GL_LESS);
 

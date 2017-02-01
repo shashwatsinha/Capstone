@@ -92,7 +92,8 @@ private:
 	//Model spaceShip;
 	Model *pointLightContainer;
 	Model *sphere;
-	Model *planet;
+	Model *planet, *pinkPlanet;
+	float changePlanet = false;
 	
 	//Skybox skybox;
 	Lights directionalLight;
@@ -119,6 +120,7 @@ private:
 	
 	vector<Coral* >corals;
 	float mixValue;
+	int noOfCoralsActivated = 0;
 	vector<ParticleSystem*> coralParticles;
 
 	EnvironmentObject bgObject;
