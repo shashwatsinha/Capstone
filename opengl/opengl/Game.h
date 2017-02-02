@@ -128,7 +128,9 @@ private:
 	EnvironmentObject bgObject3;
 	EnvironmentObject bgObject4;
 
-	BGMovingObjects *movingObj1;
+	
+	vector<BGMovingObjects*> movingObjs1;
+	vector<BGMovingObjects*> movingObjs2;
 };
 
 #endif

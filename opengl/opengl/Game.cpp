@@ -22,7 +22,41 @@ void Game::Init()
 	pinkPlanet = new Model();
 	sphere = new Model();
 	pointLightContainer = new Model();
-	movingObj1 = new BGMovingObjects();
+	
+
+
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				BGMovingObjects *obj = new BGMovingObjects();
+				obj->InitPath("Models/Bullet/Bullet.obj");
+				obj->SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
+				obj->SetPosition(glm::vec3(-i*10 - 30,-j*10,-k*10 - 30));
+				obj->SetVelocity(glm::vec3(0.0f, 0.0f, -0.1f));
+				movingObjs1.push_back(obj);
+			}
+		}
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				BGMovingObjects *obj = new BGMovingObjects();
+				obj->InitPath("Models/Bullet/Bullet.obj");
+				obj->SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
+				obj->SetPosition(glm::vec3(i * 10 + 30, j * 10, k * 10 + 30));
+				obj->SetVelocity(glm::vec3(0.0f, 0.0f, -0.1f));
+				movingObjs2.push_back(obj);
+			}
+		}
+	}
 
 	vector<glm::vec3> coralPositions;
 	//coral positions
@@ -42,13 +76,14 @@ void Game::Init()
 	// Load Default Shader
 	ResourceManager::LoadShader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag", nullptr, "default");
 
-	planet->InitPath("Models/Gray Planet/untitled1.obj");
+	planet->InitPath("Models/Pink Planet/untitled1.obj");
 	planet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	planet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
 	pinkPlanet->InitPath("Models/Pink Planet/untitled1.obj");
 	pinkPlanet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	pinkPlanet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
 
 	bgObject.InitPath("Models/Bullet/Bullet.obj");
 	bgObject.SetPosition(glm::vec3(10.0f, 0.0f, 25.0f));
@@ -66,10 +101,7 @@ void Game::Init()
 	bgObject4.SetPosition(glm::vec3(-20.0f, 0.0f, 25.0f));
 	bgObject4.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
 
-	movingObj1->InitPath("Models/Bullet/Bullet.obj");
-	movingObj1->SetPosition(glm::vec3(30.0f, 0.0f, 30.0f));
-	movingObj1->SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
-	movingObj1->SetVelocity(glm::vec3(0.0f, 0.0f, -0.1f));
+	
 
 	ResourceManager::LoadShader("Shaders/vertexShader_LightContainer.vs", "Shaders/fragmentShader_LightContainer.frag", nullptr, "coralShader");
 	
@@ -446,7 +478,14 @@ void Game::Render()
 	bgObject2.Update(&shader, Camera::instance()->GetPosition());
 	bgObject3.Update(&shader, Camera::instance()->GetPosition());
 	bgObject4.Update(&shader, Camera::instance()->GetPosition());
-	movingObj1->Update(&shader);
+
+	for (int i = 0; i < 27; i++)
+	{
+		movingObjs1[i]->Update(&shader);
+		movingObjs2[i]->Update(&shader);
+	}
+
+	//movingObj1->Update(&shader);
 
 	Shader coralShader = ResourceManager::GetShader("coralShader");
 	coralShader.Use();
