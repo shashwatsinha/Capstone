@@ -49,8 +49,8 @@ void Game::Init()
 			for (int k = 0; k < 3; k++)
 			{
 				BGMovingObjects *obj = new BGMovingObjects();
-				obj->InitPath("Models/Bullet/Bullet.obj");
-				obj->SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
+				obj->InitPath("Models/FlyingObjects/FlyingObjectBlue.obj");
+				obj->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
 				obj->SetPosition(glm::vec3(i * 10 + 30, j * 10, k * 10 + 30));
 				obj->SetVelocity(glm::vec3(0.0f, 0.0f, -0.1f));
 				movingObjs2.push_back(obj);
@@ -76,13 +76,13 @@ void Game::Init()
 	// Load Default Shader
 	ResourceManager::LoadShader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag", nullptr, "default");
 
-	planet->InitPath("Models/Pink Planet/untitled1.obj");
+	planet->InitPath("Models/PlanetWithCaves/Planet.obj");
 	planet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	planet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+	planet->SetScale(glm::vec3(0.03f, 0.03f, 0.03f));
 
-	pinkPlanet->InitPath("Models/Pink Planet/untitled1.obj");
+	pinkPlanet->InitPath("Models/PlanetWithCaves/Planet.obj");
 	pinkPlanet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	pinkPlanet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+	pinkPlanet->SetScale(glm::vec3(0.03f, 0.03f, 0.03f));
 
 
 	bgObject.InitPath("Models/Bullet/Bullet.obj");
