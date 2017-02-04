@@ -33,9 +33,9 @@ void Game::Init()
 			for (int k = 0; k < 3; k++)
 			{
 				BGMovingObjects *obj = new BGMovingObjects();
-				obj->InitPath("Models/Bullet/Bullet.obj");
-				obj->SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
-				obj->SetPosition(glm::vec3(-i*10 - 30,-j*10,-k*10 - 30));
+				obj->InitPath("Models/BlueObject/BlueObject.obj");
+				obj->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+				obj->SetPosition(glm::vec3(-i*3 - 30,-j*3,-k*3 - 30));
 				obj->SetVelocity(glm::vec3(0.0f, 0.0f, -0.1f));
 				movingObjs1.push_back(obj);
 			}
@@ -49,9 +49,9 @@ void Game::Init()
 			for (int k = 0; k < 3; k++)
 			{
 				BGMovingObjects *obj = new BGMovingObjects();
-				obj->InitPath("Models/FlyingObjects/FlyingObjectBlue.obj");
+				obj->InitPath("Models/GreenObject/GreenObject.obj");
 				obj->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-				obj->SetPosition(glm::vec3(i * 10 + 30, j * 10, k * 10 + 30));
+				obj->SetPosition(glm::vec3(i * 3 + 30, j * 3, k * 3 + 30));
 				obj->SetVelocity(glm::vec3(0.0f, 0.0f, -0.1f));
 				movingObjs2.push_back(obj);
 			}
@@ -79,11 +79,6 @@ void Game::Init()
 	planet->InitPath("Models/PlanetWithCaves/Planet.obj");
 	planet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	planet->SetScale(glm::vec3(0.03f, 0.03f, 0.03f));
-
-	pinkPlanet->InitPath("Models/PlanetWithCaves/Planet.obj");
-	pinkPlanet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	pinkPlanet->SetScale(glm::vec3(0.03f, 0.03f, 0.03f));
-
 
 	bgObject.InitPath("Models/Bullet/Bullet.obj");
 	bgObject.SetPosition(glm::vec3(10.0f, 0.0f, 25.0f));
@@ -469,11 +464,8 @@ void Game::Render()
 	//spaceShip.SetRotation(myQuat);
 	//spaceShip.Draw(&shader);
 
-	if(!changePlanet)
-		planet->Draw(&shader);
-	else {
-		pinkPlanet->Draw(&shader);
-	}
+	
+	planet->Draw(&shader);
 	bgObject.Update(&shader, Camera::instance()->GetPosition());
 	bgObject2.Update(&shader, Camera::instance()->GetPosition());
 	bgObject3.Update(&shader, Camera::instance()->GetPosition());
@@ -560,7 +552,6 @@ void Game::Render()
 	if (noOfCoralsActivated == corals.size()) {
 		noOfCoralsActivated = 0;
 		skySphereShader.SetFloat("isColor", 1.0f);
-		changePlanet = true;
 	}
 	else {
 		noOfCoralsActivated = 0;

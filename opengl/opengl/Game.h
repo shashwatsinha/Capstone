@@ -93,7 +93,6 @@ private:
 	Model *pointLightContainer;
 	Model *sphere;
 	Model *planet, *pinkPlanet;
-	float changePlanet = false;
 	
 	//Skybox skybox;
 	Lights directionalLight;
