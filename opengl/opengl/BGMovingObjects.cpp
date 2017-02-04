@@ -4,6 +4,7 @@
 
 BGMovingObjects::BGMovingObjects()
 {
+	currentTime = 0.0f;
 }
 
 
@@ -46,6 +47,12 @@ void BGMovingObjects::Update(Shader * shader)
 		this->SetPosition(glm::vec3(this->GetPosition().x, this->GetPosition().y, 50.0f));
 	}
 
+	GLfloat ct = glfwGetTime();
+	if (ct - currentTime > 5.0f)
+	{
+		ChangeVelocity(ct);
+		currentTime = ct;
+	}
 
 	Draw(shader);
 }
@@ -59,4 +66,13 @@ void BGMovingObjects::SetVelocity(glm::vec3 velocity)
 void BGMovingObjects::ResetPosition()
 {
 	this->SetPosition(initialPosition);
+}
+
+void BGMovingObjects::ChangeVelocity(float ct)
+{
+	//srand(time(NULL));
+	float a =   ((rand() % 10 - 5.0f) / 500.0f); // this->velocity.x;
+	float b =   ((rand() % 10 - 5) / 500.0f);     //   this->velocity.y;   
+	float c = ((rand() % 5 - 10) / 100.0f);
+	this->velocity = glm::vec3(a, b, c);
 }

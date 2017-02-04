@@ -1,19 +1,4 @@
-﻿  Game.cpp
-d:\cpstone\capstone\opengl\opengl\game.cpp(113): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(193): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(225): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(457): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(495): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(504): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\cpstone\capstone\opengl\opengl\game.cpp(553): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-d:\cpstone\capstone\opengl\opengl\game.cpp(555): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(621): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(659): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\cpstone\capstone\opengl\opengl\game.cpp(660): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\cpstone\capstone\opengl\opengl\game.cpp(661): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\cpstone\capstone\opengl\opengl\game.cpp(720): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(723): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(726): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-d:\cpstone\capstone\opengl\opengl\game.cpp(1061): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+﻿  BGMovingObjects.cpp
+d:\cpstone\capstone\opengl\opengl\bgmovingobjects.cpp(50): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
   opengl.vcxproj -> D:\cpstone\Capstone\opengl\Debug\opengl.exe
   opengl.vcxproj -> D:\cpstone\Capstone\opengl\Debug\opengl.pdb (Full PDB)
