@@ -22,7 +22,14 @@ void Game::Init()
 	pinkPlanet = new Model();
 	sphere = new Model();
 	pointLightContainer = new Model();
-	
+	for (int i = 1; i < 4; i++)
+	{
+		Satellite *s = new Satellite(i);
+		s->InitPath("Models/GreenObject/GreenObject.obj");
+		s->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+		s->SetPosition(glm::vec3(0, 0, 0));
+		satellites.push_back(s);
+	}
 
 
 
@@ -57,6 +64,8 @@ void Game::Init()
 			}
 		}
 	}
+
+	
 
 	vector<glm::vec3> coralPositions;
 	//coral positions
@@ -478,6 +487,11 @@ void Game::Render()
 	}
 
 	//movingObj1->Update(&shader);
+	
+	for (int i = 0; i < satellites.size(); i++)
+	{
+		satellites[i]->Update(&shader);
+	}
 
 	Shader coralShader = ResourceManager::GetShader("coralShader");
 	coralShader.Use();

@@ -3,7 +3,7 @@
 Camera* Camera::player_instance = 0;
 void Camera :: ProcessKeyboard(Camera_Movement direction, GLfloat deltaTime)
 {
-	GLfloat velocity = this->MovementSpeed * deltaTime * 2;
+	GLfloat velocity = this->MovementSpeed * deltaTime * 10;
 	if (direction == FORWARD)
 		this->Position += this->Front * velocity;
 	if (direction == BACKWARD)

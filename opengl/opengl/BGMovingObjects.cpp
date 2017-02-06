@@ -70,9 +70,12 @@ void BGMovingObjects::ResetPosition()
 
 void BGMovingObjects::ChangeVelocity(float ct)
 {
-	//srand(time(NULL));
-	float a =   ((rand() % 10 - 5.0f) / 500.0f); // this->velocity.x;
-	float b =   ((rand() % 10 - 5) / 500.0f);     //   this->velocity.y;   
-	float c = ((rand() % 5 - 10) / 100.0f);
+	srand(time(NULL));
+	float a =    ((rand() % 10 ) / 1000.0f); // this->velocity.x;
+	float b =   ((rand() % 10 ) / 3000.0f);     //   this->velocity.y;   
+	float c =    this->velocity.z; //((rand() % 5 - 10) / 100.0f);   
 	this->velocity = glm::vec3(a, b, c);
+
+	//this->SetPosition ( glm::vec3( 30 * sin(x) , this->velocity.y,  30 * cos(x)));
+	
 }

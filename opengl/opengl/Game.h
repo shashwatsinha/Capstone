@@ -26,6 +26,7 @@
 #include "Lights.h"
 #include "BGMovingObjects.h"
 #include "ResourceManager.h"
+#include "Satellite.h"
 
 // Include the Oculus SDK
 #include "GL/CAPI_GLE.h"
@@ -130,6 +131,8 @@ private:
 	
 	vector<BGMovingObjects*> movingObjs1;
 	vector<BGMovingObjects*> movingObjs2;
+
+	vector<Satellite*>satellites;
 };
 
 #endif
