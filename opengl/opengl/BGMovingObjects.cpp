@@ -85,7 +85,12 @@ void BGMovingObjects::ChangeVelocity(float ct)
 float BGMovingObjects::DistanceFrom(glm::vec3 k)
 {
 	//float k = glm::distance(k, this->GetPosition());
-	return 0;
+	float x = k.x - this->GetPosition().x;
+	float y = k.y - this->GetPosition().y;
+	float z = k.z - this->GetPosition().z;
+
+	float distance = (x*x) + (y*y) + (z*z);
+	return distance;
 }
 
 glm::vec3 BGMovingObjects::GetVelocity()

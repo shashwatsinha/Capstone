@@ -483,7 +483,10 @@ void Game::Render()
 	for (int i = 0; i < 27; i++)
 	{
 		movingObjs1[i]->Update(&shader);
-		movingObjs1[i]->SetVelocity(movingObjs1[i]->GetVelocity() + ComputeAlignment(movingObjs1[i]) + ComputeCohesion(movingObjs1[i]) + ComputeSeperation(movingObjs1[i]));
+		glm::vec3 temp = movingObjs1[i]->GetVelocity() + ComputeAlignment(movingObjs1[i]) + ComputeCohesion(movingObjs1[i]) + ComputeSeperation(movingObjs1[i]);
+		temp = glm::normalize(temp);
+		//temp.x /= 10;	temp.y /= 10;	temp.z /= 10;
+		movingObjs1[i]->SetVelocity(temp);
 		//movingObjs2[i]->Update(&shader);
 	}
 
@@ -791,21 +794,24 @@ glm::vec3 Game::ComputeAlignment(BGMovingObjects * obj)
 {
 	glm::vec3 point;
 	int neighborCount = 0;
-	for (int i =0;i<movingObjs1.size();i++)
+	for (int i = 0; i <movingObjs1.size();i++)
 	{
 		if (movingObjs1[i]!=obj)
 		{
-			if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 5)
+		//	if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 20)
 			{
 				point += movingObjs1[i]->GetVelocity();
 				neighborCount++;
 			}
 		}
 	}
-	if (neighborCount == 0)
-		return point;
 	
-	point.x /= neighborCount;	point.y /= neighborCount;	point.z /= neighborCount;
+	
+	point.x /= movingObjs1.size();	point.y /= movingObjs1.size();	point.z /= movingObjs1.size();
+	//point.x = point.x * 1000;	point.y = point.y * 1000;
+	point = glm::vec3((point.x - obj->GetVelocity().x) /8.0f,
+					(point.y - obj->GetVelocity().y) / 8.0f,
+					(point.z - obj->GetVelocity().z) / 8.0f);
 	glm::normalize(point);
 	return point;
 }
@@ -813,23 +819,25 @@ glm::vec3 Game::ComputeAlignment(BGMovingObjects * obj)
 glm::vec3 Game::ComputeCohesion(BGMovingObjects * obj)
 {
 	glm::vec3 point;
-	int neighborCount = 0;
+	
+
+
 	for (int i = 0; i<movingObjs1.size(); i++)
 	{
 		if (movingObjs1[i] != obj)
 		{
-			if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 5)
+		//	if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 20)
 			{
 				point += movingObjs1[i]->GetPosition();
-				neighborCount++;
 			}
 		}
 	}
-	if (neighborCount == 0)
-		return point;
 
-	point.x /= neighborCount;	point.y /= neighborCount;	point.z /= neighborCount;
-	point = point - obj->GetPosition();
+
+	point.x /= movingObjs1.size();	point.y /= movingObjs1.size();	point.z /= movingObjs1.size();
+	point = glm::vec3((point.x - obj->GetPosition().x)/100,
+					  (point.y - obj->GetPosition().y) / 100,
+					 (point.z - obj->GetPosition().z) / 100);
 	glm::normalize(point);
 	return point;
 }
@@ -842,17 +850,17 @@ glm::vec3 Game::ComputeSeperation(BGMovingObjects * obj)
 	{
 		if (movingObjs1[i] != obj)
 		{
-			if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 5)
+			if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 20)
 			{
-				point += movingObjs1[i]->GetPosition() - obj->GetPosition();
+				point = point -( movingObjs1[i]->GetPosition() - obj->GetPosition());
 				neighborCount++;
 			}
 		}
 	}
-	if (neighborCount == 0)
-		return point;
+	//if (neighborCount == 0)
+		//return point;
 
-	point.x /= -neighborCount;	point.y /= -neighborCount;	point.z /= -neighborCount;
+//	point.x /= -neighborCount;	point.y /= -neighborCount;	point.z /= -neighborCount;
 	glm::normalize(point);
 	return point;
 }
