@@ -1,6 +1,5 @@
 d:\cpstone\capstone\opengl\opengl\debug\vc140.pdb
 d:\cpstone\capstone\opengl\opengl\debug\vc140.idb
-d:\cpstone\capstone\opengl\opengl\debug\environmentobject.obj
 d:\cpstone\capstone\opengl\opengl\debug\framework.obj
 d:\cpstone\capstone\opengl\opengl\debug\fsm.obj
 d:\cpstone\capstone\opengl\opengl\debug\game.obj
@@ -11,6 +10,7 @@ d:\cpstone\capstone\opengl\opengl\debug\model.obj
 d:\cpstone\capstone\opengl\opengl\debug\normalenemy.obj
 d:\cpstone\capstone\opengl\opengl\debug\particlesystem.obj
 d:\cpstone\capstone\opengl\opengl\debug\resourcemanager.obj
+d:\cpstone\capstone\opengl\opengl\debug\satellite.obj
 d:\cpstone\capstone\opengl\opengl\debug\shader.obj
 d:\cpstone\capstone\opengl\opengl\debug\tinystr.obj
 d:\cpstone\capstone\opengl\opengl\debug\tinyxml.obj
@@ -22,12 +22,12 @@ d:\cpstone\capstone\opengl\opengl\debug\texture2d.obj
 d:\cpstone\capstone\opengl\opengl\debug\capi_gle.obj
 d:\cpstone\capstone\opengl\opengl\debug\actorfactory.obj
 d:\cpstone\capstone\opengl\opengl\debug\aldlist.obj
+d:\cpstone\capstone\opengl\opengl\debug\bgmovingobjects.obj
 d:\cpstone\capstone\opengl\opengl\debug\bullet.obj
 d:\cpstone\capstone\opengl\opengl\debug\camera.obj
 d:\cpstone\capstone\opengl\opengl\debug\coral.obj
 d:\cpstone\capstone\opengl\opengl\debug\cwaves.obj
-d:\cpstone\capstone\opengl\opengl\debug\bgmovingobjects.obj
-d:\cpstone\capstone\opengl\opengl\debug\satellite.obj
+d:\cpstone\capstone\opengl\opengl\debug\environmentobject.obj
 d:\cpstone\capstone\opengl\debug\opengl.pdb
 d:\cpstone\capstone\opengl\opengl\debug\opengl.tlog\cl.command.1.tlog
 d:\cpstone\capstone\opengl\opengl\debug\opengl.tlog\cl.read.1.tlog

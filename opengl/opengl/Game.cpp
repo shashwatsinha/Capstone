@@ -479,11 +479,12 @@ void Game::Render()
 	bgObject2.Update(&shader, Camera::instance()->GetPosition());
 	bgObject3.Update(&shader, Camera::instance()->GetPosition());
 	bgObject4.Update(&shader, Camera::instance()->GetPosition());
-
+	
 	for (int i = 0; i < 27; i++)
 	{
 		movingObjs1[i]->Update(&shader);
-		movingObjs2[i]->Update(&shader);
+		movingObjs1[i]->SetVelocity(movingObjs1[i]->GetVelocity() + ComputeAlignment(movingObjs1[i]) + ComputeCohesion(movingObjs1[i]) + ComputeSeperation(movingObjs1[i]));
+		//movingObjs2[i]->Update(&shader);
 	}
 
 	//movingObj1->Update(&shader);
@@ -784,6 +785,76 @@ void Game::Shoot()
 	bulletDirection = glm::vec3(bulletDirection * bulletSpeed);
 	enemy->SetValues(shootPosition, bulletDirection);
 	bullets.push_back(enemy);
+}
+
+glm::vec3 Game::ComputeAlignment(BGMovingObjects * obj)
+{
+	glm::vec3 point;
+	int neighborCount = 0;
+	for (int i =0;i<movingObjs1.size();i++)
+	{
+		if (movingObjs1[i]!=obj)
+		{
+			if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 5)
+			{
+				point += movingObjs1[i]->GetVelocity();
+				neighborCount++;
+			}
+		}
+	}
+	if (neighborCount == 0)
+		return point;
+	
+	point.x /= neighborCount;	point.y /= neighborCount;	point.z /= neighborCount;
+	glm::normalize(point);
+	return point;
+}
+
+glm::vec3 Game::ComputeCohesion(BGMovingObjects * obj)
+{
+	glm::vec3 point;
+	int neighborCount = 0;
+	for (int i = 0; i<movingObjs1.size(); i++)
+	{
+		if (movingObjs1[i] != obj)
+		{
+			if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 5)
+			{
+				point += movingObjs1[i]->GetPosition();
+				neighborCount++;
+			}
+		}
+	}
+	if (neighborCount == 0)
+		return point;
+
+	point.x /= neighborCount;	point.y /= neighborCount;	point.z /= neighborCount;
+	point = point - obj->GetPosition();
+	glm::normalize(point);
+	return point;
+}
+
+glm::vec3 Game::ComputeSeperation(BGMovingObjects * obj)
+{
+	glm::vec3 point;
+	int neighborCount = 0;
+	for (int i = 0; i<movingObjs1.size(); i++)
+	{
+		if (movingObjs1[i] != obj)
+		{
+			if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 5)
+			{
+				point += movingObjs1[i]->GetPosition() - obj->GetPosition();
+				neighborCount++;
+			}
+		}
+	}
+	if (neighborCount == 0)
+		return point;
+
+	point.x /= -neighborCount;	point.y /= -neighborCount;	point.z /= -neighborCount;
+	glm::normalize(point);
+	return point;
 }
 
 void Game::GenerateEnvironment()

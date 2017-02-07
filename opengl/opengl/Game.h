@@ -89,6 +89,11 @@ public:
 	void DetectCollisions();
 	void Shoot();
 
+	//Flocking Behaviour functions
+	glm::vec3 ComputeAlignment(BGMovingObjects *obj);
+	glm::vec3 ComputeCohesion(BGMovingObjects *obj);
+	glm::vec3 ComputeSeperation(BGMovingObjects *obj);
+
 private:
 	//Model spaceShip;
 	Model *pointLightContainer;
