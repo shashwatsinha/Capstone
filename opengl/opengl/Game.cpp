@@ -21,6 +21,7 @@ void Game::Init()
 	planet = new Model();
 	pinkPlanet = new Model();
 	sphere = new Model();
+	leader = new BGMovingObjects();
 	pointLightContainer = new Model();
 	for (int i = 1; i < 4; i++)
 	{
@@ -31,7 +32,10 @@ void Game::Init()
 		satellites.push_back(s);
 	}
 
-
+	leader-> InitPath("Models/BlueObject/BlueObject.obj");
+	leader->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+	leader->SetPosition(glm::vec3( 30, 0, 30));
+	leader->SetVelocity(glm::vec3(0.0f, 0.0f, -0.1f));
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -484,10 +488,19 @@ void Game::Render()
 	{
 		movingObjs1[i]->Update(&shader);
 		glm::vec3 temp = movingObjs1[i]->GetVelocity() + ComputeAlignment(movingObjs1[i]) + ComputeCohesion(movingObjs1[i]) + ComputeSeperation(movingObjs1[i]);
+		
 		temp = glm::normalize(temp);
-		//temp.x /= 10;	temp.y /= 10;	temp.z /= 10;
+		//temp *= 2;
+		temp = LimitFlockVelocity(temp);
 		movingObjs1[i]->SetVelocity(temp);
 		//movingObjs2[i]->Update(&shader);
+	}
+
+	GLfloat ct = glfwGetTime();
+	if (ct - currentTime > 5.0f)
+	{
+		ChangeCentreOfFlock(centreOfFlock);
+		currentTime = ct;
 	}
 
 	//movingObj1->Update(&shader);
@@ -790,6 +803,13 @@ void Game::Shoot()
 	bullets.push_back(enemy);
 }
 
+float Game::GetDeterminant(glm::vec3 k)
+{
+	float val = (k.x * k.x) + (k.y * k.y) + (k.z * k.z);
+	val = pow(val, 0.5f);
+	return val;
+}
+
 glm::vec3 Game::ComputeAlignment(BGMovingObjects * obj)
 {
 	glm::vec3 point;
@@ -818,8 +838,8 @@ glm::vec3 Game::ComputeAlignment(BGMovingObjects * obj)
 
 glm::vec3 Game::ComputeCohesion(BGMovingObjects * obj)
 {
-	glm::vec3 point;
-	
+	//centreOfFlock = glm::vec3(-50,0,50);
+	glm::vec3 centre = centreOfFlock;
 
 
 	for (int i = 0; i<movingObjs1.size(); i++)
@@ -828,18 +848,19 @@ glm::vec3 Game::ComputeCohesion(BGMovingObjects * obj)
 		{
 		//	if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 20)
 			{
-				point += movingObjs1[i]->GetPosition();
+				centre += movingObjs1[i]->GetPosition();
+				
 			}
 		}
 	}
 
 
-	point.x /= movingObjs1.size();	point.y /= movingObjs1.size();	point.z /= movingObjs1.size();
-	point = glm::vec3((point.x - obj->GetPosition().x)/100,
-					  (point.y - obj->GetPosition().y) / 100,
-					 (point.z - obj->GetPosition().z) / 100);
-	glm::normalize(point);
-	return point;
+	centre.x /= movingObjs1.size();	centre.y /= movingObjs1.size();	centre.z /= movingObjs1.size();
+	centre = glm::vec3((centre.x - obj->GetPosition().x)/100,
+					  (centre.y - obj->GetPosition().y) / 100,
+					 (centre.z - obj->GetPosition().z) / 100);
+	glm::normalize(centre);
+	return centre;
 }
 
 glm::vec3 Game::ComputeSeperation(BGMovingObjects * obj)
@@ -850,7 +871,7 @@ glm::vec3 Game::ComputeSeperation(BGMovingObjects * obj)
 	{
 		if (movingObjs1[i] != obj)
 		{
-			if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 20)
+			if (obj->DistanceFrom(movingObjs1[i]->GetPosition()) < 30)
 			{
 				point = point -( movingObjs1[i]->GetPosition() - obj->GetPosition());
 				neighborCount++;
@@ -864,6 +885,42 @@ glm::vec3 Game::ComputeSeperation(BGMovingObjects * obj)
 	glm::normalize(point);
 	return point;
 }
+
+glm::vec3 Game::LimitFlockVelocity(glm::vec3 speed)
+{
+	float vLim = 1.1f;
+	glm::vec3 v = speed;
+	
+	if (GetDeterminant(speed) > vLim)
+	{
+		v /= GetDeterminant(v);
+		v *= vLim;
+		
+	}
+
+	return v;
+}
+
+void Game::ChangeCentreOfFlock(glm::vec3 centre)
+{
+	srand(time(NULL));
+	int choice = (rand() % 3) + 1;
+	switch (choice) 
+	{
+	case 1: centreOfFlock = glm::vec3(-50, 0, -50);
+		break;
+	case 2:	centreOfFlock = glm::vec3(50, 0, 50);
+		break;
+	case 3: centreOfFlock = glm::vec3(-50, 0, 50);
+		break;
+	case 4:	centreOfFlock = glm::vec3(50, 0, -50);
+		break;
+	}
+}
+
+
+
+
 
 void Game::GenerateEnvironment()
 {

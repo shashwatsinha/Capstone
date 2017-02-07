@@ -88,11 +88,15 @@ public:
 	bool IsPositionValid(std::tuple<int, int, int>, int typeOfObject);
 	void DetectCollisions();
 	void Shoot();
+	float GetDeterminant(glm::vec3 k);
 
 	//Flocking Behaviour functions
 	glm::vec3 ComputeAlignment(BGMovingObjects *obj);
 	glm::vec3 ComputeCohesion(BGMovingObjects *obj);
 	glm::vec3 ComputeSeperation(BGMovingObjects *obj);
+	glm::vec3 LimitFlockVelocity(glm::vec3 speed);
+	void ChangeCentreOfFlock(glm::vec3 centre);
+
 
 private:
 	//Model spaceShip;
@@ -138,6 +142,10 @@ private:
 	vector<BGMovingObjects*> movingObjs2;
 
 	vector<Satellite*>satellites;
+
+	BGMovingObjects *leader;
+	glm::vec3 centreOfFlock;
+	GLfloat currentTime;
 };
 
 #endif

@@ -15,6 +15,8 @@ public:
 	void ChangeVelocity(float ct);
 	float DistanceFrom(glm::vec3 k);
 	glm::vec3 GetVelocity();
+	
+	
 
 private:
 	glm::vec3 velocity;
