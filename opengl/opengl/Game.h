@@ -91,10 +91,10 @@ public:
 	float GetDeterminant(glm::vec3 k);
 
 	//Flocking Behaviour functions
-	glm::vec3 ComputeAlignment(BGMovingObjects *obj);
-	glm::vec3 ComputeCohesion(BGMovingObjects *obj);
-	glm::vec3 ComputeSeperation(BGMovingObjects *obj);
-	glm::vec3 LimitFlockVelocity(glm::vec3 speed);
+	glm::vec3 ComputeAlignment(BGMovingObjects *obj, vector<BGMovingObjects*>objs);
+	glm::vec3 ComputeCohesion(BGMovingObjects *obj, glm::vec3 centreOfFlock, vector<BGMovingObjects*>objs);
+	glm::vec3 ComputeSeperation(BGMovingObjects *obj, vector<BGMovingObjects*>objs);
+	glm::vec3 LimitFlockVelocity(glm::vec3 speed,  float s);
 	void ChangeCentreOfFlock(glm::vec3 centre);
 
 
@@ -144,7 +144,10 @@ private:
 	vector<Satellite*>satellites;
 
 	BGMovingObjects *leader;
-	glm::vec3 centreOfFlock;
+	glm::vec3 centreOfFlock1;
+	GLfloat flock1CurTime;
+	GLfloat flock2CurTime;
+	glm::vec3 centreOfFlock2;
 	GLfloat currentTime;
 };
 
