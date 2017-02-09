@@ -89,6 +89,7 @@ public:
 	void DetectCollisions();
 	void Shoot();
 	float GetDeterminant(glm::vec3 k);
+	glm::vec3 MultiplyVector(glm::vec3 a, float k);
 
 	//Flocking Behaviour functions
 	glm::vec3 ComputeAlignment(BGMovingObjects *obj, vector<BGMovingObjects*>objs);
@@ -140,15 +141,19 @@ private:
 	
 	vector<BGMovingObjects*> movingObjs1;
 	vector<BGMovingObjects*> movingObjs2;
+	vector<BGMovingObjects*> movingObjs3;
 
 	vector<Satellite*>satellites;
 
 	BGMovingObjects *leader;
 	glm::vec3 centreOfFlock1;
+	glm::vec3 centreOfFlock3;
 	GLfloat flock1CurTime;
 	GLfloat flock2CurTime;
 	glm::vec3 centreOfFlock2;
 	GLfloat currentTime;
+
+	float seperator;
 };
 
 #endif

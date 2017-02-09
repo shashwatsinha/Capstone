@@ -17,7 +17,9 @@ Game::~Game()
 
 void Game::Init()
 {
+	seperator = 1;
 	centreOfFlock1 = glm::vec3(-50, 0, 50);
+	centreOfFlock3 = glm::vec3(-50, 0, 50);
 	centreOfFlock2 = glm::vec3(50, 0, -50);
 	planet = new Model();
 	pinkPlanet = new Model();
@@ -491,9 +493,9 @@ void Game::Render()
 		for (int i = 0; i < 27; i++)
 		{
 
-			glm::vec3 temp = movingObjs1[i]->GetVelocity() + ComputeAlignment(movingObjs1[i],movingObjs1) + ComputeCohesion(movingObjs1[i],centreOfFlock1, movingObjs1) + ComputeSeperation(movingObjs1[i], movingObjs1);
+			glm::vec3 temp = movingObjs1[i]->GetVelocity() + ComputeAlignment(movingObjs1[i],movingObjs1) + MultiplyVector(ComputeCohesion(movingObjs1[i],centreOfFlock1, movingObjs1),seperator) + ComputeSeperation(movingObjs1[i], movingObjs1);
 
-			temp = glm::normalize(temp);
+			//temp = glm::normalize(temp);
 			temp = LimitFlockVelocity(temp,0.1f);
 			movingObjs1[i]->SetVelocity(temp);
 			//movingObjs2[i]->Update(&shader);
@@ -505,7 +507,8 @@ void Game::Render()
 	GLfloat flock1DirChanger = glfwGetTime();
 	if (flock1DirChanger - flock1CurTime > 15.0f)
 	{
-		centreOfFlock1.x *= -1;
+		//centreOfFlock1.x *= -1;
+		seperator *= -1;
 		flock1CurTime = flock1DirChanger;
 	}
 
@@ -854,6 +857,11 @@ float Game::GetDeterminant(glm::vec3 k)
 	float val = (k.x * k.x) + (k.y * k.y) + (k.z * k.z);
 	val = pow(val, 0.5f);
 	return val;
+}
+
+glm::vec3 Game::MultiplyVector(glm::vec3 a, float k)
+{
+	return glm::vec3(a.x*k,a.y*k,a.z*k);
 }
 
 glm::vec3 Game::ComputeAlignment(BGMovingObjects * obj, vector<BGMovingObjects*>objs)
