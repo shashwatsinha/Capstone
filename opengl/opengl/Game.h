@@ -11,6 +11,7 @@
 #include <glm/gtc/quaternion.hpp> 
 #include <glm/gtx/quaternion.hpp>
 #include <SOIL.h>
+#include <ppl.h>
 
 
 #include "Camera.h"
@@ -97,6 +98,7 @@ public:
 	glm::vec3 ComputeSeperation(BGMovingObjects *obj, vector<BGMovingObjects*>objs);
 	glm::vec3 LimitFlockVelocity(glm::vec3 speed,  float s);
 	void ChangeCentreOfFlock(glm::vec3 centre);
+	glm::vec3 TestChangingCentre(glm::vec3 centre);
 
 
 private:
@@ -152,6 +154,7 @@ private:
 	GLfloat flock2CurTime;
 	glm::vec3 centreOfFlock2;
 	GLfloat currentTime;
+	float theta;
 
 	float seperator;
 };
