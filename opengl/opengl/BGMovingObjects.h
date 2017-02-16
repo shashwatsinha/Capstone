@@ -16,7 +16,9 @@ public:
 	float DistanceFrom(glm::vec3 k);
 	glm::vec3 GetVelocity();
 	
-	
+	//Vector Helper Functions
+	float GetDeterminant(glm::vec3 k);
+	glm::vec3 MultiplyVector(glm::vec3 a, float k);
 
 private:
 	glm::vec3 velocity;

@@ -20,6 +20,10 @@ void Game::Init()
 	theta = 0.0f;
 	seperator = 1;
 	centreOfFlock1 = glm::vec3(-50, 0, 50);
+	flock1 = new Flockers();
+	flock2 = new Flockers();
+	flock1->InitializeFlock(27, centreOfFlock1, 0.5f,true, 15.0f,false,0);
+	flock2->InitializeFlock(27, centreOfFlock2, 1.0f,false, 0.0f, true, 2);
 	centreOfFlock3 = glm::vec3(-50, 0, 50);
 	centreOfFlock2 = glm::vec3(50, 0, -50);
 	planet = new Model();
@@ -167,7 +171,7 @@ void Game::Init()
 	ResourceManager::LoadShader("Shaders/vertexShader_Skysphere.vs", "Shaders/fragmentShader_Skysphere.frag", nullptr, "skySphere");
 	sphere->InitPath("Models/Sphere/sphere.obj");
 	sphere->SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
-	sphere->SetScale(glm::vec3(3.0f, 3.0f, 3.0f));
+	sphere->SetScale(glm::vec3(5.0f, 5.0f, 3.0f));
 
 	//loading resources
 	ResourceManager::LoadShader("Shaders/particle.vs", "Shaders/particle.frag", nullptr, "particle");
@@ -482,42 +486,17 @@ void Game::Render()
 	//spaceShip.Draw(&shader);
 
 	
-	planet->Draw(&shader);
+	//planet->Draw(&shader);
 	bgObject.Update(&shader, Camera::instance()->GetPosition());
 	bgObject2.Update(&shader, Camera::instance()->GetPosition());
 	bgObject3.Update(&shader, Camera::instance()->GetPosition());
 	bgObject4.Update(&shader, Camera::instance()->GetPosition());
 	
-	GLfloat flock1Timer = glfwGetTime();
-	if (flock1Timer - currentTime > 0.5f)
-	{
-		for (int i = 0; i < 27; i++)
-		{
+	
 
-			glm::vec3 temp = movingObjs1[i]->GetVelocity() + 
-							 ComputeAlignment(movingObjs1[i],movingObjs1) + 
-							 MultiplyVector(ComputeCohesion(movingObjs1[i],centreOfFlock1, movingObjs1),seperator) + 
-							 ComputeSeperation(movingObjs1[i], movingObjs1);
-
-			temp = LimitFlockVelocity(temp,0.1f);
-			movingObjs1[i]->SetVelocity(temp);
-		}
-		currentTime = flock1Timer;
-	}
-
-	GLfloat flock1DirChanger = glfwGetTime();
-	if (flock1DirChanger - flock1CurTime > 15.0f)
-	{
-		seperator *= -1;
-		flock1CurTime = flock1DirChanger;
-	}
-
-	for (int i = 0; i < movingObjs1.size(); i++)
-	{
-		movingObjs1[i]->Update(&shader);
-	}
-
-	centreOfFlock2 = TestChangingCentre(centreOfFlock2);
+	//flock1->RenderFlock(&shader);
+	flock2->RenderFlock(&shader);
+	/*centreOfFlock2 = TestChangingCentre(centreOfFlock2);
 
 
 
@@ -545,7 +524,7 @@ void Game::Render()
 	for (int i = 0; i < movingObjs2.size(); i++)
 	{
 		movingObjs2[i]->Update(&shader);
-	}
+	}*/
 
 	
 	for (int i = 0; i < satellites.size(); i++)

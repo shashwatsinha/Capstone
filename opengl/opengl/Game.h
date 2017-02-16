@@ -28,6 +28,7 @@
 #include "BGMovingObjects.h"
 #include "ResourceManager.h"
 #include "Satellite.h"
+#include "Flockers.h"
 
 // Include the Oculus SDK
 #include "GL/CAPI_GLE.h"
@@ -156,6 +157,8 @@ private:
 	GLfloat currentTime;
 	float theta;
 
+	Flockers *flock1;
+	Flockers *flock2;
 	float seperator;
 };
 

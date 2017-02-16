@@ -97,3 +97,15 @@ glm::vec3 BGMovingObjects::GetVelocity()
 {
 	return velocity;
 }
+
+float BGMovingObjects::GetDeterminant(glm::vec3 k)
+{
+	float val = (k.x * k.x) + (k.y * k.y) + (k.z * k.z);
+	val = pow(val, 0.5f);
+	return val;
+}
+
+glm::vec3 BGMovingObjects::MultiplyVector(glm::vec3 a, float k)
+{
+	return glm::vec3(a.x*k, a.y*k, a.z*k);
+}

@@ -164,6 +164,7 @@
     <ClCompile Include="Coral.cpp" />
     <ClCompile Include="CWaves.cpp" />
     <ClCompile Include="EnvironmentObject.cpp" />
+    <ClCompile Include="Flockers.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="FSM.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Coral.h" />
     <ClInclude Include="CWaves.h" />
     <ClInclude Include="EnvironmentObject.h" />
+    <ClInclude Include="Flockers.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="Game.h" />
