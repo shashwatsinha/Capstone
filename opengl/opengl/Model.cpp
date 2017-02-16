@@ -236,6 +236,8 @@ GLint TextureFromFile(const char* path, string directory)
 	unsigned char* image = SOIL_load_image(filename.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
 	// Assign texture to ID
 	glBindTexture(GL_TEXTURE_2D, textureID);
+	// To enable Gamma Correction - Uncomment below line and comment the other glTexImage2D line
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
