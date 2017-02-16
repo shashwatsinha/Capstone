@@ -171,7 +171,7 @@ void Game::Init()
 	ResourceManager::LoadShader("Shaders/vertexShader_Skysphere.vs", "Shaders/fragmentShader_Skysphere.frag", nullptr, "skySphere");
 	sphere->InitPath("Models/Sphere/sphere.obj");
 	sphere->SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
-	sphere->SetScale(glm::vec3(5.0f, 5.0f, 3.0f));
+	sphere->SetScale(glm::vec3(3.0f, 3.0f, 3.0f));
 
 	//loading resources
 	ResourceManager::LoadShader("Shaders/particle.vs", "Shaders/particle.frag", nullptr, "particle");
@@ -486,7 +486,7 @@ void Game::Render()
 	//spaceShip.Draw(&shader);
 
 	
-	//planet->Draw(&shader);
+	planet->Draw(&shader);
 	bgObject.Update(&shader, Camera::instance()->GetPosition());
 	bgObject2.Update(&shader, Camera::instance()->GetPosition());
 	bgObject3.Update(&shader, Camera::instance()->GetPosition());

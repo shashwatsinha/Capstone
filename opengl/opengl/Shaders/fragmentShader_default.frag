@@ -56,6 +56,9 @@ void main()
 	// Phase 2: Point lights
     for(int i = 0; i < NO_OF_POINT_LIGHTS; i++)
         result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
+	
+	// To enable Gamma correction uncomment the below line
+	//result = pow(result, vec3(1.0/2.2));
 
 	color = vec4(result, 1.0f);
 }
@@ -84,7 +87,11 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     float diff = max(dot(normal, lightDir), 0.0);
     // Specular shading
     vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+	// For blinn-phong lighting (we calculate an additional halwayDirection and spec calcualtion is changed based on that)
+	vec3 halfwayDir = normalize(lightDir + viewDir);
+	// For phong lighting model spec is calculated as :  pow(max(dot(viewDir, reflectDir), 0.0), material.shininess)
+	// For blinn-phong lighting model, spec is calculated as below (Also the shininess changed to 32 from 16 in mesh.h class)
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess);
     // Attenuation
     float distance = length(light.position - fragPos);
     float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));    
