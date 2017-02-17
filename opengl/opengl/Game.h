@@ -68,6 +68,10 @@ public:
 	GLfloat deltaTime = 0.0f;
 	GLfloat lastFrame = 0.0f;
 	bool retryCreate = true;
+	GLuint quadVAO, quadVBO;
+	GLuint rbo;
+	GLuint textureColorbuffer;
+	GLuint framebuffer;
 
 	// Constructor/Destructor
 	Game(GLuint width, GLuint height);
@@ -81,6 +85,8 @@ public:
 
 	// Other methods specific for our game
 	void GenerateEnvironment();
+	GLuint generateAttachmentTexture(GLboolean depth, GLboolean stencil);
+	void setupScreenQuadAndFrameBuffer();
 	ovrGraphicsLuid GetDefaultAdapterLuid();
 	int Compare(const ovrGraphicsLuid & lhs, const ovrGraphicsLuid & rhs);
 	bool RenderOculus();

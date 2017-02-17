@@ -175,10 +175,6 @@ int main(int argc, char **argv)
 			// Update Game state
 			game.Update(deltaTime);
 
-			// Clear the colorbuffer
-			glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 			// Render
 			game.Render();
 

@@ -235,5 +235,11 @@
     <None Include="Shaders\particle.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Shaders\vertexShader_Quad.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Shaders\fragmentShader_Quad.frag">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
