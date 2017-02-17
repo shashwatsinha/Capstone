@@ -101,9 +101,9 @@ void Game::Init()
 	// Load Default Shader
 	ResourceManager::LoadShader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag", nullptr, "default");
 
-	planet->InitPath("Models/PlanetWithCaves/Planet.obj");
+	planet->InitPath("Models/Planet/planet.obj");
 	planet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	planet->SetScale(glm::vec3(0.03f, 0.03f, 0.03f));
+	planet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
 	bgObject.InitPath("Models/Bullet/Bullet.obj");
 	bgObject.SetPosition(glm::vec3(10.0f, 0.0f, 25.0f));
