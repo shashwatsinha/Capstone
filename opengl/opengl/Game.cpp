@@ -169,9 +169,9 @@ void Game::Init()
 	pointLightContainer.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));*/
 
 	ResourceManager::LoadShader("Shaders/vertexShader_Skysphere.vs", "Shaders/fragmentShader_Skysphere.frag", nullptr, "skySphere");
-	sphere->InitPath("Models/Sphere/sphere.obj");
-	sphere->SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
-	sphere->SetScale(glm::vec3(3.0f, 3.0f, 3.0f));
+	sphere->InitPath("Models/Sphere/perfect_sphere.obj");
+	sphere->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+	sphere->SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
 	//loading resources
 	ResourceManager::LoadShader("Shaders/particle.vs", "Shaders/particle.frag", nullptr, "particle");
@@ -449,7 +449,7 @@ void Game::Render()
 	else
 	{
 		 view = Camera::instance()->GetViewMatrix();
-		 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 100.0f);
+		 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 1000.0f);
 	}
 	Shader shader = ResourceManager::GetShader("default");
 	shader.Use();
