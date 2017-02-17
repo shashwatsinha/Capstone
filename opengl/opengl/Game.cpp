@@ -458,13 +458,13 @@ void Game::Render()
 	if (isVR)
 	{
 		 view = Camera::instance()->GetViewMatrix();
-		 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 100.0f);
+		 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
 	}
 
 	else
 	{
 		 view = Camera::instance()->GetViewMatrix();
-		 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 1000.0f);
+		 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
 	}
 	Shader shader = ResourceManager::GetShader("default");
 	shader.Use();

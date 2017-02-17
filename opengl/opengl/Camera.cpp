@@ -60,7 +60,7 @@ void Camera :: updateCameraVectors()
 
 void Camera::InitValues()
 {
-	this->Position = glm::vec3(0, 0, 70);
+	this->Position = glm::vec3(0, 0, 400);
 	this->WorldUp = glm::vec3(0, 1, 0);
 	this->Yaw = YAW;
 	this->Pitch = PITCH;
