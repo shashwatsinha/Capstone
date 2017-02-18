@@ -15,5 +15,6 @@ public:
 private:
 	float theta;
 	int config;
+	float radius;
 };
 

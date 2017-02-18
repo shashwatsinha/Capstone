@@ -5,6 +5,15 @@ class Flockers :public BGMovingObjects
 {
 public:
 	
+	/*
+	FlockSize = number of elements in the flock
+	centre = Place where flock is spawned
+	delay = time between when you update the velocity
+	seperate = do you want to seperate the flock
+	sDelay = seperation delay
+	patternMovement = Should the flock move
+	patternNumber = If pattern is moving, which pattern is it following
+	*/
 	void InitializeFlock(float flockSize,glm::vec3 centre, float delay,bool seperate,float sDelay, bool patternMovement, int patternNumber);
 	Flockers();
 	~Flockers();

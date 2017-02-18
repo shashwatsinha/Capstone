@@ -142,19 +142,12 @@ private:
 	int noOfCoralsActivated = 0;
 	vector<ParticleSystem*> coralParticles;
 
-	EnvironmentObject bgObject;
-	EnvironmentObject bgObject2;
-	EnvironmentObject bgObject3;
-	EnvironmentObject bgObject4;
-
 	
-	vector<BGMovingObjects*> movingObjs1;
-	vector<BGMovingObjects*> movingObjs2;
-	vector<BGMovingObjects*> movingObjs3;
+
+	vector<EnvironmentObject*>bgObjs;
 
 	vector<Satellite*>satellites;
 
-	BGMovingObjects *leader;
 	glm::vec3 centreOfFlock1;
 	glm::vec3 centreOfFlock3;
 	GLfloat flock1CurTime;
@@ -165,6 +158,9 @@ private:
 
 	Flockers *flock1;
 	Flockers *flock2;
+	Flockers *flock3;
+	Flockers *flock4;
+	Flockers *flock5;
 	float seperator;
 };
 

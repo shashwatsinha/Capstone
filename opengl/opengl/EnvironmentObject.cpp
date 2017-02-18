@@ -118,7 +118,6 @@ void EnvironmentObject::Update(Shader * shader,glm::vec3 playerPos)
 		glm::vec3 diffVector = this->GetPosition() - playerPos;
 		diffVector = glm::normalize(diffVector);
 		SetVelocity(ReturnPerpendicularVector(diffVector));
-		int k = 0;
 	}
 
 	else if (DistanceFromPlayer() > 1500.0f)

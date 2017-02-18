@@ -155,8 +155,8 @@ int main(int argc, char **argv)
 			ALFWprintf(".");
 			// Get Source State
 			alGetSourcei(uiSource, AL_SOURCE_STATE, &iState);
-			if (iState != AL_PLAYING)
-				alSourcePlay(uiSource);
+			//if (iState != AL_PLAYING)
+			//	alSourcePlay(uiSource);
 
 
 			calcFPS(1.0, windowTitle);

@@ -56,7 +56,7 @@ glm::vec3 Flockers::ComputeSeperation(BGMovingObjects * obj)
 	{
 		if (objs[i] != obj)
 		{
-			if (obj->DistanceFrom(objs[i]->GetPosition()) < 30)
+			if (obj->DistanceFrom(objs[i]->GetPosition()) < 100)
 			{
 				point = point - (objs[i]->GetPosition() - obj->GetPosition());
 			}
@@ -104,7 +104,7 @@ void Flockers::InitializeFlock(float flockSize, glm::vec3 centre, float delay,  
 	{
 		BGMovingObjects *temp = new BGMovingObjects();
 		temp->InitPath("Models/BlueObject/BlueObject.obj");
-		temp->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+		temp->SetScale(glm::vec3(0.03f, 0.03f, 0.03f));
 		temp->SetPosition(centre);
 		temp->SetVelocity(glm::vec3(0.0f, 0.1f, -0.1f));
 		objs.push_back(temp);		

@@ -6,6 +6,7 @@ Satellite::Satellite(int c)
 {
 	theta = 0;
 	config = c;
+	radius = 200.0f;
 }
 
 
@@ -18,26 +19,26 @@ void Satellite::Update(Shader * shader)
 	switch (config)
 	{
 	case 1:
-		this->SetPosition(glm::vec3(30 * sin(theta), 30 * cos(theta), this->GetPosition().z));
+		this->SetPosition(glm::vec3(radius * sin(theta), radius * cos(theta), this->GetPosition().z));
 		break;
 	case 2:
-		this->SetPosition(glm::vec3(30 * sin(theta), this->GetPosition().y, 30 * cos(theta) ));
+		this->SetPosition(glm::vec3(radius * sin(theta), this->GetPosition().y, radius * cos(theta) ));
 		break;
 	case 3:
-		this->SetPosition(glm::vec3(this->GetPosition().x, 30 * sin(theta), 30 * cos(theta)));
+		this->SetPosition(glm::vec3(this->GetPosition().x, radius * sin(theta), radius * cos(theta)));
 		break;
 	case 4:
-		this->SetPosition(glm::vec3(30 * sin(theta), 30 * cos(theta), 30 * cos(theta)));
+		this->SetPosition(glm::vec3(radius * sin(theta), radius * cos(theta), radius * cos(theta)));
 		break;
 	case 5:
-		this->SetPosition(glm::vec3(30 * sin(theta), 30 * cos(theta), 30 * sin(theta)));
+		this->SetPosition(glm::vec3(radius * sin(theta), radius * cos(theta), radius * sin(theta)));
 		break;
 	case 6:
-		this->SetPosition(glm::vec3(30 * cos(theta), 30 * cos(theta), 30 * sin(theta)));
+		this->SetPosition(glm::vec3(radius * cos(theta), radius * cos(theta), radius * sin(theta)));
 		break;
 
 	}
 	
-	theta = theta + 0.01f;
+	theta = theta + 0.001f;
 	Draw(shader);
 }

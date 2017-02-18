@@ -23,63 +23,35 @@ void Game::Init()
 {
 	theta = 0.0f;
 	seperator = 1;
-	centreOfFlock1 = glm::vec3(-50, 0, 50);
+	centreOfFlock1 = glm::vec3(-250, 0, 50);
+	centreOfFlock2 = glm::vec3(250, 0, -50);
 	flock1 = new Flockers();
 	flock2 = new Flockers();
+	flock3 = new Flockers();
+	
+
 	flock1->InitializeFlock(27, centreOfFlock1, 0.5f,true, 15.0f,false,0);
 	flock2->InitializeFlock(27, centreOfFlock2, 1.0f,false, 0.0f, true, 2);
+	flock3->InitializeFlock(27, glm::vec3(350, 0, 250), 0.5f, true, 15.0f, false, 0);
+	
 	centreOfFlock3 = glm::vec3(-50, 0, 50);
-	centreOfFlock2 = glm::vec3(50, 0, -50);
+	
 	planet = new Model();
 	pinkPlanet = new Model();
 	sphere = new Model();
-	leader = new BGMovingObjects();
 	pointLightContainer = new Model();
 	for (int i = 1; i < 4; i++)
 	{
 		Satellite *s = new Satellite(i);
 		s->InitPath("Models/GreenObject/GreenObject.obj");
-		s->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+		s->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 		s->SetPosition(glm::vec3(0, 0, 0));
 		satellites.push_back(s);
 	}
 
-	leader-> InitPath("Models/BlueObject/BlueObject.obj");
-	leader->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-	leader->SetPosition(glm::vec3( 30, 0, 30));
-	leader->SetVelocity(glm::vec3(0.0f, 0.0f, -0.1f));
 
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			for (int k = 0; k < 3; k++)
-			{
-				BGMovingObjects *obj = new BGMovingObjects();
-				obj->InitPath("Models/BlueObject/BlueObject.obj");
-				obj->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-				obj->SetPosition(glm::vec3(-i*3 - 30,-j*3,-k*3 - 30));
-				obj->SetVelocity(glm::vec3(0.0f, 0.0f, -0.1f));
-				movingObjs1.push_back(obj);
-			}
-		}
-	}
 
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			for (int k = 0; k < 3; k++)
-			{
-				BGMovingObjects *obj = new BGMovingObjects();
-				obj->InitPath("Models/GreenObject/GreenObject.obj");
-				obj->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-				obj->SetPosition(glm::vec3(i * 3 + 30, j * 3, k * 3 + 30));
-				obj->SetVelocity(glm::vec3(0.0f, 0.0f, -0.1f));
-				movingObjs2.push_back(obj);
-			}
-		}
-	}
+	
 
 	
 
@@ -102,26 +74,26 @@ void Game::Init()
 	ResourceManager::LoadShader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag", nullptr, "default");
 
 	planet->InitPath("Models/Planet/planet.obj");
-	planet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+	planet->SetPosition(glm::vec3(0.0f, 0.0f, 00.0f));
 	planet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
-	bgObject.InitPath("Models/Bullet/Bullet.obj");
-	bgObject.SetPosition(glm::vec3(10.0f, 0.0f, 25.0f));
-	bgObject.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
-	
-	bgObject2.InitPath("Models/Bullet/Bullet.obj");
-	bgObject2.SetPosition(glm::vec3(20.0f, 0.0f, 25.0f));
-	bgObject2.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
 
-	bgObject3.InitPath("Models/Bullet/Bullet.obj");
-	bgObject3.SetPosition(glm::vec3(-10.0f, 0.0f, 25.0f));
-	bgObject3.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
 
-	bgObject4.InitPath("Models/Bullet/Bullet.obj");
-	bgObject4.SetPosition(glm::vec3(-20.0f, 0.0f, 25.0f));
-	bgObject4.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
 
-	
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			for (int k = 0; k < 10; k++)
+			{
+				EnvironmentObject *obj = new EnvironmentObject();
+				obj->InitPath("Models/Bullet/Bullet.obj");
+				obj->SetPosition(glm::vec3((i * 4) - 30 , (j * 4)-10, k * 3 + 200));
+				obj->SetScale(glm::vec3(4.0f, 4.0f, 4.0f));
+				bgObjs.push_back(obj);
+			}
+		}
+	}
 
 	ResourceManager::LoadShader("Shaders/vertexShader_LightContainer.vs", "Shaders/fragmentShader_LightContainer.frag", nullptr, "coralShader");
 	
@@ -502,44 +474,16 @@ void Game::Render()
 
 	
 	planet->Draw(&shader);
-	bgObject.Update(&shader, Camera::instance()->GetPosition());
-	bgObject2.Update(&shader, Camera::instance()->GetPosition());
-	bgObject3.Update(&shader, Camera::instance()->GetPosition());
-	bgObject4.Update(&shader, Camera::instance()->GetPosition());
-	
-	
-
-	//flock1->RenderFlock(&shader);
+	flock1->RenderFlock(&shader);
 	flock2->RenderFlock(&shader);
-	/*centreOfFlock2 = TestChangingCentre(centreOfFlock2);
-
-
-
-	GLfloat flock2Timer = glfwGetTime();
-	if (flock2Timer - flock2CurTime > 1.0f)
+	flock3->RenderFlock(&shader);
+	//flock4->RenderFlock(&shader);
+	//flock5->RenderFlock(&shader);
+	
+	for (int i = 0; i < bgObjs.size(); i++)
 	{
-		for (int i = 0; i < movingObjs2.size(); i++)
-		{
-
-			glm::vec3 temp = movingObjs2[i]->GetVelocity() + 
-							 ComputeAlignment(movingObjs2[i], movingObjs2) + 
-							 ComputeCohesion(movingObjs2[i], centreOfFlock2, movingObjs2) + 
-							 ComputeSeperation(movingObjs2[i], movingObjs2);
-
-			temp = glm::normalize(temp);
-			temp = LimitFlockVelocity(temp,0.2f);
-			movingObjs2[i]->SetVelocity(temp);
-			
-		}
-		flock2CurTime = flock2Timer;
+		bgObjs[i]->Update(&shader, Camera::instance()->GetPosition());
 	}
-
-
-
-	for (int i = 0; i < movingObjs2.size(); i++)
-	{
-		movingObjs2[i]->Update(&shader);
-	}*/
 
 	
 	for (int i = 0; i < satellites.size(); i++)
