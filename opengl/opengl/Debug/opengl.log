@@ -1,158 +1,65 @@
-﻿  CAPI_GLE.cpp
-  Texture2D.cpp
-  SphereCollider.cpp
-c:\capstone\opengl\opengl\spherecollider.cpp(22): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-  tinyxmlparser.cpp
-  tinyxmlerror.cpp
-  tinyxml2.cpp
-  tinyxml.cpp
-  tinystr.cpp
-  Shader.cpp
-  Satellite.cpp
-  ResourceManager.cpp
-  ParticleSystem.cpp
-  NormalEnemy.cpp
-c:\capstone\opengl\opengl\normalenemy.cpp(77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\capstone\opengl\opengl\normalenemy.cpp(146): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\normalenemy.cpp(169): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\capstone\opengl\opengl\normalenemy.cpp(175): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\capstone\opengl\opengl\normalenemy.cpp(176): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\capstone\opengl\opengl\normalenemy.cpp(177): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\capstone\opengl\opengl\normalenemy.cpp(209): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\capstone\opengl\opengl\normalenemy.cpp(212): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Model.cpp
-c:\capstone\opengl\opengl\model.cpp(16): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\model.cpp(27): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\model.cpp(38): warning C4018: '<': signed/unsigned mismatch
-  Mesh.cpp
-  main.cpp
-c:\capstone\opengl\opengl\main.cpp(120): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\capstone\opengl\opengl\main.cpp(165): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\opengl\main.cpp(222): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\opengl\main.cpp(223): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\opengl\main.cpp(227): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\opengl\main.cpp(228): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\opengl\main.cpp(230): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\opengl\main.cpp(231): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\opengl\main.cpp(238): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-  LoadOAL.cpp
-  Game.cpp
-c:\capstone\opengl\opengl\game.cpp(105): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\game.cpp(185): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\game.cpp(217): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\game.cpp(460): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\game.cpp(483): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\game.cpp(489): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\game.cpp(499): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\game.cpp(508): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\capstone\opengl\opengl\game.cpp(557): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\opengl\game.cpp(559): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\game.cpp(624): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\game.cpp(750): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\capstone\opengl\opengl\game.cpp(751): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\capstone\opengl\opengl\game.cpp(752): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\capstone\opengl\opengl\game.cpp(811): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\game.cpp(814): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\game.cpp(817): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\capstone\opengl\opengl\game.cpp(1271): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-  FSM.cpp
-  Framework.cpp
-c:\capstone\opengl\opengl\framework.cpp(209): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-  Generating Code...
-  Compiling...
-  Flockers.cpp
-c:\capstone\opengl\opengl\flockers.cpp(136): warning C4018: '<': signed/unsigned mismatch
-c:\capstone\opengl\opengl\flockers.cpp(141): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-c:\capstone\opengl\opengl\flockers.cpp(172): warning C4018: '<': signed/unsigned mismatch
-  EnvironmentObject.cpp
-c:\capstone\opengl\opengl\environmentobject.cpp(22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  CWaves.cpp
-  Coral.cpp
-  Camera.cpp
-  Bullet.cpp
-c:\capstone\opengl\opengl\bullet.cpp(77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\capstone\opengl\opengl\bullet.cpp(80): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  BGMovingObjects.cpp
-  aldlist.cpp
-  ActorFactory.cpp
-c:\capstone\opengl\opengl\actorfactory.cpp(31): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
-NormalEnemy.obj : warning LNK4049: locally defined symbol ___glewDeleteFramebuffers imported
-Satellite.obj : warning LNK4217: locally defined symbol ___glewDeleteFramebuffers imported in function "float __cdecl sin(float)" (?sin@@YAMM@Z)
-EnvironmentObject.obj : warning LNK4049: locally defined symbol ___glewDeleteFramebuffers imported
-Flockers.obj : warning LNK4049: locally defined symbol ___glewDeleteFramebuffers imported
-Game.obj : warning LNK4049: locally defined symbol ___glewDeleteFramebuffers imported
-Model.obj : warning LNK4049: locally defined symbol ___glewDeleteFramebuffers imported
-ActorFactory.obj : warning LNK4049: locally defined symbol ___glewDeleteFramebuffers imported
-BGMovingObjects.obj : warning LNK4049: locally defined symbol ___glewDeleteFramebuffers imported
-Bullet.obj : warning LNK4049: locally defined symbol ___glewDeleteFramebuffers imported
-Coral.obj : warning LNK4217: locally defined symbol ___glewDeleteFramebuffers imported in function "public: static char * __cdecl std::char_traits<char>::copy(char *,char const *,unsigned int)" (?copy@?$char_traits@D@std@@SAPADPADPBDI@Z)
-Game.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
-Model.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
-ParticleSystem.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
-Game.obj : warning LNK4049: locally defined symbol ___glewBufferData imported
-Model.obj : warning LNK4049: locally defined symbol ___glewBufferData imported
-ParticleSystem.obj : warning LNK4049: locally defined symbol ___glewBufferData imported
-Game.obj : warning LNK4049: locally defined symbol ___glewDeleteBuffers imported
-Game.obj : warning LNK4049: locally defined symbol ___glewGenBuffers imported
-Model.obj : warning LNK4049: locally defined symbol ___glewGenBuffers imported
-ParticleSystem.obj : warning LNK4049: locally defined symbol ___glewGenBuffers imported
-Game.obj : warning LNK4049: locally defined symbol ___glewEnableVertexAttribArray imported
-Model.obj : warning LNK4049: locally defined symbol ___glewEnableVertexAttribArray imported
-ParticleSystem.obj : warning LNK4049: locally defined symbol ___glewEnableVertexAttribArray imported
-Game.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
-Model.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
-ParticleSystem.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
-Game.obj : warning LNK4049: locally defined symbol ___glewUniform1f imported
-Model.obj : warning LNK4049: locally defined symbol ___glewUniform1f imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewUniform1f imported
-Game.obj : warning LNK4049: locally defined symbol ___glewUniform3f imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewUniform3f imported
-Game.obj : warning LNK4049: locally defined symbol ___glewVertexAttribPointer imported
-Model.obj : warning LNK4049: locally defined symbol ___glewVertexAttribPointer imported
-ParticleSystem.obj : warning LNK4049: locally defined symbol ___glewVertexAttribPointer imported
-Game.obj : warning LNK4049: locally defined symbol ___glewBindFramebuffer imported
-Game.obj : warning LNK4049: locally defined symbol ___glewBindRenderbuffer imported
-Game.obj : warning LNK4049: locally defined symbol ___glewBlitFramebuffer imported
-Game.obj : warning LNK4049: locally defined symbol ___glewCheckFramebufferStatus imported
-Game.obj : warning LNK4049: locally defined symbol ___glewDeleteRenderbuffers imported
-Game.obj : warning LNK4049: locally defined symbol ___glewFramebufferRenderbuffer imported
-Game.obj : warning LNK4049: locally defined symbol ___glewFramebufferTexture2D imported
-Game.obj : warning LNK4049: locally defined symbol ___glewGenFramebuffers imported
-Game.obj : warning LNK4049: locally defined symbol ___glewGenRenderbuffers imported
-Game.obj : warning LNK4049: locally defined symbol ___glewGenerateMipmap imported
-Model.obj : warning LNK4049: locally defined symbol ___glewGenerateMipmap imported
-Game.obj : warning LNK4049: locally defined symbol ___glewRenderbufferStorage imported
-Game.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
-Model.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
-ParticleSystem.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
-Game.obj : warning LNK4049: locally defined symbol ___glewDeleteVertexArrays imported
-Game.obj : warning LNK4049: locally defined symbol ___glewGenVertexArrays imported
-Model.obj : warning LNK4049: locally defined symbol ___glewGenVertexArrays imported
-ParticleSystem.obj : warning LNK4049: locally defined symbol ___glewGenVertexArrays imported
-Model.obj : warning LNK4049: locally defined symbol ___glewActiveTexture imported
-Model.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
-Model.obj : warning LNK4049: locally defined symbol ___glewUniformMatrix4fv imported
-ParticleSystem.obj : warning LNK4049: locally defined symbol ___glewUniformMatrix4fv imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewUniformMatrix4fv imported
-ResourceManager.obj : warning LNK4049: locally defined symbol ___glewDeleteProgram imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewAttachShader imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewCompileShader imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewCreateProgram imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewCreateShader imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewDeleteShader imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewGetProgramInfoLog imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewGetProgramiv imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewGetShaderInfoLog imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewGetShaderiv imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewLinkProgram imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewShaderSource imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewUniform2f imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewUniform4f imported
-Shader.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
-glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Capstone\opengl\Debug\vc120.pdb'; linking object as if no debug info
-  opengl.vcxproj -> C:\Capstone\opengl\Debug\opengl.exe
+﻿Build started 2/18/2017 11:43:42 AM.
+     1>Project "C:\Users\Uday Shanker\Desktop\Github\Capstone\opengl\opengl\opengl.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\Uday Shanker\Desktop\Github\Capstone\opengl\opengl\ThirdParty\GL\include" /I"C:\Users\Uday Shanker\Desktop\Github\Capstone\opengl\opengl\ThirdParty\OculusSDK\LibOVRKernel\Src" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp
+         Game.cpp
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(18): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(110): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(161): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(171): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(212): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(229): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(248): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(253): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(501): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(534): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(540): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(552): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(561): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(589): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(591): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(656): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(661): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(785): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(786): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(787): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(846): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(849): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(852): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+     1>c:\users\uday shanker\desktop\github\capstone\opengl\opengl\game.cpp(1306): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Uday Shanker\Desktop\Github\Capstone\opengl\Debug\opengl.exe" /INCREMENTAL /NOLOGO "C:\Users\Uday Shanker\Desktop\Github\Capstone\opengl\opengl\ThirdParty\OculusSDK\LibOVR\Lib\LibOVR.lib" "C:\Users\Uday Shanker\Desktop\Github\Capstone\opengl\opengl\ThirdParty\OpenAL\libs\Win32\OpenAL32.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Uday Shanker\Desktop\Github\Capstone\opengl\Debug\opengl.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Uday Shanker\Desktop\Github\Capstone\opengl\Debug\opengl.lib" /MACHINE:X86 Debug\ActorFactory.obj
+         Debug\aldlist.obj
+         Debug\BGMovingObjects.obj
+         Debug\Bullet.obj
+         Debug\Camera.obj
+         Debug\Coral.obj
+         Debug\CWaves.obj
+         Debug\EnvironmentObject.obj
+         Debug\Flockers.obj
+         Debug\Framework.obj
+         Debug\FSM.obj
+         Debug\Game.obj
+         Debug\LoadOAL.obj
+         Debug\main.obj
+         Debug\Mesh.obj
+         Debug\Model.obj
+         Debug\NormalEnemy.obj
+         Debug\ParticleSystem.obj
+         Debug\ResourceManager.obj
+         Debug\Satellite.obj
+         Debug\Shader.obj
+         Debug\tinystr.obj
+         Debug\tinyxml.obj
+         Debug\tinyxml2.obj
+         Debug\tinyxmlerror.obj
+         Debug\tinyxmlparser.obj
+         Debug\SphereCollider.obj
+         Debug\Texture2D.obj
+         Debug\CAPI_GLE.obj
+         opengl.vcxproj -> C:\Users\Uday Shanker\Desktop\Github\Capstone\opengl\Debug\opengl.exe
+     1>Done Building Project "C:\Users\Uday Shanker\Desktop\Github\Capstone\opengl\opengl\opengl.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.11

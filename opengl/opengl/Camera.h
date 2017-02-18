@@ -80,6 +80,11 @@ public:
 	// Processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
 	void ProcessMouseScroll(GLfloat yoffset);
 
+	//Give a force
+	void MovePositiveZ(GLfloat deltaTime);
+
+	//Set Speed
+	void SetSpeed(float s);
 	static Camera *instance()
 	{
 		if (!player_instance)
@@ -93,4 +98,5 @@ private:
 	void updateCameraVectors();
 	
 	static Camera *player_instance;
+	float speed;
 };

@@ -58,16 +58,25 @@ void Game::Init()
 
 	vector<glm::vec3> coralPositions;
 	//coral positions
-	glm::vec3 coralPosition1 = glm::vec3(1, 12, 23.75); coralPositions.push_back(coralPosition1);
-	glm::vec3 coralPosition2 = glm::vec3(1, 15.5, 20.25); coralPositions.push_back(coralPosition2); 
-	glm::vec3 coralPosition3 = glm::vec3(5.5, 15.25, 19.25); coralPositions.push_back(coralPosition3);
-	glm::vec3 coralPosition4 = glm::vec3(7, 18.5, 15.25); coralPositions.push_back(coralPosition4);
-	glm::vec3 coralPosition5 = glm::vec3(-1.75, 21, 15.25); coralPositions.push_back(coralPosition5); 
-	glm::vec3 coralPosition6 = glm::vec3(-0.75, 22.25, 12.25); coralPositions.push_back(coralPosition6);
-	glm::vec3 coralPosition7 = glm::vec3(-1.75, 23.75, 9); coralPositions.push_back(coralPosition7);
-	glm::vec3 coralPosition8 = glm::vec3(-4.5, 23.25, 7.5); coralPositions.push_back(coralPosition8);
-	glm::vec3 coralPosition9 = glm::vec3(-2.25, 24, 4.5); coralPositions.push_back(coralPosition9);
-	glm::vec3 coralPosition10 = glm::vec3(2, 24.25, 2); coralPositions.push_back(coralPosition10);
+	glm::vec3 coralPosition1 = glm::vec3(-21.25,-18.75,135.5); coralPositions.push_back(coralPosition1);
+	glm::vec3 coralPosition2 = glm::vec3(-27,-16.25,120.5); coralPositions.push_back(coralPosition2); 
+	glm::vec3 coralPosition3 = glm::vec3(-27,-11.25,111.25); coralPositions.push_back(coralPosition3);
+	glm::vec3 coralPosition4 = glm::vec3(-17.75,-11,111.25); coralPositions.push_back(coralPosition4);
+	glm::vec3 coralPosition5 = glm::vec3(-17.25,-10.75,98.75); coralPositions.push_back(coralPosition5); 
+	glm::vec3 coralPosition6 = glm::vec3(-20.75,-8.25,89.25); coralPositions.push_back(coralPosition6);
+	glm::vec3 coralPosition7 = glm::vec3(-35.5,-4.5,89.25); coralPositions.push_back(coralPosition7);
+	glm::vec3 coralPosition8 = glm::vec3(-40.5,-15.75,123.25); coralPositions.push_back(coralPosition8);
+	glm::vec3 coralPosition9 = glm::vec3(-28,-17.25,136.5); coralPositions.push_back(coralPosition9);
+	glm::vec3 coralPosition10 = glm::vec3(-35.25,-16.25,145.25); coralPositions.push_back(coralPosition10);
+
+	//surface emitter positions
+	vector<glm::vec3> surfaceEmitterPositions;
+	glm::vec3 surfaceEmitterPosition1 = glm::vec3(-21,13.25,61); surfaceEmitterPositions.push_back(surfaceEmitterPosition1);
+	glm::vec3 surfaceEmitterPosition2 = glm::vec3(-21,24.75,60.75); surfaceEmitterPositions.push_back(surfaceEmitterPosition2);
+	glm::vec3 surfaceEmitterPosition3 = glm::vec3(-32.5,9.75,60.75); surfaceEmitterPositions.push_back(surfaceEmitterPosition3);
+	glm::vec3 surfaceEmitterPosition4 = glm::vec3(-40.25,13.5,61); surfaceEmitterPositions.push_back(surfaceEmitterPosition4);
+	glm::vec3 surfaceEmitterPosition5 = glm::vec3(-3.75,13.5,61); surfaceEmitterPositions.push_back(surfaceEmitterPosition5);
+
 
 	// Load Default Shader
 	ResourceManager::LoadShader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag", nullptr, "default");
@@ -95,7 +104,7 @@ void Game::Init()
 	
 	Coral *masterCoral = new Coral();
 	masterCoral->InitPath("Models/Corals/coral0.obj");
-	masterCoral->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+	masterCoral->SetScale(glm::vec3(0.3f, 0.3f, 0.3f));
 
 
 	for (int i = 0;i < coralPositions.size();i++)
@@ -105,6 +114,14 @@ void Game::Init()
 		coral->SetPosition(coralPositions[i]);
 		corals.push_back(coral);
 	}
+
+	//sample coral
+	coral1 = new Coral();
+	coral1->InitPath("Models/Corals/coral0.obj");
+	coral1->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+	
+
+
 
 	// Load Skybox Shader
 	//ResourceManager::LoadShader("Shaders/vertexShader_Skybox.vs", "Shaders/fragmentShader_Skybox.frag", nullptr, "skybox");
@@ -167,32 +184,26 @@ void Game::Init()
 
 	//loading resources
 	ResourceManager::LoadShader("Shaders/particle.vs", "Shaders/particle.frag", nullptr, "particle");
-	ResourceManager::LoadTexture("Textures/fireParticle.png", GL_TRUE, "particle");
-	particlesystem1 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+	ResourceManager::LoadTexture("Textures/whitesnowflake.png", GL_TRUE, "particle");
+	ResourceManager::LoadTexture("Textures/star.png", GL_TRUE, "coralParticle");
+	particlesystem1 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 5000);
 	particlesystem1->age = 10.0f;
-	particlesystem1->initialPosition = glm::vec3(0.5, 0.5, 60.0);
-	//particlesystem1->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	particlesystem1->initialPosition = glm::vec3(0.5, 0.5, 370.0);
+	particlesystem1->acceleration = glm::vec3(0.0, 0.0, 0.5);
 	particlesystem1->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
-	particlesystem1->startVelocityMin = 0.1f;
-	particlesystem1->startVelocityRange = 0.1f;
+	particlesystem1->startVelocityMin = 1.f;
+	particlesystem1->startVelocityRange = 1.5f;
 	particlesystem1->scale = 0.1f;
 
 
 
-	particlesystem2 = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
-	particlesystem2->age = 10.0f;
-	particlesystem2->initialPosition = glm::vec3(-3, 3, 50);
-	//particlesystem2->acceleration = glm::vec2(0.0, 0.0);
-	particlesystem2->color = glm::vec4(0.1f, 0.8f, 0.4f, 1.0f);
-	particlesystem2->startVelocityMin = 0.1f;
-	particlesystem2->startVelocityRange = 0.1f;
-	particlesystem2->scale = 0.1f;
+	
 
 	//coral particle system
 
-	ParticleSystem *masterCoralParticle = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
-	masterCoralParticle->age = 10.0f;
-	masterCoralParticle->acceleration = glm::vec3(0.0, 1.0, 0.0);
+	ParticleSystem *masterCoralParticle = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("coralParticle"), 1000);
+	masterCoralParticle->age = 4.0f;
+	masterCoralParticle->acceleration = glm::vec3(0.0, 1.5, 0.0);
 	masterCoralParticle->color = glm::vec4(0.1f, 0.8f, 0.4f, 1.0f);
 	masterCoralParticle->startVelocityMin = 0.1f;
 	masterCoralParticle->startVelocityRange = 0.1f;
@@ -206,19 +217,42 @@ void Game::Init()
 		coralParticles.push_back(coralParticle);
 	}
 
+	//surface emitter setup
+	ParticleSystem* masterSurfaceEmitter = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 5000);
+	masterSurfaceEmitter->age = 15.0f;
+	masterSurfaceEmitter->acceleration = glm::vec3(0.0, 0.0, 1.5);
+	masterSurfaceEmitter->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
+	masterSurfaceEmitter->startVelocityMin = 1.1f;
+	masterSurfaceEmitter->startVelocityRange = 1.5f;
+	masterSurfaceEmitter->scale = 0.1f;
+
+	for (int i = 0;i < surfaceEmitterPositions.size();i++)
+	{
+		ParticleSystem *surfaceParticle = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 1000);
+		*surfaceParticle = *masterSurfaceEmitter;
+		surfaceParticle->initialPosition = surfaceEmitterPositions[i];
+		surfaceEmitter.push_back(surfaceParticle);
+	}
+
+
 	// Initialize framebuffer and setup the screenQuad
 	setupScreenQuadAndFrameBuffer();
 }
 
 void Game::Update(GLfloat dt)
 {
-	particlesystem1->Update(dt, 2);
-	particlesystem2->Update(dt, 2);
+	//particlesystem1->Update(dt, 2);
+	
 	
 	//coral particle update
 	for (int i = 0;i < coralParticles.size();i++)
 	{
 		coralParticles[i]->Update(dt, 2);
+	}
+
+	for (int i = 0;i < surfaceEmitter.size(); i++)
+	{
+		surfaceEmitter[i]->Update(dt, 2);
 	}
 }
 
@@ -237,6 +271,19 @@ void Game::ProcessInput(GLfloat dt)
 		if (this->Keys[GLFW_KEY_D])
 			Camera::instance()->ProcessKeyboard(RIGHT, dt);
 
+		if (Camera::instance()->GetPosition().z > 61 && Camera::instance()->GetPosition().z < 200 &&
+			Camera::instance()->GetPosition().x > -100 && Camera::instance()->GetPosition().x < 10 &&
+			Camera::instance()->GetPosition().y > -25 && Camera::instance()->GetPosition().y < 35)
+		{
+			Camera::instance()->MovePositiveZ(dt);
+			Camera::instance()->SetSpeed(8.0f);
+		}
+
+		else
+		{
+			Camera::instance()->SetSpeed(10.0f);
+		}
+
 		if (this->Keys[GLFW_KEY_I])
 		{
 			bgY += 0.25;
@@ -246,30 +293,38 @@ void Game::ProcessInput(GLfloat dt)
 		if (this->Keys[GLFW_KEY_I])
 		{
 			pointLightPositions[pointLightPositions.size()-1].y += .25;
+			coral1Position.y += .25;
+
 		}
 		if (this->Keys[GLFW_KEY_K])
 		{
 			pointLightPositions[pointLightPositions.size() - 1].y -= .25;
+			coral1Position.y -= .25;
 		}
 		if (this->Keys[GLFW_KEY_J])
 		{
 			pointLightPositions[pointLightPositions.size() - 1].z += .25;
+			coral1Position.z += .25;
 		}
 		if (this->Keys[GLFW_KEY_L])
 		{
 			pointLightPositions[pointLightPositions.size() - 1].z -= .25;
+			coral1Position.z -= .25;
 		}
 		if (this->Keys[GLFW_KEY_U])
 		{
 			pointLightPositions[pointLightPositions.size() - 1].x += .25;
+			coral1Position.x += .25;
 		}
 		if (this->Keys[GLFW_KEY_O])
 		{
 			pointLightPositions[pointLightPositions.size() - 1].x -= .25;
+			coral1Position.x -= .25;
 		}
 		if (this->Keys[GLFW_KEY_P])
 		{
-			cout << "Position : " + glm::to_string(pointLightPositions[pointLightPositions.size() - 1]);
+			//cout << "Position : " + glm::to_string(pointLightPositions[pointLightPositions.size() - 1]);
+			cout << "position:" << coral1Position.x<<"," << coral1Position.y<<"," << coral1Position.z << endl;
 		}
 	}
 }
@@ -491,6 +546,8 @@ void Game::Render()
 	coralShader.Use();
 	coralShader.SetMatrix4("view", view);
 	coralShader.SetMatrix4("projection", projection);
+	/*coral1->SetPosition(coral1Position);
+	coral1->Draw(&coralShader);*/
 	
 	for (int i = 0;i < corals.size();i++)
 	{
@@ -592,8 +649,8 @@ void Game::Render()
 
 
 
-	particlesystem1->Draw();
-	particlesystem2->Draw();
+	//particlesystem1->Draw();
+	
 	//coral particle draw
 
 	for (int i = 0;i < coralParticles.size();i++)
@@ -601,7 +658,10 @@ void Game::Render()
 		coralParticles[i]->Draw();
 	}
 
-	
+	for (int i = 0;i < surfaceEmitter.size(); i++)
+	{
+		surfaceEmitter[i]->Draw();
+	}
 	
 	// Draw the skybox last
 	//glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content

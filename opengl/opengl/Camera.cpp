@@ -3,7 +3,7 @@
 Camera* Camera::player_instance = 0;
 void Camera :: ProcessKeyboard(Camera_Movement direction, GLfloat deltaTime)
 {
-	GLfloat velocity = this->MovementSpeed * deltaTime * 10;
+	GLfloat velocity = this->MovementSpeed * deltaTime * speed;
 	if (direction == FORWARD)
 		this->Position += this->Front * velocity;
 	if (direction == BACKWARD)
@@ -12,6 +12,11 @@ void Camera :: ProcessKeyboard(Camera_Movement direction, GLfloat deltaTime)
 		this->Position -= this->Right * velocity;
 	if (direction == RIGHT)
 		this->Position += this->Right * velocity;
+}
+
+void Camera::SetSpeed(float s)
+{
+	speed = s;
 }
 
 void Camera :: ProcessMouseMovement(GLfloat xoffset, GLfloat yoffset, GLboolean constrainPitch = true)
@@ -33,6 +38,13 @@ void Camera :: ProcessMouseMovement(GLfloat xoffset, GLfloat yoffset, GLboolean 
 
 	// Update Front, Right and Up Vectors using the updated Eular angles
 	this->updateCameraVectors();
+}
+
+void Camera::MovePositiveZ(GLfloat deltaTime)
+{
+	/*GLfloat velocity = this->MovementSpeed * deltaTime * 2;
+	this->Position -= this->Front * velocity;*/
+	this->Position.z += 1.1f;
 }
 
 void Camera :: ProcessMouseScroll(GLfloat yoffset)

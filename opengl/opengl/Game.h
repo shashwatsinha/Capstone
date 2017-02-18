@@ -134,13 +134,14 @@ private:
 	ParticleSystem*  particlesystem1;
 	ParticleSystem*  particlesystem2;
 	//coral particlesystem
-
+	Coral* coral1;
 	//coral models
 	
 	vector<Coral* >corals;
 	float mixValue;
 	int noOfCoralsActivated = 0;
 	vector<ParticleSystem*> coralParticles;
+	vector<ParticleSystem*> surfaceEmitter;
 
 	
 
@@ -162,6 +163,8 @@ private:
 	Flockers *flock4;
 	Flockers *flock5;
 	float seperator;
+
+	glm::vec3 coral1Position = glm::vec3(0.5, 0.5, 380);
 };
 
 #endif
