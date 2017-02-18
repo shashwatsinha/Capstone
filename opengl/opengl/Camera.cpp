@@ -44,7 +44,7 @@ void Camera::MovePositiveZ(GLfloat deltaTime)
 {
 	/*GLfloat velocity = this->MovementSpeed * deltaTime * 2;
 	this->Position -= this->Front * velocity;*/
-	this->Position.z += 1.1f;
+	this->Position.z += 0.3f;
 }
 
 void Camera :: ProcessMouseScroll(GLfloat yoffset)

@@ -94,9 +94,7 @@ public:
 	void RunVR();
 	//void Run(bool(*MainLoop)(bool retryCreate));
 	double calcFPS(double theTimeInterval, string theWindowTitle);
-	bool IsPositionValid(std::tuple<int, int, int>, int typeOfObject);
-	void DetectCollisions();
-	void Shoot();
+	
 	float GetDeterminant(glm::vec3 k);
 	glm::vec3 MultiplyVector(glm::vec3 a, float k);
 
@@ -108,6 +106,8 @@ public:
 	void ChangeCentreOfFlock(glm::vec3 centre);
 	glm::vec3 TestChangingCentre(glm::vec3 centre);
 
+	//Delete all Pointers
+	void CleanUp();
 private:
 	vector<Model*> pointLightContainers;
 	Model *sphere;
@@ -118,11 +118,8 @@ private:
 	vector<Lights*> pointLights;
 	vector<glm::vec3> pointLightPositions;
 
-	vector<NormalEnemy*> physicsObjects;
-	vector<Bullet*> bullets;
-	Bullet *masterBullet;
-	// The MAIN function, from here we start our application and run our Game loop
-	map<tuple<int, int, int>, int> mapPositions;
+	
+	
 
 	float currentBulletFired = 0;
 	float previousBulletFired = 0;
@@ -160,8 +157,7 @@ private:
 	Flockers *flock1;
 	Flockers *flock2;
 	Flockers *flock3;
-	Flockers *flock4;
-	Flockers *flock5;
+
 	float seperator;
 
 	glm::vec3 coral1Position = glm::vec3(0.5, 0.5, 380);

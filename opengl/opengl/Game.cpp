@@ -12,14 +12,8 @@ Game::Game(GLuint width, GLuint height)
 
 Game::~Game()
 {
-	delete masterBullet;
 
-	delete directionalLight;
-	for (int i = 0; i < pointLights.size(); i++)
-	{
-		delete pointLightContainers[i];
-		delete pointLights[i];
-	}
+	
 
 	glDeleteVertexArrays(1, &quadVAO);
 	glDeleteBuffers(1, &quadVBO);
@@ -673,7 +667,7 @@ void Game::Render()
 	//skybox.Draw(&skyboxShader);
 	//glDepthFunc(GL_LESS); // Set depth function back to default
 	
-	DetectCollisions();
+	
 
 	/////////////////////////////////////////////////////
 	// Bind to default framebuffer again and draw the 
@@ -765,147 +759,7 @@ GLuint Game::generateAttachmentTexture(GLboolean depth, GLboolean stencil)
 	return textureID;
 }
 
-//typeOfObject : 2 means its enemy, 3 means its an obstacle
-bool Game::IsPositionValid(std::tuple<int, int, int> positionTuple, int typeOfObject)
-{
-	bool flag = false;
-	int minDistanceBetweenEnemies = 25;
-	int minDistanceBetweenObstacles = 25;
-	int minDistanceBetweenOE = 15;
 
-	if (mapPositions[positionTuple] == NULL)
-	{
-		flag = true;
-		for (auto it = mapPositions.begin(); it != mapPositions.end(); it++)
-		{
-			int x1 = get<0>(it->first); int x2 = get<0>(positionTuple);
-			int y1 = get<1>(it->first); int y2 = get<1>(positionTuple);
-			int z1 = get<2>(it->first); int z2 = get<2>(positionTuple);
-
-			int d1 = pow(x1 - x2, 2);
-			int d2 = pow(y1 - y2, 2);
-			int d3 = pow(z1 - z2, 2);
-			int value = it->second;
-			switch (typeOfObject)
-			{
-			case 2:
-				if (value == 2)
-				{
-					if ((d1 + d2 + d3) < minDistanceBetweenEnemies && (d1 + d2 + d3)>0)
-					{
-						mapPositions.erase(positionTuple);
-						flag = false;
-						return flag;
-					}
-				}
-
-				else if (value == 3)
-				{
-					if ((d1 + d2 + d3) < minDistanceBetweenOE && (d1 + d2 + d3)>0)
-					{
-						mapPositions.erase(positionTuple);
-						flag = false;
-						return flag;
-					}
-				}
-				break;
-
-			case 3:
-				if (value == 2)
-				{
-					if ((d1 + d2 + d3) < minDistanceBetweenOE && (d1 + d2 + d3)>0)
-					{
-						mapPositions.erase(positionTuple);
-						flag = false;
-						return flag;
-					}
-				}
-
-				else if (value == 3)
-				{
-					if ((d1 + d2 + d3) < minDistanceBetweenObstacles && (d1 + d2 + d3)>0)
-					{
-						mapPositions.erase(positionTuple);
-						flag = false;
-						return flag;
-					}
-				}
-				break;
-
-			}
-		}
-		return flag;
-	}
-	mapPositions.erase(positionTuple);
-	return flag;
-}
-
-void Game::DetectCollisions()
-{
-	//Check for collision between bullets by player and enemy objects
-	for (int i = 0; i < physicsObjects.size(); )
-	{
-		bool delObj = false;
-		for (int j = 0; j < bullets.size(); )
-		{
-			glm::vec3 distance = physicsObjects[i]->GetPosition() - bullets[j]->GetPosition();
-			float sumOfRadii = physicsObjects[i]->GetCollider()->GetRadius() + bullets[j]->GetCollider()->GetRadius();
-			float length = (distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z);
-
-			//Destroy the bullet
-			if (length < (sumOfRadii * sumOfRadii))
-			{
-				//Clean way to destroy the bullet
-				Bullet *bullet = bullets[j];
-				bullets.erase(bullets.begin() + j);
-				delete bullet;
-				physicsObjects[i]->ReduceHealth(10);
-			}
-
-			else if (bullets[j]->GetPosition().x > 100 || bullets[j]->GetPosition().x < -100 ||
-				bullets[j]->GetPosition().y > 100 || bullets[j]->GetPosition().y < -100 ||
-				bullets[j]->GetPosition().z > 100 || bullets[j]->GetPosition().z < -100)
-			{
-				Bullet *bullet = bullets[j];
-				bullets.erase(bullets.begin() + j);
-				delete bullet;
-				physicsObjects[i]->ReduceHealth(10);
-			}
-
-			else
-			{
-				++j;
-			}
-		}
-
-		//Destroy the enemy
-		if (physicsObjects[i]->GetHealth() <= 0)
-		{
-			delObj = true;
-			NormalEnemy *enemy = physicsObjects[i];
-			physicsObjects.erase(physicsObjects.begin() + i);
-			delete enemy;
-		}
-		else
-		{
-			++i;
-		}
-	}
-}
-
-void Game::Shoot()
-{
-	Bullet *enemy = new Bullet();
-	*enemy = *masterBullet;
-	glm::vec3 shootPosition = glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y - 1.0f, Camera::instance()->GetPosition().z);
-	enemy->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
-	enemy->AddSphereCollider(2.0f, enemy->GetPosition());
-	glm::vec3 bulletDirection = glm::normalize(Camera::instance()->Front);
-	float bulletSpeed = 4.0f;
-	bulletDirection = glm::vec3(bulletDirection * bulletSpeed);
-	enemy->SetValues(shootPosition, bulletDirection);
-	bullets.push_back(enemy);
-}
 
 float Game::GetDeterminant(glm::vec3 k)
 {
@@ -1022,97 +876,60 @@ glm::vec3 Game::TestChangingCentre(glm::vec3 centre)
 	return centre;
 }
 
+void Game::CleanUp()
+{
+	delete sphere, planet, pinkPlanet;
+	for (int i = 0; i < pointLightContainers.size(); i++)
+		delete pointLightContainers[i];
+
+	delete directionalLight;
+
+	for (int i = 0; i < pointLights.size(); i++)
+		delete pointLights[i];
+
+	delete particlesystem1;
+	delete particlesystem2;
+
+	delete coral1;
+
+	for (int i = 0; i < corals.size(); i++)
+	{
+		delete corals[i];
+	}
+
+	for (int i = 0; i < coralParticles.size(); i++)
+	{
+		delete coralParticles[i];
+	}
+
+	for (int i = 0; i < surfaceEmitter.size(); i++)
+	{
+		delete surfaceEmitter[i];
+	}
+
+	for (int i = 0; i < bgObjs.size(); i++)
+	{
+		delete bgObjs[i];
+	}
+
+	for (int i = 0; i < satellites.size(); i++)
+	{
+		delete satellites[i];
+	}
+
+	delete flock1;
+	delete flock2;
+	delete flock3;
+
+}
+
 
 
 
 
 void Game::GenerateEnvironment()
 {
-	/*ifstream inputFile;
-	inputFile.open("EnvironmentCoordinates/TrainedValues.txt");
-	vector< vector<int> > coordinates;
-
-	NormalEnemy *masterEnemy = new NormalEnemy();
-	masterEnemy->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
-	masterEnemy->SetType(1);
-
-	NormalEnemy *masterAsteroid = new NormalEnemy();
-	masterAsteroid->InitPath("Models/Asteroid/Asteroid.obj");
-	masterAsteroid->SetType(0);
-
-	for (int i = 0; i < 23; i++)
-	{
-	vector<int> temp;
-	char tempString = NULL;
-	for (int j = 0; j < 40; j++)
-	{
-	inputFile >> tempString;
-	int input = tempString - '0';
-	if (input == 1)
-	{
-	NormalEnemy *enemy = new NormalEnemy();
-	*enemy = *masterEnemy;
-	enemy->SetValues(glm::vec3(i*5, (rand() % 5 - 5), j*-10), glm::vec3(0, 0, 0));
-	enemy->AddSphereCollider(2.0f, enemy->GetPosition());
-	enemy->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-	enemy->SetHealth(100);
-	physicsObjects.push_back(enemy);
-	}
-
-	if (input == 2)
-	{
-	NormalEnemy *enemy = new NormalEnemy();
-	*enemy = *masterAsteroid;
-	enemy->SetValues(glm::vec3(i * 5, (rand() % 5 - 5), j * -10), glm::vec3(0, 0, 0));
-	enemy->AddSphereCollider(2.0f, enemy->GetPosition());
-	enemy->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-	enemy->SetHealth(100);
-	physicsObjects.push_back(enemy);
-	}
-
-	temp.push_back(input);
-	tempString = NULL;
-	}
-	coordinates.push_back(temp);
-	temp.clear();
-	}
-	int k = 0;*/
-
-	NormalEnemy *masterEnemy = new NormalEnemy();
-	masterEnemy->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
-	masterEnemy->SetType(1);
-	masterEnemy->SetValues(glm::vec3(0 * 5, (rand() % 5 - 5), 1 * -10), glm::vec3(0, 0, 0));
-	masterEnemy->AddSphereCollider(2.0f, masterEnemy->GetPosition());
-	masterEnemy->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-	masterEnemy->SetHealth(100);
-	physicsObjects.push_back(masterEnemy);
-
-
-	/*bool checkPositionValidity = true;
-	int numberOfObjects = 20;
-	NormalEnemy *masterEnemy = new NormalEnemy();
-	masterEnemy->InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
-	for (int i = 0; i < numberOfObjects; i++)
-	{
-	NormalEnemy *enemy = new NormalEnemy();
-	*enemy = *masterEnemy;
-	while (checkPositionValidity == true)
-	{
-	enemy->SetValues(glm::vec3(rand() % 10, (rand() % 5 - 5), (rand() % 50) * -1),glm::vec3(0,0,0));
-	auto positionTuple = make_tuple(enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z);
-	if (IsPositionValid(positionTuple,3) == true)
-	{
-	checkPositionValidity = false;
-	}
-	}
-	checkPositionValidity = true;
-	auto positionTuple = make_tuple(enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z);
-	mapPositions[positionTuple] = 2;
-	enemy->AddSphereCollider(2.0f, enemy->GetPosition());
-	enemy->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-	enemy->SetHealth(100);
-	physicsObjects.push_back(enemy);
-	}*/
+	
 }
 
 

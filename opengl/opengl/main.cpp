@@ -183,7 +183,7 @@ int main(int argc, char **argv)
 	}
 
 	ResourceManager::Clear();
-
+	game.CleanUp();
 
 	// Clean up by deleting Source(s) and Buffer(s)
 	alSourceStop(uiSource);
