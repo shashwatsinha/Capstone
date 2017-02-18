@@ -13,6 +13,14 @@ Game::Game(GLuint width, GLuint height)
 Game::~Game()
 {
 	delete masterBullet;
+
+	delete directionalLight;
+	for (int i = 0; i < pointLights.size(); i++)
+	{
+		delete pointLightContainers[i];
+		delete pointLights[i];
+	}
+
 	glDeleteVertexArrays(1, &quadVAO);
 	glDeleteBuffers(1, &quadVBO);
 	glDeleteFramebuffers(1, &framebuffer);
@@ -37,9 +45,8 @@ void Game::Init()
 	centreOfFlock3 = glm::vec3(-50, 0, 50);
 	
 	planet = new Model();
-	pinkPlanet = new Model();
 	sphere = new Model();
-	pointLightContainer = new Model();
+	
 	for (int i = 1; i < 4; i++)
 	{
 		Satellite *s = new Satellite(i);
@@ -74,7 +81,7 @@ void Game::Init()
 	ResourceManager::LoadShader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag", nullptr, "default");
 
 	planet->InitPath("Models/Planet/planet.obj");
-	planet->SetPosition(glm::vec3(0.0f, 0.0f, 00.0f));
+	planet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	planet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
 
@@ -95,7 +102,7 @@ void Game::Init()
 		}
 	}
 
-	ResourceManager::LoadShader("Shaders/vertexShader_LightContainer.vs", "Shaders/fragmentShader_LightContainer.frag", nullptr, "coralShader");
+	ResourceManager::LoadShader("Shaders/vertexShader_Coral.vs", "Shaders/fragmentShader_Coral.frag", nullptr, "coralShader");
 	
 	Coral *masterCoral = new Coral();
 	masterCoral->InitPath("Models/Corals/coral0.obj");
@@ -110,14 +117,6 @@ void Game::Init()
 		corals.push_back(coral);
 	}
 
-	//initializing corals
-	
-
-
-	//spaceShip.InitPath("Models/SpaceCraft/Wraith Raider Starship.obj");
-	//spaceShip.SetPosition(glm::vec3(0.0f, -1.75f, 2.0f));
-	//spaceShip.SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-
 	// Load Skybox Shader
 	//ResourceManager::LoadShader("Shaders/vertexShader_Skybox.vs", "Shaders/fragmentShader_Skybox.frag", nullptr, "skybox");
 	//skybox.setupMesh();
@@ -127,22 +126,37 @@ void Game::Init()
 	glm::vec3 ambient = glm::vec3(0.2f, 0.2f, 0.2f);
 	glm::vec3 diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
 	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
-	directionalLight.initializeDirectionalLightParameters(direction, ambient, diffuse, specular);
+	directionalLight = new Lights();
+	directionalLight->initializeDirectionalLightParameters(direction, ambient, diffuse, specular);
 
 	// Initialize Point Light (Initialize as many point lights as requires and push the lights into the pointLights vector)
 	// Cuurently the max number of point lights is set as 10 in fragment shader. For more lights change the value in fragment shader
-	Lights pointLight;
-	pointLights.push_back(pointLight);
+	glm::vec3 pointLightPosition1 = glm::vec3(1.0, 150.5, 23.75); pointLightPositions.push_back(pointLightPosition1);
+	glm::vec3 pointLightPosition2 = glm::vec3(0.75, 147.75, 32.0); pointLightPositions.push_back(pointLightPosition2);
 
-	//masterBullet = new Bullet();
-	//masterBullet->InitPath("Models/Bullet/Bullet.obj");
-	//GenerateEnvironment();
+	// Setup Point Light. Properties of Point Light can be changed over time if required. (In Game loop change the values if required)
+	// Get the Point Light whose values need to be changed using the vector pointLights and change the properties as required
+	ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+	diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+	specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	for (int i = 0; i < pointLightPositions.size(); i++)
+	{
+		Lights *pointLight = new Lights();
+		// Note that the 4th parameter is the distance the point light should affect (set the distance from the pre initialized pointLightDistance array)
+		pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
+		pointLights.push_back(pointLight);
+	}
 
 	// Point Light Container Shader
-	/*ResourceManager::LoadShader("Shaders/vertexShader_LightContainer.vs", "Shaders/fragmentShader_LightContainer.frag", nullptr, "lightContainerShader");
-	pointLightContainer.InitPath("Models/Bullet/Bullet.obj");
-	pointLightContainer.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	pointLightContainer.SetScale(glm::vec3(10.0f, 10.0f, 10.0f));*/
+	ResourceManager::LoadShader("Shaders/vertexShader_LightContainer.vs", "Shaders/fragmentShader_LightContainer.frag", nullptr, "lightContainerShader");
+	for (int i = 0; i < pointLightPositions.size(); i++)
+	{
+		Model *pointLightContainer = new Model();
+		pointLightContainer->InitPath("Models/Bullet/Bullet.obj");
+		pointLightContainer->SetPosition(pointLightPositions[i]);
+		pointLightContainer->SetScale(glm::vec3(10.0f, 10.0f, 10.0f));
+		pointLightContainers.push_back(pointLightContainer);
+	}
 
 	ResourceManager::LoadShader("Shaders/vertexShader_Skysphere.vs", "Shaders/fragmentShader_Skysphere.frag", nullptr, "skySphere");
 	sphere->InitPath("Models/Sphere/perfect_sphere.obj");
@@ -196,24 +210,10 @@ void Game::Init()
 
 void Game::Update(GLfloat dt)
 {
-	/*for (int i = 0; i < physicsObjects.size(); i++)
-	{
-		physicsObjects[i]->ProcessAI(Camera::instance()->Position);
-		physicsObjects[i]->UpdateCollider(dt);
-		for (int j = 0; j < physicsObjects[i]->enemyBullets.size(); j++)
-		{
-			physicsObjects[i]->enemyBullets[j]->UpdateCollider(dt);
-		}
-	}
-
-	for (int i = 0; i < bullets.size(); i++)
-	{
-		bullets[i]->UpdateCollider(dt);
-	}*/
 	particlesystem1->Update(dt, 2);
 	particlesystem2->Update(dt, 2);
+	
 	//coral particle update
-
 	for (int i = 0;i < coralParticles.size();i++)
 	{
 		coralParticles[i]->Update(dt, 2);
@@ -241,43 +241,33 @@ void Game::ProcessInput(GLfloat dt)
 		}
 			//bgObject.SetPosition(glm::vec3(bgObject.GetPosition().x,))
 
-		/*if (this->Keys[GLFW_KEY_I])
+		if (this->Keys[GLFW_KEY_I])
 		{
-			coralPosition.y += .25;
+			pointLightPositions[1].y += .25;
 		}
 		if (this->Keys[GLFW_KEY_K])
 		{
-			coralPosition.y -= .25;
+			pointLightPositions[1].y -= .25;
 		}
 		if (this->Keys[GLFW_KEY_J])
 		{
-			coralPosition.z += .25;
+			pointLightPositions[1].z += .25;
 		}
 		if (this->Keys[GLFW_KEY_L])
 		{
-			coralPosition.z -= .25;
+			pointLightPositions[1].z -= .25;
 		}
 		if (this->Keys[GLFW_KEY_U])
 		{
-			coralPosition.x += .25;
+			pointLightPositions[1].x += .25;
 		}
 		if (this->Keys[GLFW_KEY_O])
 		{
-			coralPosition.x -= .25;
-		}*/
-		
-		if (this->Keys[GLFW_KEY_SPACE])
+			pointLightPositions[1].x -= .25;
+		}
+		if (this->Keys[GLFW_KEY_P])
 		{
-			/*currentBulletFired = glfwGetTime();
-			float shootInterval = currentBulletFired - previousBulletFired;
-			if (shootInterval > 0.1f)
-			{
-				Shoot();
-			}
-
-			previousBulletFired = currentBulletFired;*/
-			//std::cout << coralPosition.x << coralPosition.y << coralPosition.z << std::endl;
-			//cout << "Bezier " << coralPosition.x << " " << coralPosition.y << " " << coralPosition.z << endl;
+			cout << "Position : " + glm::to_string(pointLightPositions[1]);
 		}
 	}
 }
@@ -444,24 +434,28 @@ void Game::Render()
 	shader.SetMatrix4("projection", projection);
 	
 	// Setup Directional Light
-	directionalLight.setUpDirectionalLight(&ResourceManager::GetShader("default"), Camera::instance());
+	//directionalLight->setUpDirectionalLight(&ResourceManager::GetShader("default"), Camera::instance());
 
-	// Setup Point Light. Properties of Point Light can be changed over time if required.
-	// Get the Point Light whose values need to be changed using the vector pointLights and change the properties as required
-	glm::vec3 position = glm::vec3(25.0f * sin(glfwGetTime() * 1.0f), -30.0f, 25.0f * cos(glfwGetTime() * 1.0f));
-	//glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f);
-	glm::vec3 ambient = glm::vec3(0.1f, 0.1f, 0.1f);
+	// Properties of Point Light can be changed over time if required here.
+	// Get the Point Lights whose values need to be changed using the vector pointLights and change the properties as required
+	glm::vec3 ambient = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec3 diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
 	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
-	float constant = 1.0f;
-	float linear = 0.09f;
-	float quadratic = 0.032f;
-	//pointLightContainer.SetPosition(glm::vec3(25.0f * sin(glfwGetTime() * 1.0f), -30.0f, 25.0f * cos(glfwGetTime() * 1.0f)));
-	for (int i = 0; i < pointLights.size(); i++)
+	for (int i = 0; i < pointLightPositions.size(); i++)
 	{
-		// Note that the 4th parameter is the distance the point light should affect (set the distance from the pre initialized pointLightDistance array)
-		pointLights[i].setPointLightParameters(position, ambient, diffuse, specular, pointLightDistance[4]);
-		pointLights[i].setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance());
+		if(i == 1)
+			pointLights[i]->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
+		
+		string *uniformName = new string[7];
+		uniformName[0] = string("pointLights[") + to_string(i) + string("].position");
+		uniformName[1] = string("pointLights[") + to_string(i) + string("].ambient");
+		uniformName[2] = string("pointLights[") + to_string(i) + string("].diffuse");
+		uniformName[3] = string("pointLights[") + to_string(i) + string("].specular");
+		uniformName[4] = string("pointLights[") + to_string(i) + string("].constant");
+		uniformName[5] = string("pointLights[") + to_string(i) + string("].linear");
+		uniformName[6] = string("pointLights[") + to_string(i) + string("].quadratic");
+
+		pointLights[i]->setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance(), uniformName);
 	}
 	ResourceManager::GetShader("default").SetInteger("NO_OF_POINT_LIGHTS", pointLights.size());
 	
@@ -515,38 +509,17 @@ void Game::Render()
 		coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());
 	}
 
-	/*coral1.Draw(&shader);
-	coral2.Draw(&shader);
-	coral3.Draw(&shader);
-	coral4.Draw(&shader);
-	coral5.Draw(&shader);
-	coral6.Draw(&shader);
-	coral7.Draw(&shader);
-	coral8.Draw(&shader);
-	coral9.Draw(&shader);
-	coral10.Draw(&shader);*/
-
-	
-	/*for (int i = 0; i < physicsObjects.size(); i++)
-	{
-		physicsObjects[i]->Draw(&ResourceManager::GetShader("default"));
-		for (int j = 0; j < physicsObjects[i]->enemyBullets.size(); j++)
-		{
-			physicsObjects[i]->enemyBullets[j]->Draw(&ResourceManager::GetShader("default"));
-		}
-	}
-
-	for (int i = 0; i < bullets.size(); i++)
-	{
-		bullets[i]->Draw(&ResourceManager::GetShader("default"));
-	}*/
-
 	// Also draw the point light object, again binding the appropriate shader
-	///*Shader lampShader = ResourceManager::GetShader("lightContainerShader");
-	//lampShader.Use();
-	//lampShader.SetMatrix4("view", view);
-	//lampShader.SetMatrix4("projection", projection);
-	//pointLightContainer.Draw(&lampShader);*/
+	Shader lampShader = ResourceManager::GetShader("lightContainerShader");
+	lampShader.Use();
+	lampShader.SetMatrix4("view", view);
+	lampShader.SetMatrix4("projection", projection);
+	for (int i = 0; i < pointLights.size(); i++)
+	{
+		if (i == 1)
+			pointLightContainers[i]->SetPosition(pointLightPositions[1]);
+		pointLightContainers[i]->Draw(&lampShader);
+	}
 
 	glDepthFunc(GL_LEQUAL);
 	Shader skySphereShader = ResourceManager::GetShader("skySphere");

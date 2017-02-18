@@ -38,7 +38,7 @@ uniform vec3 viewPos;
 uniform Material material;
 uniform DirLight dirLight;
 uniform int NO_OF_POINT_LIGHTS;
-uniform PointLight pointLights[10];
+uniform PointLight pointLights[100];
 
 // Function prototypes
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);

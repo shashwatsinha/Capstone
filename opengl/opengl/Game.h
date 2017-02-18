@@ -10,6 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/quaternion.hpp> 
 #include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include <SOIL.h>
 #include <ppl.h>
 
@@ -109,14 +110,14 @@ public:
 
 
 private:
-	//Model spaceShip;
-	Model *pointLightContainer;
+	vector<Model*> pointLightContainers;
 	Model *sphere;
 	Model *planet, *pinkPlanet;
 	
 	//Skybox skybox;
-	Lights directionalLight;
-	vector<Lights> pointLights;
+	Lights *directionalLight;
+	vector<Lights*> pointLights;
+	vector<glm::vec3> pointLightPositions;
 
 	vector<NormalEnemy*> physicsObjects;
 	vector<Bullet*> bullets;

@@ -78,19 +78,19 @@ public:
 		glUniform3f(lightSpecularLoc, dirLight.specular.x, dirLight.specular.y, dirLight.specular.z);
 	}
 
-	void setUpPointLight(Shader *shader, Camera *camera) {
+	void setUpPointLight(Shader *shader, Camera *camera, string *uniformName) {
 		// Pass view position to calculate specular light
 		GLint viewPosLoc = glGetUniformLocation(shader->ID, "viewPos");
 		glUniform3f(viewPosLoc, Camera::instance()->Position.x, Camera::instance()->Position.y, Camera::instance()->Position.z);
 
 		// Set the Light Properties
-		GLint lightPosLoc = glGetUniformLocation(shader->ID, "pointLights[0].position");
-		GLint lightAmbientLoc = glGetUniformLocation(shader->ID, "pointLights[0].ambient");
-		GLint lightDiffuseLoc = glGetUniformLocation(shader->ID, "pointLights[0].diffuse");
-		GLint lightSpecularLoc = glGetUniformLocation(shader->ID, "pointLights[0].specular");
-		GLint lightConstantLoc = glGetUniformLocation(shader->ID, "pointLights[0].constant");
-		GLint lightLinearLoc = glGetUniformLocation(shader->ID, "pointLights[0].linear");
-		GLint lightQuadraticLoc = glGetUniformLocation(shader->ID, "pointLights[0].quadratic");
+		GLint lightPosLoc = glGetUniformLocation(shader->ID, uniformName[0].c_str());
+		GLint lightAmbientLoc = glGetUniformLocation(shader->ID, uniformName[1].c_str());
+		GLint lightDiffuseLoc = glGetUniformLocation(shader->ID, uniformName[2].c_str());
+		GLint lightSpecularLoc = glGetUniformLocation(shader->ID, uniformName[3].c_str());
+		GLint lightConstantLoc = glGetUniformLocation(shader->ID, uniformName[4].c_str());
+		GLint lightLinearLoc = glGetUniformLocation(shader->ID, uniformName[5].c_str());
+		GLint lightQuadraticLoc = glGetUniformLocation(shader->ID, uniformName[6].c_str());
 		glUniform3f(lightPosLoc, pointLight.position.x, pointLight.position.y, pointLight.position.z);
 		glUniform3f(lightAmbientLoc, pointLight.ambient.x, pointLight.ambient.y, pointLight.ambient.z);
 		glUniform3f(lightDiffuseLoc, pointLight.diffuse.x, pointLight.diffuse.y, pointLight.diffuse.z);
