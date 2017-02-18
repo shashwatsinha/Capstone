@@ -32,7 +32,7 @@ void Game::Init()
 	theta = 0.0f;
 	seperator = 1;
 	centreOfFlock1 = glm::vec3(-250, 0, 50);
-	centreOfFlock2 = glm::vec3(250, 0, -50);
+	centreOfFlock2 = glm::vec3(200, -50, 100);
 	
 	
 
@@ -532,6 +532,8 @@ void Game::Render()
 		satellites[i]->Update(&shader);
 	}
 
+	TestWithFlock();
+
 	Shader coralShader = ResourceManager::GetShader("coralShader");
 	coralShader.Use();
 	coralShader.SetMatrix4("view", view);
@@ -765,6 +767,36 @@ float Game::GetDeterminant(glm::vec3 k)
 glm::vec3 Game::MultiplyVector(glm::vec3 a, float k)
 {
 	return glm::vec3(a.x*k,a.y*k,a.z*k);
+}
+
+void Game::TestWithFlock()
+{
+	if (DistanceBetweenVectors(Camera::instance()->GetPosition(), centreOfFlock2) < 5000.0f)
+	{
+		flock2->setSeperate(true);
+		flock2->setSeperationDelay(15.0f);
+		flock2->SetPatternMovement(false);
+		flock2->SetPatternNumber(0);
+	}
+
+	else
+	{
+		flock2->setSeperate(false);
+		flock2->setSeperationDelay(0.0f);
+		flock2->SetPatternMovement(true);
+		flock2->SetPatternNumber(2);
+		flock2->SetSeperatorOne();
+	}
+}
+
+float Game::DistanceBetweenVectors(glm::vec3 a, glm::vec3 b)
+{
+	float x = a.x - b.x;
+	float y = a.y - b.y;
+	float z = a.z - b.z;
+
+	float distance = (x*x) + (y*y) + (z*z);
+	return distance;
 }
 
 void Game::CleanUp()

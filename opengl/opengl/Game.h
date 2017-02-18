@@ -98,7 +98,8 @@ public:
 	float GetDeterminant(glm::vec3 k);
 	glm::vec3 MultiplyVector(glm::vec3 a, float k);
 
-	
+	void TestWithFlock();
+	float DistanceBetweenVectors(glm::vec3 a,glm::vec3 b);
 
 	//Delete all Pointers
 	void CleanUp();

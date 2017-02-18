@@ -87,7 +87,7 @@ void Flockers::ChangeCentreOfFlock(glm::vec3 centre)
 
 void Flockers::ChangeCentreOfFlockLinearPositiveX()
 {
-	centreOfFlock.x += 0.01f;
+	//centreOfFlock.x += 0.01f;
 }
 
 void Flockers::ChangeCentreOfFlockCircular()
@@ -164,6 +164,31 @@ void Flockers::RenderFlock(Shader * shader)
 			break;
 		}
 	}
+}
+
+void Flockers::setSeperationDelay(float sDelay)
+{
+	seperatorDelay = sDelay;
+}
+
+void Flockers::setSeperate(bool s)
+{
+	seperate = s;
+}
+
+void Flockers::SetPatternMovement(bool p)
+{
+	patternTrue = p;
+}
+
+void Flockers::SetPatternNumber(int p)
+{
+	patternNumber = p;
+}
+
+void Flockers::SetSeperatorOne()
+{
+	seperator = 1.0f;
 }
 
 void Flockers::UpdateVelocity()

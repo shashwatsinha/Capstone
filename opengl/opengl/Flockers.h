@@ -20,6 +20,16 @@ public:
 	
 	void RenderFlock(Shader *shader);
 
+	void setSeperationDelay(float sDelay);
+
+	void setSeperate(bool s);
+
+	void SetPatternMovement(bool p);
+
+	void SetPatternNumber(int p);
+
+	void SetSeperatorOne();
+
 private:
 	vector<BGMovingObjects*> objs;
 	glm::vec3 centreOfFlock;
