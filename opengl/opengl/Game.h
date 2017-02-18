@@ -108,7 +108,6 @@ public:
 	void ChangeCentreOfFlock(glm::vec3 centre);
 	glm::vec3 TestChangingCentre(glm::vec3 centre);
 
-
 private:
 	vector<Model*> pointLightContainers;
 	Model *sphere;

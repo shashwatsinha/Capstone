@@ -56,12 +56,6 @@ void Game::Init()
 		satellites.push_back(s);
 	}
 
-
-
-	
-
-	
-
 	vector<glm::vec3> coralPositions;
 	//coral positions
 	glm::vec3 coralPosition1 = glm::vec3(1, 12, 23.75); coralPositions.push_back(coralPosition1);
@@ -75,17 +69,12 @@ void Game::Init()
 	glm::vec3 coralPosition9 = glm::vec3(-2.25, 24, 4.5); coralPositions.push_back(coralPosition9);
 	glm::vec3 coralPosition10 = glm::vec3(2, 24.25, 2); coralPositions.push_back(coralPosition10);
 
-	
-
 	// Load Default Shader
 	ResourceManager::LoadShader("Shaders/vertexShader_default.vs", "Shaders/fragmentShader_default.frag", nullptr, "default");
 
 	planet->InitPath("Models/Planet/planet.obj");
 	planet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	planet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
-
-
-
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -132,7 +121,20 @@ void Game::Init()
 	// Initialize Point Light (Initialize as many point lights as requires and push the lights into the pointLights vector)
 	// Cuurently the max number of point lights is set as 10 in fragment shader. For more lights change the value in fragment shader
 	glm::vec3 pointLightPosition1 = glm::vec3(1.0, 150.5, 23.75); pointLightPositions.push_back(pointLightPosition1);
-	glm::vec3 pointLightPosition2 = glm::vec3(0.75, 147.75, 32.0); pointLightPositions.push_back(pointLightPosition2);
+	glm::vec3 pointLightPosition2 = glm::vec3(1.0, 148.0, 44.0); pointLightPositions.push_back(pointLightPosition2);
+	glm::vec3 pointLightPosition3 = glm::vec3(-9.5, 148.75, 33.75); pointLightPositions.push_back(pointLightPosition3);
+	glm::vec3 pointLightPosition4 = glm::vec3(12.25, 148.75, 33.75); pointLightPositions.push_back(pointLightPosition4);
+	glm::vec3 pointLightPosition5 = glm::vec3(-9.0, 143.5, 54.25); pointLightPositions.push_back(pointLightPosition5);
+	glm::vec3 pointLightPosition6 = glm::vec3(13.0, 140.25, 54.25); pointLightPositions.push_back(pointLightPosition6);
+	glm::vec3 pointLightPosition7 = glm::vec3(0.75, 150.0, 4.25); pointLightPositions.push_back(pointLightPosition7);
+	glm::vec3 pointLightPosition8 = glm::vec3(-10.25, 151.5, 14.0); pointLightPositions.push_back(pointLightPosition8);
+	glm::vec3 pointLightPosition9 = glm::vec3(12.0, 150.0, 14.0); pointLightPositions.push_back(pointLightPosition9);
+	glm::vec3 pointLightPosition10 = glm::vec3(12.0, 147.75, -8.0); pointLightPositions.push_back(pointLightPosition10);
+	glm::vec3 pointLightPosition11 = glm::vec3(-11.25, 148.25, -8.0); pointLightPositions.push_back(pointLightPosition11);
+	glm::vec3 pointLightPosition12 = glm::vec3(0.2, 149.0, -18.0); pointLightPositions.push_back(pointLightPosition12);
+	glm::vec3 pointLightPosition13 = glm::vec3(-11.8, 147.75, -28.75); pointLightPositions.push_back(pointLightPosition13);
+	glm::vec3 pointLightPosition14 = glm::vec3(11.2, 147.75, -28.75); pointLightPositions.push_back(pointLightPosition14);
+	//  vec3(11.200000, 147.750000, -28.750000)
 
 	// Setup Point Light. Properties of Point Light can be changed over time if required. (In Game loop change the values if required)
 	// Get the Point Light whose values need to be changed using the vector pointLights and change the properties as required
@@ -243,31 +245,31 @@ void Game::ProcessInput(GLfloat dt)
 
 		if (this->Keys[GLFW_KEY_I])
 		{
-			pointLightPositions[1].y += .25;
+			pointLightPositions[pointLightPositions.size()-1].y += .25;
 		}
 		if (this->Keys[GLFW_KEY_K])
 		{
-			pointLightPositions[1].y -= .25;
+			pointLightPositions[pointLightPositions.size() - 1].y -= .25;
 		}
 		if (this->Keys[GLFW_KEY_J])
 		{
-			pointLightPositions[1].z += .25;
+			pointLightPositions[pointLightPositions.size() - 1].z += .25;
 		}
 		if (this->Keys[GLFW_KEY_L])
 		{
-			pointLightPositions[1].z -= .25;
+			pointLightPositions[pointLightPositions.size() - 1].z -= .25;
 		}
 		if (this->Keys[GLFW_KEY_U])
 		{
-			pointLightPositions[1].x += .25;
+			pointLightPositions[pointLightPositions.size() - 1].x += .25;
 		}
 		if (this->Keys[GLFW_KEY_O])
 		{
-			pointLightPositions[1].x -= .25;
+			pointLightPositions[pointLightPositions.size() - 1].x -= .25;
 		}
 		if (this->Keys[GLFW_KEY_P])
 		{
-			cout << "Position : " + glm::to_string(pointLightPositions[1]);
+			cout << "Position : " + glm::to_string(pointLightPositions[pointLightPositions.size() - 1]);
 		}
 	}
 }
@@ -434,7 +436,7 @@ void Game::Render()
 	shader.SetMatrix4("projection", projection);
 	
 	// Setup Directional Light
-	//directionalLight->setUpDirectionalLight(&ResourceManager::GetShader("default"), Camera::instance());
+	directionalLight->setUpDirectionalLight(&ResourceManager::GetShader("default"), Camera::instance());
 
 	// Properties of Point Light can be changed over time if required here.
 	// Get the Point Lights whose values need to be changed using the vector pointLights and change the properties as required
@@ -443,7 +445,7 @@ void Game::Render()
 	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
 	for (int i = 0; i < pointLightPositions.size(); i++)
 	{
-		if(i == 1)
+		if(i == (pointLightPositions.size() - 1))
 			pointLights[i]->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
 		
 		string *uniformName = new string[7];
@@ -510,16 +512,16 @@ void Game::Render()
 	}
 
 	// Also draw the point light object, again binding the appropriate shader
-	Shader lampShader = ResourceManager::GetShader("lightContainerShader");
+	/*Shader lampShader = ResourceManager::GetShader("lightContainerShader");
 	lampShader.Use();
 	lampShader.SetMatrix4("view", view);
 	lampShader.SetMatrix4("projection", projection);
 	for (int i = 0; i < pointLights.size(); i++)
 	{
-		if (i == 1)
-			pointLightContainers[i]->SetPosition(pointLightPositions[1]);
+		if (i == (pointLightPositions.size() - 1))
+			pointLightContainers[i]->SetPosition(pointLightPositions[i]);
 		pointLightContainers[i]->Draw(&lampShader);
-	}
+	}*/
 
 	glDepthFunc(GL_LEQUAL);
 	Shader skySphereShader = ResourceManager::GetShader("skySphere");
