@@ -18,7 +18,7 @@ public:
 	Flockers();
 	~Flockers();
 	
-	void RenderFlock(Shader *shader);
+	void RenderFlock(Shader *shader,glm::vec3 player);
 
 	void setSeperationDelay(float sDelay);
 
@@ -29,6 +29,12 @@ public:
 	void SetPatternNumber(int p);
 
 	void SetSeperatorOne();
+
+	glm::vec3 ReturnPerpendicularVector(glm::vec3 inputVector);
+
+	bool IsVelocityZero(glm::vec3 velocity);
+
+	float DistanceFromPlayer();
 
 private:
 	vector<BGMovingObjects*> objs;
@@ -55,5 +61,8 @@ private:
 	bool patternTrue;
 	int patternNumber;
 	bool seperate;
+
+	glm::vec3 playerPos;
+	int x;
 };
 

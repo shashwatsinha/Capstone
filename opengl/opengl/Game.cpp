@@ -36,9 +36,9 @@ void Game::Init()
 	
 	
 
-	flock1->InitializeFlock(27, centreOfFlock1, 0.5f,true, 15.0f,false,0);
+	flock1->InitializeFlock(27, centreOfFlock1, 1.0f, false, 0.0f, true, 2);
 	flock2->InitializeFlock(27, centreOfFlock2, 1.0f,false, 0.0f, true, 2);
-	flock3->InitializeFlock(27, glm::vec3(350, 0, 250), 0.5f, true, 15.0f, false, 0);
+	flock3->InitializeFlock(27, glm::vec3(350, 0, 250), 1.0f, false, 0.0f, true, 2);
 	
 	centreOfFlock3 = glm::vec3(-50, 0, 50);
 	
@@ -515,9 +515,9 @@ void Game::Render()
 
 	
 	planet->Draw(&shader);
-	flock1->RenderFlock(&shader);
-	flock2->RenderFlock(&shader);
-	flock3->RenderFlock(&shader);
+	flock1->RenderFlock(&shader, Camera::instance()->GetPosition());
+	flock2->RenderFlock(&shader, Camera::instance()->GetPosition());
+	flock3->RenderFlock(&shader, Camera::instance()->GetPosition());
 	//flock4->RenderFlock(&shader);
 	//flock5->RenderFlock(&shader);
 	
@@ -532,7 +532,7 @@ void Game::Render()
 		satellites[i]->Update(&shader);
 	}
 
-	TestWithFlock();
+	//TestWithFlock();
 
 	Shader coralShader = ResourceManager::GetShader("coralShader");
 	coralShader.Use();

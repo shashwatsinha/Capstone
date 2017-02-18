@@ -61,7 +61,6 @@ void BGMovingObjects::Update(Shader * shader)
 
 void BGMovingObjects::SetVelocity(glm::vec3 velocity)
 {
-	
 	this->velocity = velocity;
 }
 

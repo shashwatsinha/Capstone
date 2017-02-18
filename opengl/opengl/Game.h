@@ -85,7 +85,7 @@ public:
 	void Render();
 
 	// Other methods specific for our game
-	void GenerateEnvironment();
+
 	GLuint generateAttachmentTexture(GLboolean depth, GLboolean stencil);
 	void setupScreenQuadAndFrameBuffer();
 	ovrGraphicsLuid GetDefaultAdapterLuid();

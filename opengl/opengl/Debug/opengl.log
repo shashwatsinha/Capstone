@@ -1,34 +1,7 @@
-﻿  Game.cpp
-d:\cpstone\capstone\opengl\opengl\game.cpp(107): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(158): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(168): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(205): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(222): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(239): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(244): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(491): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(524): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(530): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(544): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(553): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\cpstone\capstone\opengl\opengl\game.cpp(581): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-d:\cpstone\capstone\opengl\opengl\game.cpp(583): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(648): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(653): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(805): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(810): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(818): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(823): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(828): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(833): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(838): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(1037): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-  Flockers.cpp
-d:\cpstone\capstone\opengl\opengl\flockers.cpp(136): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\flockers.cpp(141): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\cpstone\capstone\opengl\opengl\flockers.cpp(197): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
+﻿  Flockers.cpp
+d:\cpstone\capstone\opengl\opengl\flockers.cpp(137): warning C4018: '<': signed/unsigned mismatch
+d:\cpstone\capstone\opengl\opengl\flockers.cpp(142): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\cpstone\capstone\opengl\opengl\flockers.cpp(291): warning C4018: '<': signed/unsigned mismatch
+d:\cpstone\capstone\opengl\opengl\flockers.cpp(302): warning C4018: '<': signed/unsigned mismatch
   opengl.vcxproj -> D:\cpstone\Capstone\opengl\Debug\opengl.exe
   opengl.vcxproj -> D:\cpstone\Capstone\opengl\Debug\opengl.pdb (Full PDB)

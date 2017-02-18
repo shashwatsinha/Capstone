@@ -131,8 +131,9 @@ Flockers::~Flockers()
 {
 }
 
-void Flockers::RenderFlock(Shader * shader)
+void Flockers::RenderFlock(Shader * shader, glm::vec3 player)
 {
+	playerPos = player;
 	for (int i = 0; i < objs.size(); i++)
 	{
 		objs[i]->Update(shader);
@@ -191,19 +192,124 @@ void Flockers::SetSeperatorOne()
 	seperator = 1.0f;
 }
 
+glm::vec3 Flockers::ReturnPerpendicularVector(glm::vec3 inputVector)
+{
+	glm::vec3 perpendicularVector;
+	srand(++x);
+	int choice = rand() % 8 + 1;
+
+	if (choice == 1)
+	{
+		float x = inputVector.x;
+		float y = inputVector.y;
+		float z = inputVector.z;
+		float k = (-(x + z)) / y;
+		perpendicularVector = glm::vec3(1, k, 1);
+	}
+
+	else if (choice == 2)
+	{
+		float x = 0;
+		float y = inputVector.y;
+		float z = inputVector.z;
+		float k = (-z) / y;
+		perpendicularVector = glm::vec3(0, k, 1);
+	}
+
+	else if (choice == 4)
+	{
+		float x = 0;
+		float y = inputVector.y;
+		float z = inputVector.z;
+		float k = (-y) / z;
+		perpendicularVector = glm::vec3(0, 1, k);
+	}
+
+	else if (choice == 5)
+	{
+		float x = inputVector.x;
+		float y = inputVector.y;
+		float z = 0;
+		float k = (-x) / y;
+		perpendicularVector = glm::vec3(1, k, 0);
+	}
+
+	else if (choice == 6)
+	{
+		float x = inputVector.x;
+		float y = inputVector.y;
+		float z = 0;
+		float k = (-y) / x;
+		perpendicularVector = glm::vec3(k, 1, 0);
+	}
+
+	else if (choice == 7)
+	{
+		float x = inputVector.x;
+		float y = 0;
+		float z = inputVector.z;
+		float k = (-z) / x;
+		perpendicularVector = glm::vec3(k, 0, 1);
+	}
+
+	else
+	{
+		float x = inputVector.x;
+		float y = 0;
+		float z = inputVector.z;
+		float k = (-x) / z;
+		perpendicularVector = glm::vec3(1, 0, k);
+	}
+
+	perpendicularVector /= GetDeterminant(perpendicularVector);
+	perpendicularVector = perpendicularVector * 0.5f;
+	return perpendicularVector;
+}
+
+bool Flockers::IsVelocityZero(glm::vec3 velocity)
+{
+	if (velocity.x == 0 && velocity.y == 0 && velocity.z == 0)
+		return true;
+	else
+		return false;
+}
+
+float Flockers::DistanceFromPlayer()
+{
+	float x = playerPos.x - centreOfFlock.x;
+	float y = playerPos.y - centreOfFlock.y;
+	float z = playerPos.z - centreOfFlock.z;
+
+	float distance = (x*x) + (y*y) + (z*z);
+	return distance;
+}
+
 void Flockers::UpdateVelocity()
 {
-
-	for (int i = 0; i < objs.size(); i++)
+	if (DistanceFromPlayer() < 5000.0f)
 	{
+		for (int i = 0; i < objs.size(); i++)
+		{
+			glm::vec3 diffVector = centreOfFlock - playerPos;
+			diffVector = glm::normalize(diffVector);
+			objs[i] ->SetVelocity(ReturnPerpendicularVector(diffVector));
+			centreOfFlock = objs[objs.size() / 2]->GetPosition();
+		}
+	}
 
-		glm::vec3 temp = objs[i]->GetVelocity() +
-			ComputeAlignment(objs[i]) +
-			MultiplyVector(ComputeCohesion(objs[i], centreOfFlock), seperator) +
-			ComputeSeperation(objs[i]);
+	else
+	{
+		for (int i = 0; i < objs.size(); i++)
+		{
 
-		temp = LimitFlockVelocity(temp, 0.1f);
-		objs[i]->SetVelocity(temp);
+			glm::vec3 temp = objs[i]->GetVelocity() +
+				ComputeAlignment(objs[i]) +
+				MultiplyVector(ComputeCohesion(objs[i], centreOfFlock), seperator) +
+				ComputeSeperation(objs[i]);
+
+			temp = LimitFlockVelocity(temp, 0.1f);
+			objs[i]->SetVelocity(temp);
+		}
 	}
 }
 
