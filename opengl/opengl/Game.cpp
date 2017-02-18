@@ -23,13 +23,17 @@ Game::~Game()
 
 void Game::Init()
 {
+	flock1 = new Flockers();
+	flock2 = new Flockers();
+	flock3 = new Flockers();
+	planet = new Model();
+	sphere = new Model();
+
 	theta = 0.0f;
 	seperator = 1;
 	centreOfFlock1 = glm::vec3(-250, 0, 50);
 	centreOfFlock2 = glm::vec3(250, 0, -50);
-	flock1 = new Flockers();
-	flock2 = new Flockers();
-	flock3 = new Flockers();
+	
 	
 
 	flock1->InitializeFlock(27, centreOfFlock1, 0.5f,true, 15.0f,false,0);
@@ -38,8 +42,7 @@ void Game::Init()
 	
 	centreOfFlock3 = glm::vec3(-50, 0, 50);
 	
-	planet = new Model();
-	sphere = new Model();
+	
 	
 	for (int i = 1; i < 4; i++)
 	{
@@ -189,10 +192,6 @@ void Game::Init()
 	particlesystem1->startVelocityRange = 1.5f;
 	particlesystem1->scale = 0.1f;
 
-
-
-	
-
 	//coral particle system
 
 	ParticleSystem *masterCoralParticle = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("coralParticle"), 1000);
@@ -228,14 +227,12 @@ void Game::Init()
 		surfaceEmitter.push_back(surfaceParticle);
 	}
 
-
 	// Initialize framebuffer and setup the screenQuad
 	setupScreenQuadAndFrameBuffer();
 }
 
 void Game::Update(GLfloat dt)
 {
-	//particlesystem1->Update(dt, 2);
 	
 	
 	//coral particle update
@@ -282,7 +279,6 @@ void Game::ProcessInput(GLfloat dt)
 		{
 			bgY += 0.25;
 		}
-			//bgObject.SetPosition(glm::vec3(bgObject.GetPosition().x,))
 
 		if (this->Keys[GLFW_KEY_I])
 		{
@@ -759,8 +755,6 @@ GLuint Game::generateAttachmentTexture(GLboolean depth, GLboolean stencil)
 	return textureID;
 }
 
-
-
 float Game::GetDeterminant(glm::vec3 k)
 {
 	float val = (k.x * k.x) + (k.y * k.y) + (k.z * k.z);
@@ -771,109 +765,6 @@ float Game::GetDeterminant(glm::vec3 k)
 glm::vec3 Game::MultiplyVector(glm::vec3 a, float k)
 {
 	return glm::vec3(a.x*k,a.y*k,a.z*k);
-}
-
-glm::vec3 Game::ComputeAlignment(BGMovingObjects * obj, vector<BGMovingObjects*>objs)
-{
-	glm::vec3 point;
-	concurrency::parallel_for(size_t(0), objs.size(), [&](size_t i)
-	{
-		if (objs[i]!=obj)
-		{
-			{
-				point += objs[i]->GetVelocity();
-			}
-		}
-	});
-	
-	
-	point.x /= objs.size();	point.y /= objs.size();	point.z /= objs.size();
-
-	point = glm::vec3((point.x - obj->GetVelocity().x) / 8.0f,
-		(point.y - obj->GetVelocity().y) / 8.0f,
-		(point.z - obj->GetVelocity().z) / 8.0f);
-
-	return point;
-}
-
-glm::vec3 Game::ComputeCohesion(BGMovingObjects * obj,glm::vec3 centreOfFlock, vector<BGMovingObjects*>objs)
-{
-	glm::vec3 centre = centreOfFlock;
-
-	concurrency::parallel_for(size_t(0), objs.size(), [&](size_t i)
-	{
-		if (objs[i] != obj)
-		{
-			{
-				centre += objs[i]->GetPosition();
-				
-			}
-		}
-	});
-
-	centre.x /= objs.size();	centre.y /= objs.size();	centre.z /= objs.size();
-	centre = glm::vec3((centre.x - obj->GetPosition().x) / 100,
-						(centre.y - obj->GetPosition().y) / 100,
-						(centre.z - obj->GetPosition().z) / 100);
-
-	return centre;
-}
-
-glm::vec3 Game::ComputeSeperation(BGMovingObjects * obj, vector<BGMovingObjects*>objs)
-{
-	glm::vec3 point;
-
-	concurrency::parallel_for(size_t(0), objs.size(), [&](size_t i)
-	{
-		if (objs[i] != obj)
-		{
-			if (obj->DistanceFrom(objs[i]->GetPosition()) < 30)
-			{
-				point = point - (objs[i]->GetPosition() - obj->GetPosition());
-			}
-		}
-	});
-
-	return point;
-}
-
-glm::vec3 Game::LimitFlockVelocity(glm::vec3 speed,float s)
-{
-	float vLim = s;
-	glm::vec3 v = speed;
-	
-	if (GetDeterminant(speed) > vLim)
-	{
-		v /= GetDeterminant(v);
-		v *= vLim;
-		
-	}
-
-	return v;
-}
-
-void Game::ChangeCentreOfFlock(glm::vec3 centre)
-{
-	//srand(time(NULL));
-	//int choice = (rand() % 3) + 1;
-	//switch (choice) 
-	//{
-	//case 1: centreOfFlock = glm::vec3(-50, 0, -50);
-	//	break;
-	//case 2:	centreOfFlock = glm::vec3(50, 0, 50);
-	//	break;
-	//case 3: centreOfFlock = glm::vec3(-50, 0, 50);
-	//	break;
-	//case 4:	centreOfFlock = glm::vec3(50, 0, -50);
-	//	break;
-	//}
-}
-
-glm::vec3 Game::TestChangingCentre(glm::vec3 centre)
-{
-	centre = glm::vec3(50 * sin(theta), 50 * cos(theta), centre.z);
-	theta = theta + 0.01f;
-	return centre;
 }
 
 void Game::CleanUp()
@@ -921,15 +812,6 @@ void Game::CleanUp()
 	delete flock2;
 	delete flock3;
 
-}
-
-
-
-
-
-void Game::GenerateEnvironment()
-{
-	
 }
 
 
