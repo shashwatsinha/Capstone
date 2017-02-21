@@ -135,7 +135,7 @@ void Game::Init()
 	// Initialize Point Light (Initialize as many point lights as requires and push the lights into the pointLights vector)
 	// Cuurently the max number of point lights is set as 10 in fragment shader. For more lights change the value in fragment shader
 	glm::vec3 pointLightPosition1 = glm::vec3(1.0, 150.5, 23.75); pointLightPositions.push_back(pointLightPosition1);
-	glm::vec3 pointLightPosition2 = glm::vec3(1.0, 148.0, 44.0); pointLightPositions.push_back(pointLightPosition2);
+	/*glm::vec3 pointLightPosition2 = glm::vec3(1.0, 148.0, 44.0); pointLightPositions.push_back(pointLightPosition2);
 	glm::vec3 pointLightPosition3 = glm::vec3(-9.5, 148.75, 33.75); pointLightPositions.push_back(pointLightPosition3);
 	glm::vec3 pointLightPosition4 = glm::vec3(12.25, 148.75, 33.75); pointLightPositions.push_back(pointLightPosition4);
 	glm::vec3 pointLightPosition5 = glm::vec3(-9.0, 143.5, 54.25); pointLightPositions.push_back(pointLightPosition5);
@@ -147,7 +147,7 @@ void Game::Init()
 	glm::vec3 pointLightPosition11 = glm::vec3(-11.25, 148.25, -8.0); pointLightPositions.push_back(pointLightPosition11);
 	glm::vec3 pointLightPosition12 = glm::vec3(0.2, 149.0, -18.0); pointLightPositions.push_back(pointLightPosition12);
 	glm::vec3 pointLightPosition13 = glm::vec3(-11.8, 147.75, -28.75); pointLightPositions.push_back(pointLightPosition13);
-	glm::vec3 pointLightPosition14 = glm::vec3(11.2, 147.75, -28.75); pointLightPositions.push_back(pointLightPosition14);
+	glm::vec3 pointLightPosition14 = glm::vec3(11.2, 147.75, -28.75); pointLightPositions.push_back(pointLightPosition14);*/
 	//  vec3(11.200000, 147.750000, -28.750000)
 
 	// Setup Point Light. Properties of Point Light can be changed over time if required. (In Game loop change the values if required)
