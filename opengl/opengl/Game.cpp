@@ -45,9 +45,9 @@ void Game::Init()
 	
 	
 	
-	for (int i = 1; i < 2; i++)
+	for (int i = 1; i < 4; i++)
 	{
-		Satellite *s = new Satellite(2);
+		Satellite *s = new Satellite(i);
 		s->InitPath("Models/GreenObject/GreenObject.obj");
 		s->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 		s->SetPosition(glm::vec3(0, 0, 0));
@@ -519,10 +519,17 @@ void Game::Render()
 
 //	cout << Camera::instance()->Front.x <<" "<< Camera::instance()->Front.y<<" " << Camera::instance()->Front.z << endl;
 	glm::mat4 k = Camera::instance()->GetProjectionMatrix();
-	planet->Draw(&shader);
-	flock1->RenderFlock(&shader, Camera::instance()->GetPosition());
-	flock2->RenderFlock(&shader, Camera::instance()->GetPosition());
-	flock3->RenderFlock(&shader, Camera::instance()->GetPosition());
+	if (frustum->CheckSphere(planet->GetPosition(), planet->GetScale().x))
+		planet->Draw(&shader);
+
+	if (frustum->CheckSphere(flock1->ReturnCentreOfFlock(), flock1->ReturnScaleOfElementOfFlock().x))
+		flock1->RenderFlock(&shader, Camera::instance()->GetPosition());
+
+	if (frustum->CheckSphere(flock2->ReturnCentreOfFlock(), flock2->ReturnScaleOfElementOfFlock().x))
+		flock2->RenderFlock(&shader, Camera::instance()->GetPosition());
+
+	if (frustum->CheckSphere(flock3->ReturnCentreOfFlock(), flock3->ReturnScaleOfElementOfFlock().x))
+		flock3->RenderFlock(&shader, Camera::instance()->GetPosition());
 	//flock4->RenderFlock(&shader);
 	//flock5->RenderFlock(&shader);
 	
@@ -535,7 +542,7 @@ void Game::Render()
 	for (int i = 0; i < satellites.size(); i++)
 	{
 		satellites[i]->UpdatePhysics();
-		if(frustum->CheckSphere(satellites[i]->GetPosition(),0.1f))
+		if(frustum->CheckSphere(satellites[i]->GetPosition(),satellites[i]->GetScale().x))
 			satellites[i]->Render(&shader);
 	}
 

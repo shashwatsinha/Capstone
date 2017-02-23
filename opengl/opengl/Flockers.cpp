@@ -284,6 +284,16 @@ float Flockers::DistanceFromPlayer()
 	return distance;
 }
 
+glm::vec3 Flockers::ReturnCentreOfFlock()
+{
+	return centreOfFlock;
+}
+
+glm::vec3 Flockers::ReturnScaleOfElementOfFlock()
+{
+	return objs[0]->GetScale();
+}
+
 void Flockers::UpdateVelocity()
 {
 	if (DistanceFromPlayer() < 5000.0f)

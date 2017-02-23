@@ -44,7 +44,7 @@ void Satellite::UpdatePhysics()
 
 	}
 
-	//theta = theta + 0.001f;
+	theta = theta + 0.001f;
 }
 
 float Satellite::GetRadius()

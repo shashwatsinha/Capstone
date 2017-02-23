@@ -1,8 +1,26 @@
-﻿  Frustum.cpp
-c:\capstone\opengl\opengl\frustum.cpp(21): warning C4101: 'zMinimum': unreferenced local variable
-c:\capstone\opengl\opengl\frustum.cpp(21): warning C4101: 'r': unreferenced local variable
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
-  Game.cpp
+﻿  Game.cpp
+c:\capstone\opengl\opengl\game.cpp(108): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(159): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(169): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(206): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(223): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(240): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(245): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(495): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(536): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(542): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(558): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(567): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\capstone\opengl\opengl\game.cpp(595): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\capstone\opengl\opengl\game.cpp(597): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(662): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(667): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(820): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(825): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(833): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(838): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(843): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(848): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(853): warning C4018: '<': signed/unsigned mismatch
+c:\capstone\opengl\opengl\game.cpp(1052): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
   opengl.vcxproj -> C:\Capstone\opengl\Debug\opengl.exe

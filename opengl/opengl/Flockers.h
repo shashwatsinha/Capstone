@@ -36,6 +36,10 @@ public:
 
 	float DistanceFromPlayer();
 
+	glm::vec3 ReturnCentreOfFlock();
+
+	glm::vec3 ReturnScaleOfElementOfFlock();
+
 private:
 	vector<BGMovingObjects*> objs;
 	glm::vec3 centreOfFlock;
