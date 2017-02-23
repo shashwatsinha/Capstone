@@ -1,5 +1,8 @@
 #pragma once
+#include "glm/gtc/matrix_access.hpp"
 #include "PlaneClass.h"
+#include<iostream>
+#include <vector>
 class Frustum
 {
 public:
@@ -9,6 +12,6 @@ public:
 	bool CheckSphere(glm::vec3 centre, float radius);
 	
 private:
-	PlaneClass frustum[6];
+	std::vector<PlaneClass> frustum;
 };
 

@@ -14,7 +14,12 @@ Satellite::~Satellite()
 {
 }
 
-void Satellite::Update(Shader * shader)
+void Satellite::Render(Shader * shader)
+{
+	Draw(shader);
+}
+
+void Satellite::UpdatePhysics()
 {
 	switch (config)
 	{
@@ -22,7 +27,7 @@ void Satellite::Update(Shader * shader)
 		this->SetPosition(glm::vec3(radius * sin(theta), radius * cos(theta), this->GetPosition().z));
 		break;
 	case 2:
-		this->SetPosition(glm::vec3(radius * sin(theta), this->GetPosition().y, radius * cos(theta) ));
+		this->SetPosition(glm::vec3(radius * sin(theta), this->GetPosition().y, radius * cos(theta)));
 		break;
 	case 3:
 		this->SetPosition(glm::vec3(this->GetPosition().x, radius * sin(theta), radius * cos(theta)));
@@ -38,9 +43,8 @@ void Satellite::Update(Shader * shader)
 		break;
 
 	}
-	
-	theta = theta + 0.001f;
-	Draw(shader);
+
+	//theta = theta + 0.001f;
 }
 
 float Satellite::GetRadius()

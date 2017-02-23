@@ -10,7 +10,8 @@ class Satellite : public Model
 public:
 	Satellite(int c);
 	~Satellite();
-	void Update(Shader *shader);
+	void Render(Shader *shader);
+	void UpdatePhysics();
 	float GetRadius();
 	
 private:

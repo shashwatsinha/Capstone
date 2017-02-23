@@ -45,9 +45,9 @@ void Game::Init()
 	
 	
 	
-	for (int i = 1; i < 4; i++)
+	for (int i = 1; i < 2; i++)
 	{
-		Satellite *s = new Satellite(i);
+		Satellite *s = new Satellite(2);
 		s->InitPath("Models/GreenObject/GreenObject.obj");
 		s->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 		s->SetPosition(glm::vec3(0, 0, 0));
@@ -473,9 +473,12 @@ void Game::Render()
 	else
 	{
 		 camView = Camera::instance()->GetViewMatrix();
-		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
+		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 400.0f);
 	}
-	int tr = camProjection[2][3];
+
+	frustum->ConstructFrustum(5, camProjection, camView);
+
+
 	Shader shader = ResourceManager::GetShader("default");
 	shader.Use();
 	shader.SetMatrix4("view", camView);
@@ -531,8 +534,9 @@ void Game::Render()
 	
 	for (int i = 0; i < satellites.size(); i++)
 	{
-		if(frustum->CheckSphere(satellites[i]->GetPosition(),satellites[i]->GetRadius()/10.0f))
-			satellites[i]->Update(&shader);
+		satellites[i]->UpdatePhysics();
+		if(frustum->CheckSphere(satellites[i]->GetPosition(),0.1f))
+			satellites[i]->Render(&shader);
 	}
 
 	//TestWithFlock();
@@ -658,7 +662,6 @@ void Game::Render()
 		surfaceEmitter[i]->Draw();
 	}
 
-	frustum->ConstructFrustum(150, camProjection, camView);
 	
 	// Draw the skybox last
 	//glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content

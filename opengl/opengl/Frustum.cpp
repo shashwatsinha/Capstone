@@ -4,6 +4,11 @@
 
 Frustum::Frustum()
 {
+	PlaneClass a(0, 0, 0, 0);
+	for (int i = 0; i < 6; i++)
+	{
+		frustum.push_back(a);
+	}
 }
 
 
@@ -14,69 +19,59 @@ Frustum::~Frustum()
 void Frustum::ConstructFrustum(float screenDepth, glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 {
 	float zMinimum, r;
-	glm::mat4 matrix;
+	glm::mat4 matrix = projectionMatrix * viewMatrix;
 
+	glm::vec4 rowX = glm::row(matrix, 0);
+	glm::vec4 rowY = glm::row(matrix, 1);
+	glm::vec4 rowZ = glm::row(matrix, 2);
+	glm::vec4 rowW = glm::row(matrix, 3);
 
-	// Calculate the minimum Z distance in the frustum.
-	zMinimum = -projectionMatrix[3][2] / projectionMatrix[2][2];
-	r = screenDepth / (screenDepth - zMinimum);
-	projectionMatrix[2][2] = r;
-	projectionMatrix[3][2] = -r * zMinimum;
-	matrix = glm::matrixCompMult(viewMatrix, projectionMatrix);
-	// Create the frustum matrix from the view matrix and updated projection matrix.
+	glm::vec4 temp = normalize(rowW + rowX);
+	PlaneClass temp1(temp.x, temp.y, temp.z, temp.w);
+	frustum[0] = temp1;
 
-	// Calculate near plane of frustum.
-	frustum[0].a = matrix[0][3] + matrix[0][2];
-	frustum[0].b = matrix[1][3] + matrix[1][2];
-	frustum[0].c = matrix[2][3] + matrix[2][2];
-	frustum[0].d = matrix[3][3] + matrix[3][2];
-	frustum[0] = frustum[0].NormalizePlane();
+	temp = normalize(rowW - rowX);
+	PlaneClass temp2(temp.x, temp.y, temp.z, temp.w);
+	frustum[1] = temp2;
 
-	// Calculate far plane of frustum.
-	frustum[1].a = matrix[0][3] - matrix[0][2];
-	frustum[1].b = matrix[1][3] - matrix[1][2];
-	frustum[1].c = matrix[2][3] - matrix[2][2];
-	frustum[1].d = matrix[3][3] - matrix[3][2];
-	frustum[1] = frustum[1].NormalizePlane();
+	temp = normalize(rowW + rowY);
+	PlaneClass temp3(temp.x, temp.y, temp.z, temp.w);
+	frustum[2] = temp1;
 
-	// Calculate left plane of frustum.
-	frustum[2].a = matrix[0][3] + matrix[0][0];
-	frustum[2].b = matrix[1][3] + matrix[1][0];
-	frustum[2].c = matrix[2][3] + matrix[2][0];
-	frustum[2].d = matrix[3][3] + matrix[3][0];
-	frustum[2] = frustum[2].NormalizePlane();
+	temp = normalize(rowW - rowY);
+	PlaneClass temp4(temp.x, temp.y, temp.z, temp.w);
+	frustum[3] = temp4;
 
-	// Calculate right plane of frustum.
-	frustum[3].a = matrix[0][3] - matrix[0][0];
-	frustum[3].b = matrix[1][3] - matrix[1][0];
-	frustum[3].c = matrix[2][3] - matrix[2][0];
-	frustum[3].d = matrix[3][3] - matrix[3][0];
-	frustum[3] = frustum[3].NormalizePlane();
+	temp = normalize(rowW + rowZ);
+	PlaneClass temp5(temp.x, temp.y, temp.z, temp.w);
+	frustum[4] = temp5;
 
-	// Calculate top plane of frustum.
-	frustum[4].a = matrix[0][3] - matrix[0][1];
-	frustum[4].b = matrix[1][3] - matrix[1][1];
-	frustum[4].c = matrix[2][3] - matrix[2][1];
-	frustum[4].d = matrix[3][3] - matrix[3][1];
-	frustum[4] = frustum[4].NormalizePlane();
+	temp = normalize(rowW - rowZ);
+	PlaneClass temp6(temp.x, temp.y, temp.z, temp.w);
+	frustum[5] = temp6;
 
-	// Calculate bottom plane of frustum.
-	frustum[5].a = matrix[0][3] + matrix[0][1];
-	frustum[5].b = matrix[1][3] + matrix[1][1];
-	frustum[5].c = matrix[2][3] + matrix[2][1];
-	frustum[5].d = matrix[3][3] + matrix[3][1];
-	frustum[5] = frustum[0].NormalizePlane();
+	for (int i = 0; i < 6; i++)
+	{
+		glm::vec3 normal(frustum[i].a, frustum[i].b, frustum[i].c);
+		float length = glm::length(normal);
+		frustum[i] = frustum[i]/ -length;
+	}
+
+	
 }
 
-bool Frustum::CheckSphere(glm::vec3 centre, float radius)
+bool Frustum::CheckSphere(glm::vec3 center, float radius)
 {
 	for (int i = 0; i < 6; i++)
 	{
-		if (frustum[i].DotCoord(centre) < -radius)
+		float dist = frustum[i].a * center.x + frustum[i].b * center.y + frustum[i].c * center.z + frustum[i].d - radius;
+		if (dist > 0)
 		{
+			std::cout << "false"<<std::endl;
 			return false;
 		}
 	}
 
+	std::cout << "true" << std::endl;
 	return true;
 }

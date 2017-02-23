@@ -2,16 +2,7 @@
 
 
 
-PlaneClass::PlaneClass()
-{
-}
-
-
-PlaneClass::~PlaneClass()
-{
-}
-
-void PlaneClass::ConstructPlane(float p1, float p2, float p3, float p4)
+PlaneClass::PlaneClass(float p1, float p2, float p3, float p4)
 {
 	a = p1;
 	b = p2;
@@ -19,9 +10,15 @@ void PlaneClass::ConstructPlane(float p1, float p2, float p3, float p4)
 	d = p4;
 }
 
+
+PlaneClass::~PlaneClass()
+{
+}
+
+
 PlaneClass PlaneClass::NormalizePlane()
 {
-	PlaneClass Result;
+	PlaneClass Result(0,0,0,0);
 	float Distance = sqrtf(a * a + b * b + c * c);
 	Result.a = a / Distance;
 	Result.b = b / Distance;
@@ -33,4 +30,20 @@ PlaneClass PlaneClass::NormalizePlane()
 float PlaneClass::DotCoord(glm::vec3 point)
 {
 	return (a * point.x) + (b * point.y) + (c * point.z) + d;
+}
+
+PlaneClass PlaneClass::operator*(float scalar)
+{
+	return PlaneClass(a * scalar,
+		b * scalar,
+		c * scalar,
+		d * scalar);
+}
+
+PlaneClass PlaneClass::operator/(float scalar)
+{
+	return PlaneClass(a / scalar,
+		b / scalar,
+		c / scalar,
+		d / scalar);
 }

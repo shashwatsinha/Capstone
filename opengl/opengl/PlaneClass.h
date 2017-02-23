@@ -6,15 +6,17 @@
 class PlaneClass
 {
 public:
-	PlaneClass();
+	PlaneClass(float p1, float p2, float p3, float p4);
 	~PlaneClass();
-	void ConstructPlane(float p1, float p2, float p3, float p4);
 	PlaneClass NormalizePlane();
 	float DotCoord(glm::vec3 point);
 	float a;
 	float b;
 	float c;
 	float d;
+
+	PlaneClass operator*(float scalar);
+	PlaneClass operator/(float scalar);
 private:
 	
 };
