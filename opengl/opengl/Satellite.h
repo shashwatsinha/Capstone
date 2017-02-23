@@ -11,6 +11,7 @@ public:
 	Satellite(int c);
 	~Satellite();
 	void Update(Shader *shader);
+	float GetRadius();
 	
 private:
 	float theta;

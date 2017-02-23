@@ -166,6 +166,7 @@
     <ClCompile Include="EnvironmentObject.cpp" />
     <ClCompile Include="Flockers.cpp" />
     <ClCompile Include="Framework.cpp" />
+    <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="FSM.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="LoadOAL.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="NormalEnemy.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="PlaneClass.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Satellite.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -197,6 +199,7 @@
     <ClInclude Include="EnvironmentObject.h" />
     <ClInclude Include="Flockers.h" />
     <ClInclude Include="Framework.h" />
+    <ClInclude Include="Frustum.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Lights.h" />
@@ -205,6 +208,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="NormalEnemy.h" />
     <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="PlaneClass.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Satellite.h" />

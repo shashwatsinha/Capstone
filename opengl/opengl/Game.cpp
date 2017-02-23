@@ -28,11 +28,12 @@ void Game::Init()
 	flock3 = new Flockers();
 	planet = new Model();
 	sphere = new Model();
+	frustum = new Frustum();
 
 	theta = 0.0f;
 	seperator = 1;
 	centreOfFlock1 = glm::vec3(-250, 0, 50);
-	centreOfFlock2 = glm::vec3(200, -50, 100);
+	centreOfFlock2 = glm::vec3(150, -100, 50);
 	
 	
 
@@ -217,7 +218,7 @@ void Game::Init()
 	masterSurfaceEmitter->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
 	masterSurfaceEmitter->startVelocityMin = 1.1f;
 	masterSurfaceEmitter->startVelocityRange = 1.5f;
-	masterSurfaceEmitter->scale = 0.1f;
+	masterSurfaceEmitter->scale = 0.8f;
 
 	for (int i = 0;i < surfaceEmitterPositions.size();i++)
 	{
@@ -462,23 +463,23 @@ void Game::Render()
 
 	glEnable(GL_DEPTH_TEST);
 	
-	glm::mat4 view;
-	glm::mat4 projection;
+	
 	if (isVR)
 	{
-		 view = Camera::instance()->GetViewMatrix();
-		 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
+		 camView = Camera::instance()->GetViewMatrix();
+		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
 	}
-
+	
 	else
 	{
-		 view = Camera::instance()->GetViewMatrix();
-		 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
+		 camView = Camera::instance()->GetViewMatrix();
+		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
 	}
+	int tr = camProjection[2][3];
 	Shader shader = ResourceManager::GetShader("default");
 	shader.Use();
-	shader.SetMatrix4("view", view);
-	shader.SetMatrix4("projection", projection);
+	shader.SetMatrix4("view", camView);
+	shader.SetMatrix4("projection", camProjection);
 	
 	// Setup Directional Light
 	directionalLight->setUpDirectionalLight(&ResourceManager::GetShader("default"), Camera::instance());
@@ -513,7 +514,8 @@ void Game::Render()
 	//spaceShip.SetRotation(myQuat);
 	//spaceShip.Draw(&shader);
 
-	
+//	cout << Camera::instance()->Front.x <<" "<< Camera::instance()->Front.y<<" " << Camera::instance()->Front.z << endl;
+	glm::mat4 k = Camera::instance()->GetProjectionMatrix();
 	planet->Draw(&shader);
 	flock1->RenderFlock(&shader, Camera::instance()->GetPosition());
 	flock2->RenderFlock(&shader, Camera::instance()->GetPosition());
@@ -529,15 +531,16 @@ void Game::Render()
 	
 	for (int i = 0; i < satellites.size(); i++)
 	{
-		satellites[i]->Update(&shader);
+		if(frustum->CheckSphere(satellites[i]->GetPosition(),satellites[i]->GetRadius()/10.0f))
+			satellites[i]->Update(&shader);
 	}
 
 	//TestWithFlock();
 
 	Shader coralShader = ResourceManager::GetShader("coralShader");
 	coralShader.Use();
-	coralShader.SetMatrix4("view", view);
-	coralShader.SetMatrix4("projection", projection);
+	coralShader.SetMatrix4("view", camView);
+	coralShader.SetMatrix4("projection", camProjection);
 	/*coral1->SetPosition(coral1Position);
 	coral1->Draw(&coralShader);*/
 	
@@ -575,9 +578,9 @@ void Game::Render()
 	glDepthFunc(GL_LEQUAL);
 	Shader skySphereShader = ResourceManager::GetShader("skySphere");
 	skySphereShader.Use();
-	view = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
-	skySphereShader.SetMatrix4("view", view);
-	skySphereShader.SetMatrix4("projection", projection);
+	camView = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
+	skySphereShader.SetMatrix4("view", camView);
+	skySphereShader.SetMatrix4("projection", camProjection);
 	GLfloat timeValue = glfwGetTime();
 	skySphereShader.SetFloat("iGlobalTime", timeValue);
 	for (int i = 0; i < corals.size(); i++)
@@ -600,20 +603,20 @@ void Game::Render()
 
 	Shader particleShader = ResourceManager::GetShader("particle");
 	particleShader.Use();
-	view = Camera::instance()->GetViewMatrix();
-	particleShader.SetMatrix4("view", view);
-	particleShader.SetMatrix4("projection", projection);
+	camView = Camera::instance()->GetViewMatrix();
+	particleShader.SetMatrix4("view", camView);
+	particleShader.SetMatrix4("projection", camProjection);
 	glm::mat4 model;
 	//model = glm::translate(model, particle.Position);
-	model[0][0] = view[0][0];
-	model[0][1] = view[1][0];
-	model[0][2] = view[2][0];
-	model[1][0] = view[0][1];
-	model[1][1] = view[1][1];
-	model[1][2] = view[2][1];
-	model[2][0] = view[0][2];
-	model[2][1] = view[1][2];
-	model[2][2] = view[2][2];
+	model[0][0] = camView[0][0];
+	model[0][1] = camView[1][0];
+	model[0][2] = camView[2][0];
+	model[1][0] = camView[0][1];
+	model[1][1] = camView[1][1];
+	model[1][2] = camView[2][1];
+	model[2][0] = camView[0][2];
+	model[2][1] = camView[1][2];
+	model[2][2] = camView[2][2];
 	particleShader.SetMatrix4("model", model);
 
 
@@ -654,6 +657,8 @@ void Game::Render()
 	{
 		surfaceEmitter[i]->Draw();
 	}
+
+	frustum->ConstructFrustum(150, camProjection, camView);
 	
 	// Draw the skybox last
 	//glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content

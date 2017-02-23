@@ -42,3 +42,8 @@ void Satellite::Update(Shader * shader)
 	theta = theta + 0.001f;
 	Draw(shader);
 }
+
+float Satellite::GetRadius()
+{
+	return radius;
+}

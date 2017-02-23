@@ -87,6 +87,12 @@ glm::mat4 Camera ::  GetViewMatrix()
 	return glm::lookAt(this->Position, this->Position + this->Front, this->Up);
 }
 
+glm::mat4 Camera::GetProjectionMatrix()
+{
+	glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.0f);
+	return Projection;
+}
+
 glm::vec3 Camera::GetPosition()
 {
 	return this->Position;

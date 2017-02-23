@@ -67,6 +67,8 @@ public:
 	// Returns the view matrix calculated using Eular Angles and the LookAt Matrix
 	glm::mat4 GetViewMatrix();
 
+	glm::mat4 GetProjectionMatrix();
+
 	//Get the position
 	glm::vec3 GetPosition();
 	
