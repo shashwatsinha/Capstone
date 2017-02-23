@@ -157,7 +157,6 @@ private:
 	float seperator;
 
 	glm::vec3 coral1Position = glm::vec3(0.5, 0.5, 380);
-	Frustum *frustum;
 
 	glm::mat4 camView;
 	glm::mat4 camProjection;

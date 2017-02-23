@@ -1,5 +1,6 @@
 #pragma once
 #include "BGMovingObjects.h" 
+#include "Frustum.h"
 #include <ppl.h>
 class Flockers :public BGMovingObjects
 {
@@ -39,6 +40,8 @@ public:
 	glm::vec3 ReturnCentreOfFlock();
 
 	glm::vec3 ReturnScaleOfElementOfFlock();
+
+
 
 private:
 	vector<BGMovingObjects*> objs;

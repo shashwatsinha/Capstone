@@ -136,7 +136,8 @@ void Flockers::RenderFlock(Shader * shader, glm::vec3 player)
 	playerPos = player;
 	for (int i = 0; i < objs.size(); i++)
 	{
-		objs[i]->Update(shader);
+		if (Frustum::instance()->CheckSphere(objs[i]->GetPosition(), 5))
+			objs[i]->Update(shader);
 	}
 
 	currentTime = glfwGetTime();

@@ -13,8 +13,6 @@ Game::Game(GLuint width, GLuint height)
 Game::~Game()
 {
 
-	
-
 	glDeleteVertexArrays(1, &quadVAO);
 	glDeleteBuffers(1, &quadVBO);
 	glDeleteFramebuffers(1, &framebuffer);
@@ -28,7 +26,6 @@ void Game::Init()
 	flock3 = new Flockers();
 	planet = new Model();
 	sphere = new Model();
-	frustum = new Frustum();
 
 	theta = 0.0f;
 	seperator = 1;
@@ -476,7 +473,7 @@ void Game::Render()
 		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 400.0f);
 	}
 
-	frustum->ConstructFrustum(5, camProjection, camView);
+	Frustum::instance()->ConstructFrustum(5, camProjection, camView);
 
 
 	Shader shader = ResourceManager::GetShader("default");
@@ -519,17 +516,14 @@ void Game::Render()
 
 //	cout << Camera::instance()->Front.x <<" "<< Camera::instance()->Front.y<<" " << Camera::instance()->Front.z << endl;
 	glm::mat4 k = Camera::instance()->GetProjectionMatrix();
-	if (frustum->CheckSphere(planet->GetPosition(), planet->GetScale().x))
+	if (Frustum::instance()->CheckSphere(planet->GetPosition(), 250))
 		planet->Draw(&shader);
 
-	if (frustum->CheckSphere(flock1->ReturnCentreOfFlock(), flock1->ReturnScaleOfElementOfFlock().x))
-		flock1->RenderFlock(&shader, Camera::instance()->GetPosition());
+	flock1->RenderFlock(&shader, Camera::instance()->GetPosition());
 
-	if (frustum->CheckSphere(flock2->ReturnCentreOfFlock(), flock2->ReturnScaleOfElementOfFlock().x))
-		flock2->RenderFlock(&shader, Camera::instance()->GetPosition());
+	flock2->RenderFlock(&shader, Camera::instance()->GetPosition());
 
-	if (frustum->CheckSphere(flock3->ReturnCentreOfFlock(), flock3->ReturnScaleOfElementOfFlock().x))
-		flock3->RenderFlock(&shader, Camera::instance()->GetPosition());
+	flock3->RenderFlock(&shader, Camera::instance()->GetPosition());
 	//flock4->RenderFlock(&shader);
 	//flock5->RenderFlock(&shader);
 	
@@ -542,7 +536,7 @@ void Game::Render()
 	for (int i = 0; i < satellites.size(); i++)
 	{
 		satellites[i]->UpdatePhysics();
-		if(frustum->CheckSphere(satellites[i]->GetPosition(),satellites[i]->GetScale().x))
+		if(Frustum::instance()->CheckSphere(satellites[i]->GetPosition(),satellites[i]->GetScale().x))
 			satellites[i]->Render(&shader);
 	}
 

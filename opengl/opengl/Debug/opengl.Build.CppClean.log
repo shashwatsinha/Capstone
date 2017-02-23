@@ -1,6 +1,5 @@
 d:\cpstone\capstone\opengl\opengl\debug\vc140.pdb
 d:\cpstone\capstone\opengl\opengl\debug\vc140.idb
-d:\cpstone\capstone\opengl\opengl\debug\framework.obj
 d:\cpstone\capstone\opengl\opengl\debug\fsm.obj
 d:\cpstone\capstone\opengl\opengl\debug\game.obj
 d:\cpstone\capstone\opengl\opengl\debug\loadoal.obj
@@ -9,6 +8,7 @@ d:\cpstone\capstone\opengl\opengl\debug\mesh.obj
 d:\cpstone\capstone\opengl\opengl\debug\model.obj
 d:\cpstone\capstone\opengl\opengl\debug\normalenemy.obj
 d:\cpstone\capstone\opengl\opengl\debug\particlesystem.obj
+d:\cpstone\capstone\opengl\opengl\debug\planeclass.obj
 d:\cpstone\capstone\opengl\opengl\debug\resourcemanager.obj
 d:\cpstone\capstone\opengl\opengl\debug\satellite.obj
 d:\cpstone\capstone\opengl\opengl\debug\shader.obj
@@ -29,10 +29,8 @@ d:\cpstone\capstone\opengl\opengl\debug\coral.obj
 d:\cpstone\capstone\opengl\opengl\debug\cwaves.obj
 d:\cpstone\capstone\opengl\opengl\debug\environmentobject.obj
 d:\cpstone\capstone\opengl\opengl\debug\flockers.obj
+d:\cpstone\capstone\opengl\opengl\debug\framework.obj
 d:\cpstone\capstone\opengl\opengl\debug\frustum.obj
-d:\cpstone\capstone\opengl\opengl\debug\planeclass.obj
-d:\cpstone\capstone\opengl\debug\opengl.ilk
-d:\cpstone\capstone\opengl\debug\opengl.exe
 d:\cpstone\capstone\opengl\debug\opengl.pdb
 d:\cpstone\capstone\opengl\opengl\debug\opengl.tlog\cl.command.1.tlog
 d:\cpstone\capstone\opengl\opengl\debug\opengl.tlog\cl.read.1.tlog

@@ -1,6 +1,7 @@
 #include "Frustum.h"
 
 
+Frustum* Frustum::frustum_instance = 0;
 
 Frustum::Frustum()
 {
