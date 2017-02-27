@@ -299,17 +299,23 @@ void Flockers::UpdateVelocity()
 {
 	if (DistanceFromPlayer() < 5000.0f)
 	{
+		seperator = -1.0f;
 		for (int i = 0; i < objs.size(); i++)
 		{
-			glm::vec3 diffVector = centreOfFlock - playerPos;
-			diffVector = glm::normalize(diffVector);
-			objs[i] ->SetVelocity(ReturnPerpendicularVector(diffVector));
-			centreOfFlock = objs[objs.size() / 2]->GetPosition();
+
+			glm::vec3 temp = objs[i]->GetVelocity() +
+				ComputeAlignment(objs[i]) +
+				MultiplyVector(ComputeCohesion(objs[i], centreOfFlock), seperator) +
+				ComputeSeperation(objs[i]);
+
+			temp = LimitFlockVelocity(temp, 0.8f);
+			objs[i]->SetVelocity(temp);
 		}
 	}
 
 	else
 	{
+		seperator = 1.0f;
 		for (int i = 0; i < objs.size(); i++)
 		{
 

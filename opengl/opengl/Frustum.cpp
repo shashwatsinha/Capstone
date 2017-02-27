@@ -68,11 +68,9 @@ bool Frustum::CheckSphere(glm::vec3 center, float radius)
 		float dist = frustum[i].a * center.x + frustum[i].b * center.y + frustum[i].c * center.z + frustum[i].d - radius;
 		if (dist > 0)
 		{
-			std::cout << "false"<<std::endl;
 			return false;
 		}
 	}
 
-	std::cout << "true" << std::endl;
 	return true;
 }
