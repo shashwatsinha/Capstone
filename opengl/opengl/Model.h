@@ -24,7 +24,6 @@ using namespace std;
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Mesh.h"
-#include "Frustum.h"
 
 GLint TextureFromFile(const char* path, string directory);
 
@@ -94,7 +93,7 @@ private:
 	//Scale of the model
 	glm::vec3 scale;
 
-	//Rotation of the model
+	//Rotaion of the model
 	glm::quat rotation;
 
 };

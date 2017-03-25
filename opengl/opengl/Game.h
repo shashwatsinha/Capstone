@@ -160,8 +160,6 @@ private:
 
 	glm::mat4 camView;
 	glm::mat4 camProjection;
-
-	float x, y, z, w;
 };
 
 #endif

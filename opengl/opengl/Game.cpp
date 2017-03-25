@@ -42,11 +42,11 @@ void Game::Init()
 	
 	
 	
-	for (int i = 1; i < 2; i++)
+	for (int i = 1; i < 4; i++)
 	{
 		Satellite *s = new Satellite(i);
-		s->InitPath("Models/Satellite/satellite.obj");
-		s->SetScale(glm::vec3(0.05f, 0.05f, 0.05f));
+		s->InitPath("Models/GreenObject/GreenObject.obj");
+		s->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 		s->SetPosition(glm::vec3(0, 0, 0));
 		satellites.push_back(s);
 	}
@@ -88,7 +88,7 @@ void Game::Init()
 			{
 				EnvironmentObject *obj = new EnvironmentObject();
 				obj->InitPath("Models/Bullet/Bullet.obj");
-				obj->SetPosition(glm::vec3((i * 4) - 30 , (j * 4)-10, k * 3 + 150));
+				obj->SetPosition(glm::vec3((i * 4) - 30 , (j * 4)-10, k * 3 + 200));
 				obj->SetScale(glm::vec3(4.0f, 4.0f, 4.0f));
 				bgObjs.push_back(obj);
 			}
@@ -475,8 +475,6 @@ void Game::Render()
 
 	Frustum::instance()->ConstructFrustum(5, camProjection, camView);
 
-	x = x + 0.1f;
-	satellites[0]->SetRotation(glm::quat(0, x, 0, 0));
 
 	Shader shader = ResourceManager::GetShader("default");
 	shader.Use();
@@ -521,11 +519,11 @@ void Game::Render()
 	if (Frustum::instance()->CheckSphere(planet->GetPosition(), 250))
 		planet->Draw(&shader);
 
-	//flock1->RenderFlock(&shader, Camera::instance()->GetPosition());
+	flock1->RenderFlock(&shader, Camera::instance()->GetPosition());
 
 	flock2->RenderFlock(&shader, Camera::instance()->GetPosition());
 
-	//flock3->RenderFlock(&shader, Camera::instance()->GetPosition());
+	flock3->RenderFlock(&shader, Camera::instance()->GetPosition());
 	//flock4->RenderFlock(&shader);
 	//flock5->RenderFlock(&shader);
 	
@@ -538,7 +536,7 @@ void Game::Render()
 	for (int i = 0; i < satellites.size(); i++)
 	{
 		satellites[i]->UpdatePhysics();
-		if(Frustum::instance()->CheckSphere(satellites[i]->GetPosition(),2))
+		if(Frustum::instance()->CheckSphere(satellites[i]->GetPosition(),satellites[i]->GetScale().x))
 			satellites[i]->Render(&shader);
 	}
 
@@ -553,24 +551,21 @@ void Game::Render()
 	
 	for (int i = 0;i < corals.size();i++)
 	{
-		if(Frustum::instance()->CheckSphere(corals[i]->GetPosition(), corals[i]->GetScale().x))
+		if (corals[i]->GetLerpColorStatus() == false)
 		{
-			if (corals[i]->GetLerpColorStatus() == false)
-			{
-				mixValue = 0.0f;
-				coralShader.SetFloat("mixValue", mixValue);
-			}
-			else
-			{
-				mixValue = mixValue + (glfwGetTime() * 0.009f);
-				if (mixValue > 1.0f)
-					mixValue = 1.0f;
-				coralShader.SetFloat("mixValue", mixValue);
-			}
-			corals[i]->Draw(&coralShader);
-			corals[i]->IsParticleActivated(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
-			coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());
+			mixValue = 0.0f;
+			coralShader.SetFloat("mixValue", mixValue);
 		}
+		else
+		{
+			mixValue = mixValue + (glfwGetTime() * 0.009f);
+			if (mixValue > 1.0f)
+				mixValue = 1.0f;
+			coralShader.SetFloat("mixValue", mixValue);
+		}
+		corals[i]->Draw(&coralShader);
+		corals[i]->IsParticleActivated(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
+		coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());
 	}
 
 	// Also draw the point light object, again binding the appropriate shader
