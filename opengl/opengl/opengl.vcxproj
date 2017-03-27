@@ -185,6 +185,7 @@
     <ClCompile Include="Source\3rdPartyTools\tinyxmlerror.cpp" />
     <ClCompile Include="Source\3rdPartyTools\tinyxmlparser.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
+    <ClCompile Include="Spiral.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="ThirdParty\OculusSDK\LibOVRKernel\Src\GL\CAPI_GLE.cpp" />
   </ItemGroup>
@@ -218,6 +219,7 @@
     <ClInclude Include="Source\3rdPartyTools\tinyxml.h" />
     <ClInclude Include="Source\3rdPartyTools\tinyxml2.h" />
     <ClInclude Include="SphereCollider.h" />
+    <ClInclude Include="Spiral.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="ThirdParty\OculusSDK\LibOVRKernel\Src\GL\CAPI_GLE.h" />

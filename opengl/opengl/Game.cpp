@@ -26,22 +26,28 @@ void Game::Init()
 	flock3 = new Flockers();
 	planet = new Model();
 	sphere = new Model();
+	
 
+	x = 0.0f;
 	theta = 0.0f;
 	seperator = 1;
 	centreOfFlock1 = glm::vec3(-250, 0, 50);
 	centreOfFlock2 = glm::vec3(150, -100, 50);
-	
+	centreOfFlock3 = glm::vec3(350, 0, 250);
 	
 
 	flock1->InitializeFlock(27, centreOfFlock1, 1.0f, false, 0.0f, true, 2);
 	flock2->InitializeFlock(27, centreOfFlock2, 1.0f,false, 0.0f, true, 2);
-	flock3->InitializeFlock(27, glm::vec3(350, 0, 250), 1.0f, false, 0.0f, true, 2);
-	
-	centreOfFlock3 = glm::vec3(-50, 0, 50);
-	
-	
-	
+	flock3->InitializeFlock(27, centreOfFlock3, 1.0f, false, 0.0f, true, 2);
+	srand(1);
+
+	dirSpiral1 = glm::vec3(rand() % 10 - 5, rand() % 10 - 5, rand() % 10 - 5);
+	dirSpiral2 = glm::vec3(rand() % 10 - 5, rand() % 10 - 5, rand() % 10 - 5);
+	alpha = 0.0f;
+
+	dirSpiral1 = glm::normalize(dirSpiral1);
+	dirSpiral2 = glm::normalize(dirSpiral2);
+
 	for (int i = 1; i < 4; i++)
 	{
 		Satellite *s = new Satellite(i);
@@ -95,6 +101,7 @@ void Game::Init()
 		}
 	}
 
+	
 	ResourceManager::LoadShader("Shaders/vertexShader_Coral.vs", "Shaders/fragmentShader_Coral.frag", nullptr, "coralShader");
 	
 	Coral *masterCoral = new Coral();
@@ -518,12 +525,14 @@ void Game::Render()
 	glm::mat4 k = Camera::instance()->GetProjectionMatrix();
 	if (Frustum::instance()->CheckSphere(planet->GetPosition(), 250))
 		planet->Draw(&shader);
+	if (Frustum::instance()->CheckSphere(centreOfFlock1, satellites[0]->GetScale().x))
+		flock1->RenderFlock(&shader, Camera::instance()->GetPosition());
 
-	flock1->RenderFlock(&shader, Camera::instance()->GetPosition());
+	if (Frustum::instance()->CheckSphere(centreOfFlock2, satellites[0]->GetScale().x))
+		flock2->RenderFlock(&shader, Camera::instance()->GetPosition());
 
-	flock2->RenderFlock(&shader, Camera::instance()->GetPosition());
-
-	flock3->RenderFlock(&shader, Camera::instance()->GetPosition());
+	if (Frustum::instance()->CheckSphere(centreOfFlock3, satellites[0]->GetScale().x))
+		flock3->RenderFlock(&shader, Camera::instance()->GetPosition());
 	//flock4->RenderFlock(&shader);
 	//flock5->RenderFlock(&shader);
 	
@@ -540,8 +549,12 @@ void Game::Render()
 			satellites[i]->Render(&shader);
 	}
 
-	//TestWithFlock();
+	ChangeDirectionOfCameraRandomly(false);
 
+	
+	//TestWithFlock();
+	theta = theta + 0.1f;
+	x = x + 0.5f;
 	Shader coralShader = ResourceManager::GetShader("coralShader");
 	coralShader.Use();
 	coralShader.SetMatrix4("view", camView);
@@ -663,6 +676,7 @@ void Game::Render()
 		surfaceEmitter[i]->Draw();
 	}
 
+	
 	
 	// Draw the skybox last
 	//glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
@@ -853,6 +867,27 @@ void Game::CleanUp()
 	delete flock2;
 	delete flock3;
 
+}
+
+void Game::ChangeDirectionOfCameraRandomly(bool k)
+{
+	if (k)
+	{
+		glm::vec3 dirSpiralLerp = alpha*dirSpiral1 + (1 - alpha)*dirSpiral2;
+		dirSpiralLerp = glm::normalize(dirSpiralLerp);
+		
+		Camera::instance()->Front = dirSpiralLerp;
+		alpha = alpha + 0.01f;
+
+		if (alpha >= 0.96f)
+		{
+			srand(glfwGetTime());
+			dirSpiral2 = dirSpiralLerp;
+			dirSpiral1 = glm::vec3(rand() % 10 - 5, rand() % 10 - 5, rand() % 10 - 5);
+			dirSpiral1 = glm::normalize(dirSpiral1);
+			alpha = 0.0f;
+		}
+	}
 }
 
 

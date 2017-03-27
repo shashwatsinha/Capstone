@@ -31,6 +31,7 @@
 #include "Satellite.h"
 #include "Flockers.h"
 #include "Frustum.h"
+#include "Spiral.h"
 
 // Include the Oculus SDK
 #include "GL/CAPI_GLE.h"
@@ -104,6 +105,8 @@ public:
 
 	//Delete all Pointers
 	void CleanUp();
+
+	void ChangeDirectionOfCameraRandomly(bool k);
 private:
 	vector<Model*> pointLightContainers;
 	Model *sphere;
@@ -153,13 +156,20 @@ private:
 	Flockers *flock1;
 	Flockers *flock2;
 	Flockers *flock3;
-
+	float x;
 	float seperator;
 
 	glm::vec3 coral1Position = glm::vec3(0.5, 0.5, 380);
 
 	glm::mat4 camView;
 	glm::mat4 camProjection;
+
+	
+
+	glm::vec3 dirSpiral1;
+	glm::vec3 dirSpiral2;
+
+	float alpha;
 };
 
 #endif
