@@ -138,7 +138,6 @@ void Game::Init()
 	directionalLight->initializeDirectionalLightParameters(direction, ambient, diffuse, specular);
 
 	// Initialize Point Light (Initialize as many point lights as requires and push the lights into the pointLights vector)
-	// Cuurently the max number of point lights is set as 10 in fragment shader. For more lights change the value in fragment shader
 	glm::vec3 pointLightPosition1 = glm::vec3(1.0, 150.5, 23.75); pointLightPositions.push_back(pointLightPosition1);
 	/*glm::vec3 pointLightPosition2 = glm::vec3(1.0, 148.0, 44.0); pointLightPositions.push_back(pointLightPosition2);
 	glm::vec3 pointLightPosition3 = glm::vec3(-9.5, 148.75, 33.75); pointLightPositions.push_back(pointLightPosition3);
@@ -152,14 +151,86 @@ void Game::Init()
 	glm::vec3 pointLightPosition11 = glm::vec3(-11.25, 148.25, -8.0); pointLightPositions.push_back(pointLightPosition11);
 	glm::vec3 pointLightPosition12 = glm::vec3(0.2, 149.0, -18.0); pointLightPositions.push_back(pointLightPosition12);
 	glm::vec3 pointLightPosition13 = glm::vec3(-11.8, 147.75, -28.75); pointLightPositions.push_back(pointLightPosition13);
-	glm::vec3 pointLightPosition14 = glm::vec3(11.2, 147.75, -28.75); pointLightPositions.push_back(pointLightPosition14);*/
-	//  vec3(11.200000, 147.750000, -28.750000)
+	glm::vec3 pointLightPosition14 = glm::vec3(11.2, 147.75, -28.75); pointLightPositions.push_back(pointLightPosition14);
+	glm::vec3 pointLightPosition15 = glm::vec3(33.2, 143.5, -28.75); pointLightPositions.push_back(pointLightPosition15);
+	glm::vec3 pointLightPosition16 = glm::vec3(33.2, 147.5, -7.75); pointLightPositions.push_back(pointLightPosition16);
+	glm::vec3 pointLightPosition17 = glm::vec3(33.2, 149.5, 13.75); pointLightPositions.push_back(pointLightPosition17);
+	glm::vec3 pointLightPosition18 = glm::vec3(33.2, 149.0, 33.25); pointLightPositions.push_back(pointLightPosition18);
+	glm::vec3 pointLightPosition19 = glm::vec3(33.2, 141.75, 52.75); pointLightPositions.push_back(pointLightPosition19);
+	glm::vec3 pointLightPosition20 = glm::vec3(55.95, 137.0, 54.5); pointLightPositions.push_back(pointLightPosition20);
+	glm::vec3 pointLightPosition21 = glm::vec3(55.95, 143.75, 34.0); pointLightPositions.push_back(pointLightPosition21);
+	glm::vec3 pointLightPosition22 = glm::vec3(55.95, 147.5, 14.25); pointLightPositions.push_back(pointLightPosition22);
+	glm::vec3 pointLightPosition23 = glm::vec3(55.95, 148.75, -8.0); pointLightPositions.push_back(pointLightPosition23);
+	glm::vec3 pointLightPosition24 = glm::vec3(55.95, 143.5, -28.75); pointLightPositions.push_back(pointLightPosition24);
+	glm::vec3 pointLightPosition25 = glm::vec3(79.20, 130.5, -28.75); pointLightPositions.push_back(pointLightPosition25);
+	glm::vec3 pointLightPosition26 = glm::vec3(79.20, 137.5, -5.25); pointLightPositions.push_back(pointLightPosition26);
+	glm::vec3 pointLightPosition27 = glm::vec3(79.20, 135.0, 17.25); pointLightPositions.push_back(pointLightPosition27);
+	glm::vec3 pointLightPosition28 = glm::vec3(79.20, 134.25, 34.25); pointLightPositions.push_back(pointLightPosition28);
+	glm::vec3 pointLightPosition29 = glm::vec3(79.30, 131.25, 54.75); pointLightPositions.push_back(pointLightPosition29);
+	glm::vec3 pointLightPosition30 = glm::vec3(104.30, 112.0, 56.25); pointLightPositions.push_back(pointLightPosition30);
+	glm::vec3 pointLightPosition31 = glm::vec3(102.30, 116.75, 35.0); pointLightPositions.push_back(pointLightPosition31);
+	glm::vec3 pointLightPosition32 = glm::vec3(102.05, 121.0, 16.25); pointLightPositions.push_back(pointLightPosition32);
+	glm::vec3 pointLightPosition33 = glm::vec3(102.05, 119.0, -7.75); pointLightPositions.push_back(pointLightPosition33);
+	glm::vec3 pointLightPosition34 = glm::vec3(102.05, 116.25, -28.75); pointLightPositions.push_back(pointLightPosition34);
+	glm::vec3 pointLightPosition35 = glm::vec3(122.55, 96.75, -35.25); pointLightPositions.push_back(pointLightPosition35);
+	glm::vec3 pointLightPosition36 = glm::vec3(122.55, 99.25, -10.0); pointLightPositions.push_back(pointLightPosition36);
+	glm::vec3 pointLightPosition37 = glm::vec3(122.55, 99.25, 14.75); pointLightPositions.push_back(pointLightPosition37);
+	glm::vec3 pointLightPosition38 = glm::vec3(122.55, 98.25, 36.25); pointLightPositions.push_back(pointLightPosition38);
+	glm::vec3 pointLightPosition39 = glm::vec3(122.55, 83.25, 59.75); pointLightPositions.push_back(pointLightPosition39);
+	glm::vec3 pointLightPosition40 = glm::vec3(129.30, 63.75, 59.75); pointLightPositions.push_back(pointLightPosition40);
+	glm::vec3 pointLightPosition41 = glm::vec3(133.80, 76.25, 36.25); pointLightPositions.push_back(pointLightPosition41);
+	glm::vec3 pointLightPosition42 = glm::vec3(137.80, 76.25, 16.5); pointLightPositions.push_back(pointLightPosition42);
+	glm::vec3 pointLightPosition43 = glm::vec3(135.80, 76.25, -9.5); pointLightPositions.push_back(pointLightPosition43);
+	glm::vec3 pointLightPosition44 = glm::vec3(135.80, 76.25, -35.0); pointLightPositions.push_back(pointLightPosition44);
+	glm::vec3 pointLightPosition45 = glm::vec3(142.3, 52.5, -35.0); pointLightPositions.push_back(pointLightPosition45);
+	glm::vec3 pointLightPosition46 = glm::vec3(144.3, 52.5, -10.0); pointLightPositions.push_back(pointLightPosition46);
+	glm::vec3 pointLightPosition47 = glm::vec3(144.8, 52.5, 15.5); pointLightPositions.push_back(pointLightPosition47);
+	glm::vec3 pointLightPosition48 = glm::vec3(144.55, 52.5, 36.25); pointLightPositions.push_back(pointLightPosition48);
+	glm::vec3 pointLightPosition49 = glm::vec3(144.55, 52.5, 60.5); pointLightPositions.push_back(pointLightPosition49);
+	glm::vec3 pointLightPosition50 = glm::vec3(149.05, 25.5, 60.5); pointLightPositions.push_back(pointLightPosition50);
+	glm::vec3 pointLightPosition51 = glm::vec3(151.8, 25.5, 35.0); pointLightPositions.push_back(pointLightPosition51);
+	glm::vec3 pointLightPosition52 = glm::vec3(153.3, 25.5, 16.0); pointLightPositions.push_back(pointLightPosition52);
+	glm::vec3 pointLightPosition53 = glm::vec3(157.55, 25.5, -8.5); pointLightPositions.push_back(pointLightPosition53);
+	glm::vec3 pointLightPosition54 = glm::vec3(153.05, 25.5, -33.5); pointLightPositions.push_back(pointLightPosition54);
+	glm::vec3 pointLightPosition55 = glm::vec3(136.8, 25.5, 84.75); pointLightPositions.push_back(pointLightPosition55);
+	glm::vec3 pointLightPosition56 = glm::vec3(126.55, 47.25, 84.75); pointLightPositions.push_back(pointLightPosition56);
+	glm::vec3 pointLightPosition57 = glm::vec3(116.55, 66.0, 84.75); pointLightPositions.push_back(pointLightPosition57);
+	glm::vec3 pointLightPosition58 = glm::vec3(98.55, 93.0, 78.25); pointLightPositions.push_back(pointLightPosition58);
+	glm::vec3 pointLightPosition59 = glm::vec3(-30.95, 146.5, 51.25); pointLightPositions.push_back(pointLightPosition59);
+	glm::vec3 pointLightPosition60 = glm::vec3(-30.95, 149.75, 32.5); pointLightPositions.push_back(pointLightPosition60);
+	glm::vec3 pointLightPosition61 = glm::vec3(-30.95, 149.75, 15.0); pointLightPositions.push_back(pointLightPosition61);
+	glm::vec3 pointLightPosition62 = glm::vec3(-30.95, 151.75, -5); pointLightPositions.push_back(pointLightPosition62);
+	glm::vec3 pointLightPosition63 = glm::vec3(-30.95, 146.0, -28.75); pointLightPositions.push_back(pointLightPosition63);
+	glm::vec3 pointLightPosition64 = glm::vec3(-50.95, 143.5, 51.25); pointLightPositions.push_back(pointLightPosition64);
+	glm::vec3 pointLightPosition65 = glm::vec3(-50.95, 146.75, 32.5); pointLightPositions.push_back(pointLightPosition65);
+	glm::vec3 pointLightPosition66 = glm::vec3(-50.95, 146.75, 15.0); pointLightPositions.push_back(pointLightPosition66);
+	glm::vec3 pointLightPosition67 = glm::vec3(-50.95, 148.75, -5); pointLightPositions.push_back(pointLightPosition67);
+	glm::vec3 pointLightPosition68 = glm::vec3(-50.95, 143.0, -28.75); pointLightPositions.push_back(pointLightPosition68);
+	glm::vec3 pointLightPosition69 = glm::vec3(-70.95, 136.5, 51.25); pointLightPositions.push_back(pointLightPosition69);
+	glm::vec3 pointLightPosition70 = glm::vec3(-70.95, 139.75, 32.5); pointLightPositions.push_back(pointLightPosition70);
+	glm::vec3 pointLightPosition71 = glm::vec3(-70.95, 139.75, 15.0); pointLightPositions.push_back(pointLightPosition71);
+	glm::vec3 pointLightPosition72 = glm::vec3(-70.95, 141.75, -5); pointLightPositions.push_back(pointLightPosition72);
+	glm::vec3 pointLightPosition73 = glm::vec3(-70.95, 136.0, -28.75); pointLightPositions.push_back(pointLightPosition73);
+	glm::vec3 pointLightPosition74 = glm::vec3(-95.95, 125.5, 51.25); pointLightPositions.push_back(pointLightPosition74);
+	glm::vec3 pointLightPosition75 = glm::vec3(-95.95, 128.75, 32.5); pointLightPositions.push_back(pointLightPosition75);
+	glm::vec3 pointLightPosition76 = glm::vec3(-95.95, 128.75, 15.0); pointLightPositions.push_back(pointLightPosition76);
+	glm::vec3 pointLightPosition77 = glm::vec3(-95.95, 130.75, -5); pointLightPositions.push_back(pointLightPosition77);
+	glm::vec3 pointLightPosition78 = glm::vec3(-95.95, 125.0, -28.75); pointLightPositions.push_back(pointLightPosition78);
+	glm::vec3 pointLightPosition79 = glm::vec3(-120.95, 110.5, 51.25); pointLightPositions.push_back(pointLightPosition79);
+	glm::vec3 pointLightPosition80 = glm::vec3(-120.95, 113.75, 32.5); pointLightPositions.push_back(pointLightPosition80);
+	glm::vec3 pointLightPosition81 = glm::vec3(-120.95, 113.75, 15.0); pointLightPositions.push_back(pointLightPosition81);
+	glm::vec3 pointLightPosition82 = glm::vec3(-120.95, 115.75, -5); pointLightPositions.push_back(pointLightPosition82);
+	glm::vec3 pointLightPosition83 = glm::vec3(-120.95, 110.0, -28.75); pointLightPositions.push_back(pointLightPosition83);*/
+	//   vec3(98.550003, 93.000000, 78.250000)
 
 	// Setup Point Light. Properties of Point Light can be changed over time if required. (In Game loop change the values if required)
 	// Get the Point Light whose values need to be changed using the vector pointLights and change the properties as required
-	ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+	/*ambient = glm::vec3(1.0f, 1.0f, 1.0f);
 	diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
-	specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	specular = glm::vec3(1.0f, 1.0f, 1.0f);*/
+	ambient = glm::vec3(0.0f, 0.0f, 0.0f);
+	diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
+	specular = glm::vec3(0.0f, 0.0f, 0.0f);
 	for (int i = 0; i < pointLightPositions.size(); i++)
 	{
 		Lights *pointLight = new Lights();
@@ -318,8 +389,8 @@ void Game::ProcessInput(GLfloat dt)
 		}
 		if (this->Keys[GLFW_KEY_P])
 		{
-			//cout << "Position : " + glm::to_string(pointLightPositions[pointLightPositions.size() - 1]);
-			cout << "position:" << coral1Position.x<<"," << coral1Position.y<<"," << coral1Position.z << endl;
+			cout << "Position : " + glm::to_string(pointLightPositions[pointLightPositions.size() - 1]);
+			//cout << "position:" << coral1Position.x<<"," << coral1Position.y<<"," << coral1Position.z << endl;
 		}
 	}
 }
@@ -477,7 +548,7 @@ void Game::Render()
 	else
 	{
 		 camView = Camera::instance()->GetViewMatrix();
-		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 400.0f);
+		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
 	}
 
 	Frustum::instance()->ConstructFrustum(5, camProjection, camView);
@@ -493,14 +564,37 @@ void Game::Render()
 
 	// Properties of Point Light can be changed over time if required here.
 	// Get the Point Lights whose values need to be changed using the vector pointLights and change the properties as required
-	glm::vec3 ambient = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
-	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	ResourceManager::GetShader("default").SetInteger("NO_OF_POINT_LIGHTS", pointLights.size());
+	glm::vec3 ambient = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 specular = glm::vec3(0.0f, 0.0f, 0.0f);
 	for (int i = 0; i < pointLightPositions.size(); i++)
 	{
-		if(i == (pointLightPositions.size() - 1))
+		pointLights[i]->EmitLight(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
+		if (pointLights[i]->getEmitLightValue() == true)
+		{
+			cout << i << " : " << pointLights[i]->getEmitLightValue() << endl << endl << endl << endl;
+			
+			ambient = pointLights[i]->getPointLightAmbient();
+			diffuse = pointLights[i]->getPointLightDiffuse();
+			specular = pointLights[i]->getPointLightSpecular();
+			if (ambient.x < 1.0f)
+				ambient = ambient + 0.1f;
+			else
+				ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+
+			if (diffuse.x < 0.8f)
+				diffuse = diffuse + 0.1f;
+			else
+				diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+
+			if (specular.x < 1.0f)
+				specular = specular + 0.1f;
+			else
+				specular = glm::vec3(1.0f, 1.0f, 1.0f);
+			
 			pointLights[i]->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
-		
+		}
 		string *uniformName = new string[7];
 		uniformName[0] = string("pointLights[") + to_string(i) + string("].position");
 		uniformName[1] = string("pointLights[") + to_string(i) + string("].ambient");
@@ -512,7 +606,6 @@ void Game::Render()
 
 		pointLights[i]->setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance(), uniformName);
 	}
-	ResourceManager::GetShader("default").SetInteger("NO_OF_POINT_LIGHTS", pointLights.size());
 	
 	//glm::quat myQuat;
 	//glm::quat key_quat = glm::quat(glm::vec3(0.0f, (GLfloat)glfwGetTime() * glm::radians(20.0f), 0.0f));
@@ -521,7 +614,7 @@ void Game::Render()
 	//spaceShip.SetRotation(myQuat);
 	//spaceShip.Draw(&shader);
 
-	cout << Camera::instance()->GetPosition().x <<" "<< Camera::instance()->GetPosition().y<<" " << Camera::instance()->GetPosition().z << endl;
+//	cout << Camera::instance()->Front.x <<" "<< Camera::instance()->Front.y<<" " << Camera::instance()->Front.z << endl;
 	glm::mat4 k = Camera::instance()->GetProjectionMatrix();
 	if (Frustum::instance()->CheckSphere(planet->GetPosition(), 250))
 		planet->Draw(&shader);
@@ -584,8 +677,8 @@ void Game::Render()
 	// Also draw the point light object, again binding the appropriate shader
 	/*Shader lampShader = ResourceManager::GetShader("lightContainerShader");
 	lampShader.Use();
-	lampShader.SetMatrix4("view", view);
-	lampShader.SetMatrix4("projection", projection);
+	lampShader.SetMatrix4("view", camView);
+	lampShader.SetMatrix4("projection", camProjection);
 	for (int i = 0; i < pointLights.size(); i++)
 	{
 		if (i == (pointLightPositions.size() - 1))

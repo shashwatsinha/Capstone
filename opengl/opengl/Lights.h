@@ -33,12 +33,16 @@ struct PointLight {
 	float quadratic;
 
 	int distance;
+
+	glm::vec3 playerPosition;
+	bool emitLight = false;
 };
 
 class Lights {
 private:
 	DirLight dirLight;
 	PointLight pointLight;
+
 public:
 	Lights() 
 	{
@@ -148,5 +152,44 @@ public:
 				pointLight.quadratic = 0.0019f;
 				break;
 		}
+	}
+
+	float DistanceFromPlayer(glm::vec3 playerPos)
+	{
+		float x = playerPos.x - pointLight.position.x;
+		float y = playerPos.y - pointLight.position.y;
+		float z = playerPos.z - pointLight.position.z;
+
+		float distance = (x*x) + (y*y) + (z*z);
+		return distance;
+	}
+
+	void EmitLight(glm::vec3 pos)
+	{
+		pointLight.playerPosition = pos;
+		if (DistanceFromPlayer(pointLight.playerPosition) < 800)
+		{
+			pointLight.emitLight = true;
+		}
+	}
+
+	bool getEmitLightValue()
+	{
+		return pointLight.emitLight;
+	}
+
+	glm::vec3 getPointLightAmbient()
+	{
+		return pointLight.ambient;
+	}
+
+	glm::vec3 getPointLightDiffuse()
+	{
+		return pointLight.diffuse;
+	}
+
+	glm::vec3 getPointLightSpecular()
+	{
+		return pointLight.specular;
 	}
 };
