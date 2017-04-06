@@ -55,59 +55,54 @@ static void list_audio_devices(const ALCchar *devices)
 	fprintf(stdout, "----------\n");
 }
 
+void* load(char *fname, long *bufsize) {
+	FILE* fp = fopen(fname, "rb");
+	fseek(fp, 0L, SEEK_END);
+	long len = ftell(fp);
+	rewind(fp);
+	void *buf = malloc(len);
+	fread(buf, 1, len, fp);
+	fclose(fp);
+	*bufsize = len;
+	return buf;
+}
+
 int main(int argc, char **argv)
 {
 
 	
-	ALuint      uiBuffer;
-	ALuint      uiSource;
-	ALint       iState;
-
-	// Initialize Framework
-	ALFWInit();
-
-	ALFWprintf("PlayStatic Test Application\n");
-
-	if (!ALFWInitOpenAL())
-	{
-		ALFWprintf("Failed to initialize OpenAL\n");
-		ALFWShutdown();
-		return 0;
-	}
-
-	// Generate an AL Buffer
-	alGenBuffers(1, &uiBuffer);
-
-	// Load Wave file into OpenAL Buffer
-	if (!ALFWLoadWaveToBuffer((char*)ALFWaddMediaPath(TEST_WAVE_FILE), uiBuffer))
-	{
-		ALFWprintf("Failed to load %s\n", ALFWaddMediaPath(TEST_WAVE_FILE));
-	}
-
-	// Generate a Source to playback the Buffer
-	alGenSources(1, &uiSource);
-
-	// Attach Source to Buffer
-	alSourcei(uiSource, AL_BUFFER, uiBuffer);
-
-	// Play Source
-	alSourcePlay(uiSource);
-	ALFWprintf("Playing Source ");
-
-
-
+	/* initialize OpenAL context, asking for 44.1kHz to match HRIR data */
+	ALCint contextAttr[] = { ALC_FREQUENCY,44100,0 };
+	ALCdevice* device = alcOpenDevice(NULL);
+	ALCcontext* context = alcCreateContext(device, contextAttr);
+	alcMakeContextCurrent(context);
 
 	
+	alListener3f(AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
 
+	//ALuint source;
+	//alGenSources(1, &source);
+	//alSourcef(source, AL_PITCH, 1.);
+	//alSourcef(source, AL_GAIN, 5);
+	//alSource3f(source, AL_POSITION, -250, 0, 50);
+	//alSource3f(source, AL_VELOCITY, 0., 0., 0.);
+	//alSourcei(source, AL_LOOPING, AL_TRUE);
 
+	///* allocate an OpenAL buffer and fill it with monaural sample data */
+	//ALuint buffer;
+	//alGenBuffers(1, &buffer);
+	//{
+	//	long dataSize;
+	//	const ALvoid* data = load("footsteps.raw", &dataSize);
+	//	/* for simplicity, assume raw file is signed-16b at 44.1kHz */
+	//	alBufferData(buffer, AL_FORMAT_MONO16, data, dataSize, 44100);
+	//	free((void*)data);
+	//}
+	//alSourcei(source, AL_BUFFER, buffer);
 
+	//alSourcePlay(source);
 
-
-
-
-
-
-
+	//fflush(stderr); /* in case OpenAL reported an error earlier */
 
 
 	// Start Game within Menu State
@@ -146,7 +141,6 @@ int main(int argc, char **argv)
 	{
 
 		
-
 		// Initialize game
 		game.Init();
 
@@ -154,12 +148,11 @@ int main(int argc, char **argv)
 		{
 			//ALFWprintf(".");
 			// Get Source State
-			alGetSourcei(uiSource, AL_SOURCE_STATE, &iState);
-			if (iState != AL_PLAYING)
-				alSourcePlay(uiSource);
-
-
+			
 			calcFPS(1.0, windowTitle);
+
+			//alSource3f(source, AL_POSITION, -250, 0, 50);
+			alListener3f(AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
 
 			// Set frame time
 			GLfloat currentFrame = glfwGetTime();
@@ -185,14 +178,10 @@ int main(int argc, char **argv)
 	ResourceManager::Clear();
 	game.CleanUp();
 
-	// Clean up by deleting Source(s) and Buffer(s)
-	alSourceStop(uiSource);
-	alDeleteSources(1, &uiSource);
-	alDeleteBuffers(1, &uiBuffer);
-
-	ALFWShutdownOpenAL();
-
-	ALFWShutdown();
+	/*alDeleteSources(1, &source);
+	alDeleteBuffers(1, &buffer);*/
+	alcDestroyContext(context);
+	alcCloseDevice(device);
 
 	glfwTerminate();
 	return 0;

@@ -2,6 +2,8 @@
 #include "BGMovingObjects.h" 
 #include "Frustum.h"
 #include <ppl.h>
+#include <al.h>
+#include <alc.h>
 class Flockers :public BGMovingObjects
 {
 public:
@@ -71,5 +73,11 @@ private:
 
 	glm::vec3 playerPos;
 	int x;
+
+
+	ALuint soundSources[27];
+	ALuint buffer[27];
+	void *load(char *fname, long *bufsize);
+
 };
 

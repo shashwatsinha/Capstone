@@ -521,17 +521,17 @@ void Game::Render()
 	//spaceShip.SetRotation(myQuat);
 	//spaceShip.Draw(&shader);
 
-//	cout << Camera::instance()->Front.x <<" "<< Camera::instance()->Front.y<<" " << Camera::instance()->Front.z << endl;
+	cout << Camera::instance()->GetPosition().x <<" "<< Camera::instance()->GetPosition().y<<" " << Camera::instance()->GetPosition().z << endl;
 	glm::mat4 k = Camera::instance()->GetProjectionMatrix();
 	if (Frustum::instance()->CheckSphere(planet->GetPosition(), 250))
 		planet->Draw(&shader);
-	if (Frustum::instance()->CheckSphere(centreOfFlock1, satellites[0]->GetScale().x))
+	//if (Frustum::instance()->CheckSphere(centreOfFlock1, satellites[0]->GetScale().x))
 		flock1->RenderFlock(&shader, Camera::instance()->GetPosition());
 
-	if (Frustum::instance()->CheckSphere(centreOfFlock2, satellites[0]->GetScale().x))
+	//if (Frustum::instance()->CheckSphere(centreOfFlock2, satellites[0]->GetScale().x))
 		flock2->RenderFlock(&shader, Camera::instance()->GetPosition());
 
-	if (Frustum::instance()->CheckSphere(centreOfFlock3, satellites[0]->GetScale().x))
+	//if (Frustum::instance()->CheckSphere(centreOfFlock3, satellites[0]->GetScale().x))
 		flock3->RenderFlock(&shader, Camera::instance()->GetPosition());
 	//flock4->RenderFlock(&shader);
 	//flock5->RenderFlock(&shader);

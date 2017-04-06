@@ -98,6 +98,21 @@ void Flockers::ChangeCentreOfFlockCircular()
 		theta = 0.0f;
 }
 
+void * Flockers::load(char * fname, long * bufsize)
+{
+	FILE* fp = fopen(fname, "rb");
+	fseek(fp, 0L, SEEK_END);
+	long len = ftell(fp);
+	rewind(fp);
+	void *buf = malloc(len);
+	fread(buf, 1, len, fp);
+	fclose(fp);
+	*bufsize = len;
+	return buf;
+}
+
+
+
 void Flockers::InitializeFlock(float flockSize, glm::vec3 centre, float delay,  bool s, float sDelay, bool patternMovement, int number)
 {
 	for (int i = 0; i < flockSize; i++)
@@ -107,6 +122,28 @@ void Flockers::InitializeFlock(float flockSize, glm::vec3 centre, float delay,  
 		temp->SetScale(glm::vec3(0.03f, 0.03f, 0.03f));
 		temp->SetPosition(centre);
 		temp->SetVelocity(glm::vec3(0.0f, 0.1f, -0.1f));
+		alGenSources(1, &soundSources[i]);
+		alSourcef(soundSources[i], AL_PITCH, 1.);
+		alSourcef(soundSources[i], AL_GAIN, 5);
+		alSource3f(soundSources[i], AL_POSITION, temp->GetPosition().x, temp->GetPosition().y, temp->GetPosition().z);
+		alSource3f(soundSources[i], AL_VELOCITY, 0., 0., 0.);
+		alSourcei(soundSources[i], AL_LOOPING, AL_TRUE);
+
+		alGenBuffers(1, &buffer[i]);
+		{
+			long dataSize;
+			const ALvoid* data = load("footsteps.raw", &dataSize);
+			/* for simplicity, assume raw file is signed-16b at 44.1kHz */
+			alBufferData(buffer[i], AL_FORMAT_MONO16, data, dataSize, 44100);
+			free((void*)data);
+		}
+
+		alSourcei(soundSources[i], AL_BUFFER, buffer[i]);
+		alSourcePlay(soundSources[i]);
+
+		fflush(stderr); /* in case OpenAL reported an error earlier */
+
+
 		objs.push_back(temp);		
 	}
 
@@ -120,6 +157,7 @@ void Flockers::InitializeFlock(float flockSize, glm::vec3 centre, float delay,  
 	patternNumber = number;
 	theta = 0.0f;
 	seperate = s;
+
 }
 
 Flockers::Flockers()
@@ -136,8 +174,10 @@ void Flockers::RenderFlock(Shader * shader, glm::vec3 player)
 	playerPos = player;
 	for (int i = 0; i < objs.size(); i++)
 	{
-		if (Frustum::instance()->CheckSphere(objs[i]->GetPosition(), 5))
+		//if (Frustum::instance()->CheckSphere(objs[i]->GetPosition(), 5))
 			objs[i]->Update(shader);
+
+		alSource3f(soundSources[i], AL_POSITION, objs[i]->GetPosition().x, objs[i]->GetPosition().y, objs[i]->GetPosition().z);
 	}
 
 	currentTime = glfwGetTime();
@@ -166,6 +206,8 @@ void Flockers::RenderFlock(Shader * shader, glm::vec3 player)
 			break;
 		}
 	}
+
+
 }
 
 void Flockers::setSeperationDelay(float sDelay)
