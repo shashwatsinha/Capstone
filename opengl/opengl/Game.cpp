@@ -25,6 +25,7 @@ void Game::Init()
 	flock2 = new Flockers();
 	flock3 = new Flockers();
 	planet = new Model();
+	lamp = new Model();
 	sphere = new Model();
 	
 
@@ -85,6 +86,22 @@ void Game::Init()
 	planet->InitPath("Models/Planet/planet.obj");
 	planet->SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	planet->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+
+	lamp->InitPath("Models/Lamp/lamp.obj");
+	lamp->SetPosition(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, (Camera::instance()->GetPosition().z - 10)));
+	lamp->SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
+
+	for (int i = 0; i < 20; i++)
+	{
+		int xpos = rand() % 20;
+		int ypos = rand() % 20;
+		int zpos = rand() % 150;
+		EnvironmentObject *obj = new EnvironmentObject();
+		obj->InitPath("Models/Lamp/lamp.obj");
+		obj->SetPosition(glm::vec3((lamp->GetPosition().x + xpos), (lamp->GetPosition().y - ypos), (lamp->GetPosition().z - zpos)));
+		obj->SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
+		lampContainers.push_back(obj);
+	}
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -629,6 +646,12 @@ void Game::Render()
 	//flock4->RenderFlock(&shader);
 	//flock5->RenderFlock(&shader);
 	
+		lamp->Draw(&shader);
+	for (int i = 0;i< lampContainers.size();i++)
+	{
+		lampContainers.at(i)->Draw(&shader);
+	}
+
 	for (int i = 0; i < bgObjs.size(); i++)
 	{
 		bgObjs[i]->Update(&shader, Camera::instance()->GetPosition());
@@ -917,7 +940,7 @@ float Game::DistanceBetweenVectors(glm::vec3 a, glm::vec3 b)
 
 void Game::CleanUp()
 {
-	delete sphere, planet, pinkPlanet;
+	delete sphere, planet, pinkPlanet,lamp, lampContainers;
 	for (int i = 0; i < pointLightContainers.size(); i++)
 		delete pointLightContainers[i];
 

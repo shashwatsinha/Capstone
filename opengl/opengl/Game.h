@@ -110,8 +110,9 @@ public:
 private:
 	vector<Model*> pointLightContainers;
 	Model *sphere;
-	Model *planet, *pinkPlanet;
-	
+	Model *planet, *pinkPlanet, *lamp;
+	vector<Model*> lampContainers;
+
 	//Skybox skybox;
 	Lights *directionalLight;
 	vector<Lights*> pointLights;
