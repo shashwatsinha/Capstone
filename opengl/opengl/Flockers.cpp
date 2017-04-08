@@ -139,7 +139,7 @@ void Flockers::InitializeFlock(float flockSize, glm::vec3 centre, float delay,  
 		}
 
 		alSourcei(soundSources[i], AL_BUFFER, buffer[i]);
-		alSourcePlay(soundSources[i]);
+		//alSourcePlay(soundSources[i]);
 
 		fflush(stderr); /* in case OpenAL reported an error earlier */
 
@@ -177,7 +177,7 @@ void Flockers::RenderFlock(Shader * shader, glm::vec3 player)
 		//if (Frustum::instance()->CheckSphere(objs[i]->GetPosition(), 5))
 			objs[i]->Update(shader);
 
-		alSource3f(soundSources[i], AL_POSITION, objs[i]->GetPosition().x, objs[i]->GetPosition().y, objs[i]->GetPosition().z);
+		//alSource3f(soundSources[i], AL_POSITION, objs[i]->GetPosition().x, objs[i]->GetPosition().y, objs[i]->GetPosition().z);
 	}
 
 	currentTime = glfwGetTime();

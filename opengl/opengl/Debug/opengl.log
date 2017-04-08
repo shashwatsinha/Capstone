@@ -1,28 +1,14 @@
-﻿  Game.cpp
-d:\cpstone\capstone\opengl\opengl\game.cpp(112): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(163): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(173): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(210): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(227): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(244): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(249): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(499): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(539): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(545): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(565): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(574): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\cpstone\capstone\opengl\opengl\game.cpp(602): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-d:\cpstone\capstone\opengl\opengl\game.cpp(604): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(669): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(674): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(828): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(833): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(841): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(846): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(851): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(856): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(861): warning C4018: '<': signed/unsigned mismatch
-d:\cpstone\capstone\opengl\opengl\game.cpp(884): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
-d:\cpstone\capstone\opengl\opengl\game.cpp(1081): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+﻿  main.cpp
+d:\cpstone\capstone\opengl\opengl\main.cpp(59): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+d:\cpstone\capstone\opengl\opengl\main.cpp(115): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\cpstone\capstone\opengl\opengl\main.cpp(158): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\cpstone\capstone\opengl\opengl\main.cpp(211): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\cpstone\capstone\opengl\opengl\main.cpp(212): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\cpstone\capstone\opengl\opengl\main.cpp(216): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\cpstone\capstone\opengl\opengl\main.cpp(217): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\cpstone\capstone\opengl\opengl\main.cpp(219): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\cpstone\capstone\opengl\opengl\main.cpp(220): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\cpstone\capstone\opengl\opengl\main.cpp(227): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
   opengl.vcxproj -> D:\cpstone\Capstone\opengl\Debug\opengl.exe
   opengl.vcxproj -> D:\cpstone\Capstone\opengl\Debug\opengl.pdb (Full PDB)
