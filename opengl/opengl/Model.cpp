@@ -62,7 +62,7 @@ void Model::Draw(Shader *shader)
 
 void Model::SetPosition(glm::vec3 pos)
 {
-	position = pos;
+	this->position = pos;
 }
 
 

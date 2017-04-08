@@ -26,13 +26,15 @@ void Game::Init()
 	flock3 = new Flockers();
 	planet = new Model();
 	lamp = new Model();
+	maintree= new Model();
+	tree1 = new Model();
 	sphere = new Model();
 	
 
 	x = 0.0f;
 	theta = 0.0f;
 	seperator = 1;
-	centreOfFlock1 = glm::vec3(-250, 0, 50);
+	centreOfFlock1 = glm::vec3(-22, 38, -108);
 	centreOfFlock2 = glm::vec3(150, -100, 50);
 	centreOfFlock3 = glm::vec3(350, 0, 250);
 	
@@ -48,6 +50,7 @@ void Game::Init()
 
 	dirSpiral1 = glm::normalize(dirSpiral1);
 	dirSpiral2 = glm::normalize(dirSpiral2);
+
 
 	for (int i = 1; i < 4; i++)
 	{
@@ -91,11 +94,62 @@ void Game::Init()
 	lamp->SetPosition(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, (Camera::instance()->GetPosition().z - 10)));
 	lamp->SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
-	for (int i = 0; i < 20; i++)
+	maintree->InitPath("Models/Tree1/tree1.obj");
+	maintree->InitPath("Models/Base/base.obj");
+	maintree->SetPosition(glm::vec3(-22, 32, -108));
+	maintree->SetScale(glm::vec3(2.5f, 2.5f, 2.5f));
+
+
+	for (int i = 0; i < 4; i++)
+	{
+		EnvironmentObject *obj = new EnvironmentObject();
+		obj->InitPath("Models/Tree1/tree2.obj");
+		obj->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
+		trees.push_back(obj);
+	}
+
+	trees.at(0)->SetPosition(glm::vec3(-22, 30, -100));
+	trees.at(1)->SetPosition(glm::vec3(-22, 30, -108));
+	trees.at(2)->SetPosition(glm::vec3(-15, 30, -108));
+	trees.at(3)->SetPosition(glm::vec3(-30, 30, -108));
+
+	for (int i = 0; i < 8; i++)
+	{
+		EnvironmentObject *obj = new EnvironmentObject();
+		obj->InitPath("Models/Tree1/tree3.obj");
+		obj->SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
+		trees.push_back(obj);
+	}
+
+	trees.at(4)->SetPosition((glm::vec3(-2,84,100)));
+	trees.at(4)->SetScale(glm::vec3(2.0f, 2.0f, 2.0f));
+
+	trees.at(5)->SetPosition((glm::vec3(-22, 118, 62)));
+	trees.at(6)->SetPosition((glm::vec3(-2, 134, 36)));
+	trees.at(7)->SetPosition((glm::vec3(10, 143, -10)));
+	trees.at(8)->SetPosition((glm::vec3(24, 136, -32)));
+	trees.at(9)->SetPosition((glm::vec3(60, 102, -96)));
+	trees.at(10)->SetPosition((glm::vec3(60, 126, -44)));
+
+	for (int i = 0; i < 4; i++)
+	{
+		EnvironmentObject *obj = new EnvironmentObject();
+		obj->InitPath("Models/Tree1/tree4.obj");
+		obj->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
+		trees.push_back(obj);
+	}
+
+	trees.at(12)->SetPosition((glm::vec3(0, 128, 74)));
+	trees.at(13)->SetPosition((glm::vec3(16, 143, 8)));
+	trees.at(14)->SetPosition((glm::vec3(36, 138, 0)));
+	trees.at(15)->SetPosition((glm::vec3(64, 88, -88)));
+
+
+	for (int i = 0; i < 30; i++)
 	{
 		int xpos = rand() % 20;
 		int ypos = rand() % 20;
-		int zpos = rand() % 150;
+		int zpos = rand() % 200;
 		EnvironmentObject *obj = new EnvironmentObject();
 		obj->InitPath("Models/Lamp/lamp.obj");
 		obj->SetPosition(glm::vec3((lamp->GetPosition().x + xpos), (lamp->GetPosition().y - ypos), (lamp->GetPosition().z - zpos)));
@@ -147,16 +201,16 @@ void Game::Init()
 	//skybox.setupMesh();
 
 	// Setup Directional Light
-	glm::vec3 direction = glm::vec3(-0.2f, -1.0f, -0.3f);
-	glm::vec3 ambient = glm::vec3(0.2f, 0.2f, 0.2f);
-	glm::vec3 diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
-	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 directionDir = glm::vec3(-0.2f, -1.0f, -0.3f);
+	glm::vec3 ambientDir = glm::vec3(0.1f, 0.1f, 0.1f);
+	glm::vec3 diffuseDir = glm::vec3(0.1f, 0.1f, 0.1f);
+	glm::vec3 specularDir = glm::vec3(0.5f, 0.5f, 0.5f);
 	directionalLight = new Lights();
-	directionalLight->initializeDirectionalLightParameters(direction, ambient, diffuse, specular);
+	directionalLight->initializeDirectionalLightParameters(directionDir, ambientDir, diffuseDir, specularDir);
 
 	// Initialize Point Light (Initialize as many point lights as requires and push the lights into the pointLights vector)
 	glm::vec3 pointLightPosition1 = glm::vec3(1.0, 150.5, 23.75); pointLightPositions.push_back(pointLightPosition1);
-	/*glm::vec3 pointLightPosition2 = glm::vec3(1.0, 148.0, 44.0); pointLightPositions.push_back(pointLightPosition2);
+	glm::vec3 pointLightPosition2 = glm::vec3(1.0, 148.0, 44.0); pointLightPositions.push_back(pointLightPosition2);
 	glm::vec3 pointLightPosition3 = glm::vec3(-9.5, 148.75, 33.75); pointLightPositions.push_back(pointLightPosition3);
 	glm::vec3 pointLightPosition4 = glm::vec3(12.25, 148.75, 33.75); pointLightPositions.push_back(pointLightPosition4);
 	glm::vec3 pointLightPosition5 = glm::vec3(-9.0, 143.5, 54.25); pointLightPositions.push_back(pointLightPosition5);
@@ -237,17 +291,57 @@ void Game::Init()
 	glm::vec3 pointLightPosition80 = glm::vec3(-120.95, 113.75, 32.5); pointLightPositions.push_back(pointLightPosition80);
 	glm::vec3 pointLightPosition81 = glm::vec3(-120.95, 113.75, 15.0); pointLightPositions.push_back(pointLightPosition81);
 	glm::vec3 pointLightPosition82 = glm::vec3(-120.95, 115.75, -5); pointLightPositions.push_back(pointLightPosition82);
-	glm::vec3 pointLightPosition83 = glm::vec3(-120.95, 110.0, -28.75); pointLightPositions.push_back(pointLightPosition83);*/
+	glm::vec3 pointLightPosition83 = glm::vec3(-120.95, 110.0, -28.75); pointLightPositions.push_back(pointLightPosition83);
+
+	//for cave1
+	glm::vec3 pointLightPosition84 = glm::vec3(-7.95, -13.0, 118.75); pointLightPositions.push_back(pointLightPosition84);
+	glm::vec3 pointLightPosition85 = glm::vec3(-41.95, -13.0, 118.75); pointLightPositions.push_back(pointLightPosition85);
+	glm::vec3 pointLightPosition86 = glm::vec3(-41.95, -13.0, 90.75); pointLightPositions.push_back(pointLightPosition86);
+	glm::vec3 pointLightPosition87 = glm::vec3(-13.95, -13.0, 90.75); pointLightPositions.push_back(pointLightPosition87);
+	glm::vec3 pointLightPosition88 = glm::vec3(-23.95, -15.0, 114.75); pointLightPositions.push_back(pointLightPosition88);
 	//   vec3(98.550003, 93.000000, 78.250000)
+
+	//path to cave2
+	glm::vec3 pointLightPosition89 = glm::vec3(-13.95, 111.0, 98.75); pointLightPositions.push_back(pointLightPosition89);
+	glm::vec3 pointLightPosition90 = glm::vec3(-17.95, 125.0, 76.75); pointLightPositions.push_back(pointLightPosition90);
+	glm::vec3 pointLightPosition91 = glm::vec3(1.95, 129.0, 68.75); pointLightPositions.push_back(pointLightPosition91);
+	glm::vec3 pointLightPosition92 = glm::vec3(53.95, 119.0, -64.75); pointLightPositions.push_back(pointLightPosition92);
+	glm::vec3 pointLightPosition93 = glm::vec3(63.95, 113.0, -62.75); pointLightPositions.push_back(pointLightPosition93);
+	glm::vec3 pointLightPosition94 = glm::vec3(25.95, 117.0, -62.75); pointLightPositions.push_back(pointLightPosition94);
+	glm::vec3 pointLightPosition95 = glm::vec3(55.95, 111.0, -82.75); pointLightPositions.push_back(pointLightPosition95);
+	glm::vec3 pointLightPosition96 = glm::vec3(43.95, 87.0, -98.75); pointLightPositions.push_back(pointLightPosition96);
+	glm::vec3 pointLightPosition97 = glm::vec3(83.95, 93.0, -88.75); pointLightPositions.push_back(pointLightPosition97);
+	glm::vec3 pointLightPosition98 = glm::vec3(21.95, 53.0, -134.75); pointLightPositions.push_back(pointLightPosition98);
+	glm::vec3 pointLightPosition99 = glm::vec3(-7.95, 55.0, -150.75); pointLightPositions.push_back(pointLightPosition99);
+	glm::vec3 pointLightPosition100 = glm::vec3(-39.95, 49.0, -146.75); pointLightPositions.push_back(pointLightPosition100);
+	glm::vec3 pointLightPosition101 = glm::vec3(-75.95, 31.0, -26.75); pointLightPositions.push_back(pointLightPosition101);
+	glm::vec3 pointLightPosition102 = glm::vec3(-95.95, 27.0, -110.75); pointLightPositions.push_back(pointLightPosition102);
+	glm::vec3 pointLightPosition103 = glm::vec3(-29.95, 27.0, -110.75); pointLightPositions.push_back(pointLightPosition103);
+
+	//ontop of big tree
+	glm::vec3 pointLightPosition104 = glm::vec3(-13.95, 101.0, 136.75); pointLightPositions.push_back(pointLightPosition104);
+
+	glm::vec3 pointLightPosition105 = glm::vec3(-7.95, 79.0, 138.75); pointLightPositions.push_back(pointLightPosition105);
+	glm::vec3 pointLightPosition106 = glm::vec3(-7.95, 27.0, -134.75); pointLightPositions.push_back(pointLightPosition106);
+	glm::vec3 pointLightPosition107 = glm::vec3(-7.95, 27.0, -114.75); pointLightPositions.push_back(pointLightPosition107);
+	glm::vec3 pointLightPosition108 = glm::vec3(-7.95, 37.0, -98.75); pointLightPositions.push_back(pointLightPosition108);
+	glm::vec3 pointLightPosition109 = glm::vec3(-45.95, 37.0, -100.75); pointLightPositions.push_back(pointLightPosition109);
+	glm::vec3 pointLightPosition110 = glm::vec3(-65.95, 25.0, -128.75); pointLightPositions.push_back(pointLightPosition110);
+
+	for (int i = 0; i < lampContainers.size(); i++)
+	{
+		pointLightPositions.push_back(lampContainers.at(i)->GetPosition());
+	}
+
 
 	// Setup Point Light. Properties of Point Light can be changed over time if required. (In Game loop change the values if required)
 	// Get the Point Light whose values need to be changed using the vector pointLights and change the properties as required
 	/*ambient = glm::vec3(1.0f, 1.0f, 1.0f);
 	diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
 	specular = glm::vec3(1.0f, 1.0f, 1.0f);*/
-	ambient = glm::vec3(0.0f, 0.0f, 0.0f);
-	diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
-	specular = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 ambient = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 specular = glm::vec3(0.0f, 0.0f, 0.0f);
 	for (int i = 0; i < pointLightPositions.size(); i++)
 	{
 		Lights *pointLight = new Lights();
@@ -255,6 +349,8 @@ void Game::Init()
 		pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
 		pointLights.push_back(pointLight);
 	}
+
+
 
 	// Point Light Container Shader
 	ResourceManager::LoadShader("Shaders/vertexShader_LightContainer.vs", "Shaders/fragmentShader_LightContainer.frag", nullptr, "lightContainerShader");
@@ -373,41 +469,63 @@ void Game::ProcessInput(GLfloat dt)
 			bgY += 0.25;
 		}
 
+		float movespeed = 2.0f;
+		Model * movObj = trees.at(12);
+
 		if (this->Keys[GLFW_KEY_I])
 		{
-			pointLightPositions[pointLightPositions.size()-1].y += .25;
-			coral1Position.y += .25;
+			pointLightPositions[pointLightPositions.size()-1].y += movespeed;
+			//coral1Position.y += .25;
+			//glm::vec3 pos = movObj->GetPosition();
+			//pos.y += movespeed;
+			//movObj->SetPosition(pos);
 
 		}
 		if (this->Keys[GLFW_KEY_K])
 		{
-			pointLightPositions[pointLightPositions.size() - 1].y -= .25;
-			coral1Position.y -= .25;
+			pointLightPositions[pointLightPositions.size() - 1].y -= movespeed;
+			//coral1Position.y -= .25;
+			//glm::vec3 pos = movObj->GetPosition();
+			//pos.y -= movespeed;
+			//movObj->SetPosition(pos);
 		}
 		if (this->Keys[GLFW_KEY_J])
 		{
-			pointLightPositions[pointLightPositions.size() - 1].z += .25;
-			coral1Position.z += .25;
+			pointLightPositions[pointLightPositions.size() - 1].z += movespeed;
+			//coral1Position.z += .25;
+			//glm::vec3 pos = movObj->GetPosition();
+			//pos.z += movespeed;
+			//movObj->SetPosition(pos);
 		}
 		if (this->Keys[GLFW_KEY_L])
 		{
-			pointLightPositions[pointLightPositions.size() - 1].z -= .25;
+			pointLightPositions[pointLightPositions.size() - 1].z -= movespeed;
 			coral1Position.z -= .25;
+			//glm::vec3 pos = movObj->GetPosition();
+			//pos.z -= movespeed;
+			//movObj->SetPosition(pos);
 		}
 		if (this->Keys[GLFW_KEY_U])
 		{
-			pointLightPositions[pointLightPositions.size() - 1].x += .25;
-			coral1Position.x += .25;
+			pointLightPositions[pointLightPositions.size() - 1].x -= movespeed;
+			//coral1Position.x += .25;
+			//glm::vec3 pos = movObj->GetPosition();
+			//pos.x += movespeed;
+			//movObj->SetPosition(pos);
 		}
 		if (this->Keys[GLFW_KEY_O])
 		{
-			pointLightPositions[pointLightPositions.size() - 1].x -= .25;
-			coral1Position.x -= .25;
+			pointLightPositions[pointLightPositions.size() - 1].x += movespeed;
+			//coral1Position.x -= .25;
+			//glm::vec3 pos = movObj->GetPosition();
+			//pos.x -= movespeed;
+			//movObj->SetPosition(pos);
 		}
 		if (this->Keys[GLFW_KEY_P])
 		{
 			cout << "Position : " + glm::to_string(pointLightPositions[pointLightPositions.size() - 1]);
 			//cout << "position:" << coral1Position.x<<"," << coral1Position.y<<"," << coral1Position.z << endl;
+			//cout << "position:" << movObj->GetPosition().x << "," << movObj->GetPosition().y << "," << movObj->GetPosition().z << endl;
 		}
 	}
 }
@@ -590,7 +708,7 @@ void Game::Render()
 		pointLights[i]->EmitLight(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
 		if (pointLights[i]->getEmitLightValue() == true)
 		{
-			cout << i << " : " << pointLights[i]->getEmitLightValue() << endl << endl << endl << endl;
+			//cout << i << " : " << pointLights[i]->getEmitLightValue() << endl << endl << endl << endl;
 			
 			ambient = pointLights[i]->getPointLightAmbient();
 			diffuse = pointLights[i]->getPointLightDiffuse();
@@ -647,9 +765,17 @@ void Game::Render()
 	//flock5->RenderFlock(&shader);
 	
 		lamp->Draw(&shader);
+		maintree->Draw(&shader);
+		tree1->Draw(&shader);
+
 	for (int i = 0;i< lampContainers.size();i++)
 	{
 		lampContainers.at(i)->Draw(&shader);
+	}
+
+	for (int i = 0;i< trees.size();i++)
+	{
+		trees.at(i)->Draw(&shader);
 	}
 
 	for (int i = 0; i < bgObjs.size(); i++)
@@ -698,7 +824,7 @@ void Game::Render()
 	}
 
 	// Also draw the point light object, again binding the appropriate shader
-	/*Shader lampShader = ResourceManager::GetShader("lightContainerShader");
+	Shader lampShader = ResourceManager::GetShader("lightContainerShader");
 	lampShader.Use();
 	lampShader.SetMatrix4("view", camView);
 	lampShader.SetMatrix4("projection", camProjection);
@@ -707,7 +833,7 @@ void Game::Render()
 		if (i == (pointLightPositions.size() - 1))
 			pointLightContainers[i]->SetPosition(pointLightPositions[i]);
 		pointLightContainers[i]->Draw(&lampShader);
-	}*/
+	}
 
 	glDepthFunc(GL_LEQUAL);
 	Shader skySphereShader = ResourceManager::GetShader("skySphere");
@@ -940,7 +1066,7 @@ float Game::DistanceBetweenVectors(glm::vec3 a, glm::vec3 b)
 
 void Game::CleanUp()
 {
-	delete sphere, planet, pinkPlanet,lamp, lampContainers;
+	delete sphere, planet, pinkPlanet, lamp, lampContainers, maintree, tree1,trees;
 	for (int i = 0; i < pointLightContainers.size(); i++)
 		delete pointLightContainers[i];
 

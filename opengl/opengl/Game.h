@@ -110,13 +110,17 @@ public:
 private:
 	vector<Model*> pointLightContainers;
 	Model *sphere;
-	Model *planet, *pinkPlanet, *lamp;
+	Model *planet, *pinkPlanet, *lamp, *maintree,*tree1;
 	vector<Model*> lampContainers;
+	vector<Model*> trees;
 
 	//Skybox skybox;
 	Lights *directionalLight;
 	vector<Lights*> pointLights;
 	vector<glm::vec3> pointLightPositions;
+
+	vector<Lights*> pointguideLights;
+	vector<glm::vec3> pointguideLightPositions;
 
 	
 	

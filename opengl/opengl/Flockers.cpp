@@ -119,7 +119,7 @@ void Flockers::InitializeFlock(float flockSize, glm::vec3 centre, float delay,  
 	{
 		BGMovingObjects *temp = new BGMovingObjects();
 		temp->InitPath("Models/BlueObject/BlueObject.obj");
-		temp->SetScale(glm::vec3(0.03f, 0.03f, 0.03f));
+		temp->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
 		temp->SetPosition(centre);
 		temp->SetVelocity(glm::vec3(0.0f, 0.1f, -0.1f));
 		alGenSources(1, &soundSources[i]);
