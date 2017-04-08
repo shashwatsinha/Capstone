@@ -1,6 +1,8 @@
 #pragma once
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
+#include <al.h>
+#include <alc.h>
 #include "Model.h"
 
 class Coral : public Model
@@ -19,9 +21,15 @@ public:
 
 	void SetLerpColorStatus(bool status);
 
+	void InitializeSound();
+
 private:
 	bool emitParticles;
 	bool lerpColor;
 	glm::vec3 playerPos;
+
+	ALuint source;
+	ALuint buffer;
+	void *load(char *fname, long *bufsize);
 };
 

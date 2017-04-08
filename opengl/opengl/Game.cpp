@@ -178,6 +178,7 @@ void Game::Init()
 	Coral *masterCoral = new Coral();
 	masterCoral->InitPath("Models/Corals/coral0.obj");
 	masterCoral->SetScale(glm::vec3(0.3f, 0.3f, 0.3f));
+	//masterCoral->InitializeSound();
 
 
 	for (int i = 0;i < coralPositions.size();i++)
@@ -185,6 +186,7 @@ void Game::Init()
 		Coral * coral = new Coral();
 		*coral = *masterCoral;
 		coral->SetPosition(coralPositions[i]);
+		coral->InitializeSound();
 		corals.push_back(coral);
 	}
 
