@@ -157,7 +157,7 @@ void Game::Init()
 		lampContainers.push_back(obj);
 	}
 
-	for (int i = 0; i < 5; i++)
+	/*for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 5; j++)
 		{
@@ -170,7 +170,7 @@ void Game::Init()
 				bgObjs.push_back(obj);
 			}
 		}
-	}
+	}*/
 
 	
 	ResourceManager::LoadShader("Shaders/vertexShader_Coral.vs", "Shaders/fragmentShader_Coral.frag", nullptr, "coralShader");
@@ -320,6 +320,13 @@ void Game::Init()
 
 	//ontop of big tree
 	glm::vec3 pointLightPosition104 = glm::vec3(-13.95, 101.0, 136.75); pointLightPositions.push_back(pointLightPosition104);
+	//glm::vec3 ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+	//glm::vec3 diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+	//glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
+	////glm::vec3 pointLightPosition104 = glm::vec3(-13.95, 101.0, 136.75); //pointLightPositions.push_back(pointLightPosition104);
+	//pointLightTreePosition = glm::vec3(-13.95, 101.0, 136.75);
+	//pointLightTree = new Lights();
+	//pointLightTree->setPointLightParameters(pointLightTreePosition, ambient, diffuse, specular, pointLightDistance[6]);
 
 	glm::vec3 pointLightPosition105 = glm::vec3(-7.95, 79.0, 138.75); pointLightPositions.push_back(pointLightPosition105);
 	glm::vec3 pointLightPosition106 = glm::vec3(-7.95, 27.0, -134.75); pointLightPositions.push_back(pointLightPosition106);
@@ -346,8 +353,23 @@ void Game::Init()
 	{
 		Lights *pointLight = new Lights();
 		// Note that the 4th parameter is the distance the point light should affect (set the distance from the pre initialized pointLightDistance array)
-		pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
-		pointLights.push_back(pointLight);
+		if (i == 103)
+		{
+			ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+			diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+			specular = glm::vec3(1.0f, 1.0f, 1.0f);
+
+			pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[6]);
+			pointLights.push_back(pointLight);
+		}
+		else {
+			ambient = glm::vec3(0.0f, 0.0f, 0.0f);
+			diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
+			specular = glm::vec3(0.0f, 0.0f, 0.0f);
+
+			pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
+			pointLights.push_back(pointLight);
+		}
 	}
 
 
@@ -705,31 +727,43 @@ void Game::Render()
 	glm::vec3 specular = glm::vec3(0.0f, 0.0f, 0.0f);
 	for (int i = 0; i < pointLightPositions.size(); i++)
 	{
-		pointLights[i]->EmitLight(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
-		if (pointLights[i]->getEmitLightValue() == true)
+		if (i == 103)
 		{
-			//cout << i << " : " << pointLights[i]->getEmitLightValue() << endl << endl << endl << endl;
-			
 			ambient = pointLights[i]->getPointLightAmbient();
 			diffuse = pointLights[i]->getPointLightDiffuse();
 			specular = pointLights[i]->getPointLightSpecular();
-			if (ambient.x < 1.0f)
-				ambient = ambient + 0.1f;
-			else
-				ambient = glm::vec3(1.0f, 1.0f, 1.0f);
 
-			if (diffuse.x < 0.8f)
-				diffuse = diffuse + 0.1f;
-			else
-				diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
-
-			if (specular.x < 1.0f)
-				specular = specular + 0.1f;
-			else
-				specular = glm::vec3(1.0f, 1.0f, 1.0f);
-			
-			pointLights[i]->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
+			pointLights[i]->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[6]);
 		}
+		else
+		{
+			pointLights[i]->EmitLight(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
+			if (pointLights[i]->getEmitLightValue() == true)
+			{
+				//cout << i << " : " << pointLights[i]->getEmitLightValue() << endl << endl << endl << endl;
+
+				ambient = pointLights[i]->getPointLightAmbient();
+				diffuse = pointLights[i]->getPointLightDiffuse();
+				specular = pointLights[i]->getPointLightSpecular();
+				if (ambient.x < 1.0f)
+					ambient = ambient + 0.1f;
+				else
+					ambient = glm::vec3(1.0f, 1.0f, 1.0f);
+
+				if (diffuse.x < 0.8f)
+					diffuse = diffuse + 0.1f;
+				else
+					diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+
+				if (specular.x < 1.0f)
+					specular = specular + 0.1f;
+				else
+					specular = glm::vec3(1.0f, 1.0f, 1.0f);
+
+				pointLights[i]->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
+			}
+		}
+		
 		string *uniformName = new string[7];
 		uniformName[0] = string("pointLights[") + to_string(i) + string("].position");
 		uniformName[1] = string("pointLights[") + to_string(i) + string("].ambient");
@@ -741,6 +775,7 @@ void Game::Render()
 
 		pointLights[i]->setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance(), uniformName);
 	}
+
 	
 	//glm::quat myQuat;
 	//glm::quat key_quat = glm::quat(glm::vec3(0.0f, (GLfloat)glfwGetTime() * glm::radians(20.0f), 0.0f));
@@ -778,10 +813,10 @@ void Game::Render()
 		trees.at(i)->Draw(&shader);
 	}
 
-	for (int i = 0; i < bgObjs.size(); i++)
+	/*for (int i = 0; i < bgObjs.size(); i++)
 	{
 		bgObjs[i]->Update(&shader, Camera::instance()->GetPosition());
-	}
+	}*/
 
 	
 	for (int i = 0; i < satellites.size(); i++)
@@ -824,7 +859,7 @@ void Game::Render()
 	}
 
 	// Also draw the point light object, again binding the appropriate shader
-	Shader lampShader = ResourceManager::GetShader("lightContainerShader");
+	/*Shader lampShader = ResourceManager::GetShader("lightContainerShader");
 	lampShader.Use();
 	lampShader.SetMatrix4("view", camView);
 	lampShader.SetMatrix4("projection", camProjection);
@@ -833,7 +868,7 @@ void Game::Render()
 		if (i == (pointLightPositions.size() - 1))
 			pointLightContainers[i]->SetPosition(pointLightPositions[i]);
 		pointLightContainers[i]->Draw(&lampShader);
-	}
+	}*/
 
 	glDepthFunc(GL_LEQUAL);
 	Shader skySphereShader = ResourceManager::GetShader("skySphere");
@@ -1095,10 +1130,10 @@ void Game::CleanUp()
 		delete surfaceEmitter[i];
 	}
 
-	for (int i = 0; i < bgObjs.size(); i++)
+	/*for (int i = 0; i < bgObjs.size(); i++)
 	{
 		delete bgObjs[i];
-	}
+	}*/
 
 	for (int i = 0; i < satellites.size(); i++)
 	{
