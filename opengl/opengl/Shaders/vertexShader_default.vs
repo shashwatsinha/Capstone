@@ -7,6 +7,7 @@ out VS_OUT {
     vec3 FragPos;
     vec3 Normal;
     vec2 TexCoords;
+	vec4 ViewSpace;
 } vs_out;
 
 uniform mat4 model;
@@ -20,4 +21,5 @@ void main()
 	vs_out.FragPos = vec3(model * vec4(position, 1.0f));
 	vs_out.Normal = mat3(transpose(inverse(model))) * normal;
 	vs_out.TexCoords = texCoords;
+	vs_out.ViewSpace = view * model * vec4(position, 1.0f);
 }

@@ -30,6 +30,7 @@ in VS_OUT {
     vec3 FragPos;
     vec3 Normal;
     vec2 TexCoords;
+	vec4 ViewSpace;
 } fs_in;
 
 out vec4 color;
@@ -39,6 +40,9 @@ uniform Material material;
 uniform DirLight dirLight;
 uniform int NO_OF_POINT_LIGHTS;
 uniform PointLight pointLights[140];
+
+const vec3 fogColor = vec3(0.5, 0.5, 0.5);
+const float FogDensity = 0.01;
 
 // Function prototypes
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
@@ -60,7 +64,23 @@ void main()
 	// To enable Gamma correction uncomment the below line
 	//result = pow(result, vec3(1.0/2.2));
 
-	color = vec4(result, 1.0f);
+	vec3 lightColor = result;
+
+	//distance
+	float dist = 0;
+	float fogFactor = 0;
+	//dist = abs(fs_in.ViewSpace.z);
+
+	dist = length(fs_in.ViewSpace);
+
+	//fogFactor = (80 - dist)/(80 - 20);
+	//fogFactor = clamp( fogFactor, 0.0, 1.0 );
+
+	fogFactor = 1.0 /exp(dist * FogDensity);
+    fogFactor = clamp( fogFactor, 0.0, 1.0 );
+
+	vec3 finalColor = mix(fogColor, lightColor, fogFactor);
+	color = vec4(finalColor, 1);
 }
 
 // Calculates the color when using a directional light.

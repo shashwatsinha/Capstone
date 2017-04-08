@@ -152,7 +152,7 @@ void Game::Init()
 		int zpos = rand() % 200;
 		EnvironmentObject *obj = new EnvironmentObject();
 		obj->InitPath("Models/Lamp/lamp.obj");
-		obj->SetPosition(glm::vec3((lamp->GetPosition().x + xpos), (lamp->GetPosition().y - ypos), (lamp->GetPosition().z - zpos)));
+		obj->SetPosition(glm::vec3((lamp->GetPosition().x + xpos), (lamp->GetPosition().y + ypos), (lamp->GetPosition().z - zpos)));
 		obj->SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 		lampContainers.push_back(obj);
 	}
@@ -355,8 +355,8 @@ void Game::Init()
 		// Note that the 4th parameter is the distance the point light should affect (set the distance from the pre initialized pointLightDistance array)
 		if (i == 103)
 		{
-			ambient = glm::vec3(1.0f, 1.0f, 1.0f);
-			diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+			ambient = glm::vec3(3.0f, 3.0f, 3.0f);
+			diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
 			specular = glm::vec3(1.0f, 1.0f, 1.0f);
 
 			pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[6]);
@@ -871,13 +871,14 @@ void Game::Render()
 	}*/
 
 	glDepthFunc(GL_LEQUAL);
-	Shader skySphereShader = ResourceManager::GetShader("skySphere");
+	//Shader skySphereShader = ResourceManager::GetShader("skySphere");
+	Shader skySphereShader = ResourceManager::GetShader("default");
 	skySphereShader.Use();
 	camView = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
 	skySphereShader.SetMatrix4("view", camView);
 	skySphereShader.SetMatrix4("projection", camProjection);
-	GLfloat timeValue = glfwGetTime();
-	skySphereShader.SetFloat("iGlobalTime", timeValue);
+	//GLfloat timeValue = glfwGetTime();
+	//skySphereShader.SetFloat("iGlobalTime", timeValue);
 	for (int i = 0; i < corals.size(); i++)
 	{
 		if (corals[i]->GetLerpColorStatus() == true)
