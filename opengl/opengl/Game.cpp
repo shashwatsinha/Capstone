@@ -690,12 +690,12 @@ void Game::Render()
 	// Bind to framebuffer and draw to color texture 
 	// as we normally would.
 	// //////////////////////////////////////////////////
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-	// Clear all attached buffers        
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // We're not using stencil buffer so why bother with clearing?
+	//glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	//// Clear all attached buffers        
+	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // We're not using stencil buffer so why bother with clearing?
 
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 	
 	
 	if (isVR)
@@ -974,19 +974,19 @@ void Game::Render()
 	// Bind to default framebuffer again and draw the 
 	// quad plane with attched screen texture.
 	// //////////////////////////////////////////////////
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	// Clear all relevant buffers
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
-	glClear(GL_COLOR_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//// Clear all relevant buffers
+	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+	//glClear(GL_COLOR_BUFFER_BIT);
+	//glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
 
-	// Draw Screen
-	Shader screenShader = ResourceManager::GetShader("screenShader");
-	screenShader.Use();
-	glBindVertexArray(quadVAO);
-	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);	// Use the color attachment texture as the texture of the quad plane
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
+	//// Draw Screen
+	//Shader screenShader = ResourceManager::GetShader("screenShader");
+	//screenShader.Use();
+	//glBindVertexArray(quadVAO);
+	//glBindTexture(GL_TEXTURE_2D, textureColorbuffer);	// Use the color attachment texture as the texture of the quad plane
+	//glDrawArrays(GL_TRIANGLES, 0, 6);
+	//glBindVertexArray(0);
 }
 
 // Other methods specific to our game
@@ -1203,7 +1203,10 @@ int Game::Compare(const ovrGraphicsLuid& lhs, const ovrGraphicsLuid& rhs)
 	return memcmp(&lhs, &rhs, sizeof(ovrGraphicsLuid));
 }
 
-
+void Game::VRtoMouse(double xoffset, double yoffset)
+{
+	Camera::instance()->ProcessMouseMovement(xoffset, yoffset, true);
+}
 
 // return true to retry later (e.g. after display lost)
 bool Game::RenderOculus()
@@ -1346,9 +1349,32 @@ bool Game::RenderOculus()
 				Vector3f finalForward = finalRollPitchYaw.Transform(Vector3f(0, 0, -1));
 				Vector3f shiftedEyePos = Pos2 + rollPitchYaw.Transform(EyeRenderPose[eye].Position);
 
+				//if (!VROrientationSet)
+				//{
+				//	VRx = EyeRenderPose[eye].Orientation.x;
+				//	VRy= EyeRenderPose[eye].Orientation.y;
+				//	VROrientationSet = true;
+				//}
+
+				//else
+				//{
+				//	xoffset = VRx - EyeRenderPose[eye].Orientation.w;
+				//	yoffset = VRy - EyeRenderPose[eye].Orientation.y;
+
+				//	//if ((xoffset > 0.5) || (yoffset > 0.5))
+				//	//{
+				//		VRtoMouse(xoffset*3, yoffset*3);
+				//	//}
+				//}
+				
+
 				//manju_note
 				Matrix4f view = Matrix4f::LookAtRH(shiftedEyePos, shiftedEyePos + finalForward, finalUp);
 				Matrix4f proj = ovrMatrix4f_Projection(hmdDesc.DefaultEyeFov[eye], 0.2f, 1000.0f, ovrProjection_None);
+
+
+				
+				
 
 				//manju_change
 				// Render world

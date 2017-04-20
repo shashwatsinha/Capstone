@@ -37,7 +37,7 @@ string windowTitle = "OurGame";
 
 Game game(screenWidth, screenHeight);
 
-bool isVR = false;
+bool isVR = true;
 
 static void list_audio_devices(const ALCchar *devices)
 {

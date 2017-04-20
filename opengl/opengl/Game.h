@@ -76,6 +76,11 @@ public:
 	GLuint textureColorbuffer;
 	GLuint framebuffer;
 
+	float VRx=0;
+	float VRy=0;
+	float xoffset, yoffset;
+	bool VROrientationSet = false;
+
 	// Constructor/Destructor
 	Game(GLuint width, GLuint height);
 	~Game();
@@ -92,6 +97,7 @@ public:
 	void setupScreenQuadAndFrameBuffer();
 	ovrGraphicsLuid GetDefaultAdapterLuid();
 	int Compare(const ovrGraphicsLuid & lhs, const ovrGraphicsLuid & rhs);
+	void VRtoMouse(double xoffset, double yoffset);
 	bool RenderOculus();
 	void RunVR();
 	//void Run(bool(*MainLoop)(bool retryCreate));
