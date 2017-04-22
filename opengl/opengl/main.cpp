@@ -93,7 +93,7 @@ int main(int argc, char **argv)
 	alGenBuffers(1, &buffer);
 	{
 		long dataSize;
-		const ALvoid* data = load("backgroundSound.raw", &dataSize);
+		const ALvoid* data = load("Background.raw", &dataSize);
 		/* for simplicity, assume raw file is signed-16b at 44.1kHz */
 		alBufferData(buffer, AL_FORMAT_MONO16, data, dataSize, 44100);
 		free((void*)data);

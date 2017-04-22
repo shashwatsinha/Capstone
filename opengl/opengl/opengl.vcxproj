@@ -169,6 +169,7 @@
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="FSM.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Lamp.cpp" />
     <ClCompile Include="LoadOAL.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Lamp.h" />
     <ClInclude Include="Lights.h" />
     <ClInclude Include="LoadOAL.h" />
     <ClInclude Include="Mesh.h" />

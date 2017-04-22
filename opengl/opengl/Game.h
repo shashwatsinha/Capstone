@@ -32,6 +32,7 @@
 #include "Flockers.h"
 #include "Frustum.h"
 #include "Spiral.h"
+#include "Lamp.h"
 
 // Include the Oculus SDK
 #include "GL/CAPI_GLE.h"
@@ -117,7 +118,7 @@ private:
 	vector<Model*> pointLightContainers;
 	Model *sphere;
 	Model *planet, *pinkPlanet, *lamp, *maintree,*tree1;
-	vector<Model*> lampContainers;
+	vector<Lamp*> lampContainers;
 	vector<Model*> trees;
 
 	//Skybox skybox;

@@ -12,6 +12,8 @@ Coral::Coral()
 
 Coral::~Coral()
 {
+	alDeleteSources(1, &source);
+	alDeleteBuffers(1, &buffer);
 }
 
 float Coral::DistanceFromPlayer(glm::vec3 playerPos)

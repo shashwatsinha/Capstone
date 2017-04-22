@@ -150,10 +150,11 @@ void Game::Init()
 		int xpos = rand() % 20;
 		int ypos = rand() % 20;
 		int zpos = rand() % 200;
-		EnvironmentObject *obj = new EnvironmentObject();
+		Lamp *obj = new Lamp();
 		obj->InitPath("Models/Lamp/lamp.obj");
 		obj->SetPosition(glm::vec3((lamp->GetPosition().x + xpos), (lamp->GetPosition().y + ypos), (lamp->GetPosition().z - zpos)));
 		obj->SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
+		obj->SetInitialMeanPosition();
 		lampContainers.push_back(obj);
 	}
 
@@ -807,7 +808,7 @@ void Game::Render()
 
 	for (int i = 0;i< lampContainers.size();i++)
 	{
-		lampContainers.at(i)->Draw(&shader);
+		lampContainers.at(i)->Update(&shader);
 	}
 
 	for (int i = 0;i< trees.size();i++)
@@ -861,16 +862,16 @@ void Game::Render()
 	}
 
 	// Also draw the point light object, again binding the appropriate shader
-	/*Shader lampShader = ResourceManager::GetShader("lightContainerShader");
-	lampShader.Use();
-	lampShader.SetMatrix4("view", camView);
-	lampShader.SetMatrix4("projection", camProjection);
-	for (int i = 0; i < pointLights.size(); i++)
-	{
-		if (i == (pointLightPositions.size() - 1))
-			pointLightContainers[i]->SetPosition(pointLightPositions[i]);
-		pointLightContainers[i]->Draw(&lampShader);
-	}*/
+	//Shader lampShader = ResourceManager::GetShader("lightContainerShader");
+	//lampShader.Use();
+	//lampShader.SetMatrix4("view", camView);
+	//lampShader.SetMatrix4("projection", camProjection);
+	//for (int i = 0; i < pointLights.size(); i++)
+	//{
+	//	if (i == (pointLightPositions.size() - 1))
+	//		pointLightContainers[i]->SetPosition(pointLightPositions[i]);
+	//	pointLightContainers[i]->Draw(&lampShader);
+	//}
 
 	glDepthFunc(GL_LEQUAL);
 	//Shader skySphereShader = ResourceManager::GetShader("skySphere");
