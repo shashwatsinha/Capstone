@@ -8,7 +8,7 @@ class Lamp : public Model
 {
 public:
 	Lamp();
-	void Update(Shader *shader);
+	void Render(Shader *shader);
 	void SetInitialMeanPosition();
 	~Lamp();
 

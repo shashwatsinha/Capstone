@@ -15,12 +15,13 @@
 #include <ppl.h>
 
 
-#include "Camera.h"
-#include "ActorFactory.h"
+
 #include <stdlib.h>    
 #include <time.h>
 #include <map>
+#include <ppl.h>
 #include <tuple>
+#include <thread>
 #include "Bullet.h"
 #include "Coral.h"
 #include "ParticleSystem.h"
@@ -31,6 +32,7 @@
 #include "Satellite.h"
 #include "Flockers.h"
 #include "Frustum.h"
+#include "EnvironmentObject.h"
 #include "Spiral.h"
 #include "Lamp.h"
 
@@ -46,7 +48,7 @@
 
 
 using namespace OVR;
-
+using namespace concurrency;
 
 // Represents the current state of the game
 enum GameState {
@@ -107,19 +109,22 @@ public:
 	float GetDeterminant(glm::vec3 k);
 	glm::vec3 MultiplyVector(glm::vec3 a, float k);
 
-	void TestWithFlock();
+	
 	float DistanceBetweenVectors(glm::vec3 a,glm::vec3 b);
 
 	//Delete all Pointers
 	void CleanUp();
 
 	void ChangeDirectionOfCameraRandomly(bool k);
+
+	//Render thread
+	void RenderThread();
 private:
-	vector<Model*> pointLightContainers;
+	//vector<Model*> pointLightContainers;
 	Model *sphere;
-	Model *planet, *pinkPlanet, *lamp, *maintree,*tree1;
-	vector<Lamp*> lampContainers;
-	vector<Model*> trees;
+	Model *planet,  *lamp, *maintree,*tree1; //planet,maintree entered
+	vector<Lamp*> lampContainers;		//entered in modelObjects
+	vector<Model*> trees;				//Entered in modelObjects
 
 	//Skybox skybox;
 	Lights *directionalLight;
@@ -153,9 +158,9 @@ private:
 
 	
 
-	vector<EnvironmentObject*>bgObjs;
+	//vector<EnvironmentObject*>bgObjs;
 
-	vector<Satellite*>satellites;
+	//vector<Satellite*>satellites;
 
 	glm::vec3 centreOfFlock1;
 	glm::vec3 centreOfFlock3;
@@ -163,25 +168,27 @@ private:
 	GLfloat flock2CurTime;
 	glm::vec3 centreOfFlock2;
 	GLfloat currentTime;
-	float theta;
+
 
 	Flockers *flock1;
 	Flockers *flock2;
 	Flockers *flock3;
-	float x;
-	float seperator;
+	
 
 	glm::vec3 coral1Position = glm::vec3(0.5, 0.5, 380);
 
 	glm::mat4 camView;
 	glm::mat4 camProjection;
 
-	
+	Shader shader;
 
 	glm::vec3 dirSpiral1;
 	glm::vec3 dirSpiral2;
 
 	float alpha;
+
+	vector<Model*> modelObjects;
+	
 };
 
 #endif

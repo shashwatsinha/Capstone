@@ -27,7 +27,7 @@ void InitGLFW();
 double calcFPS(double theTimeInterval, string theWindowTitle);
 
 GLfloat lastX = 400, lastY = 300;
-bool firstMouse = true;
+bool firstMouse = false;
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
@@ -37,7 +37,7 @@ string windowTitle = "OurGame";
 
 Game game(screenWidth, screenHeight);
 
-bool isVR = true;
+bool isVR = false;
 
 static void list_audio_devices(const ALCchar *devices)
 {
@@ -67,9 +67,24 @@ void* load(char *fname, long *bufsize) {
 	return buf;
 }
 
+void RenderThread()
+{
+	game.RenderThread();
+}
+
+void ProcessInputThread(GLfloat deltaTime)
+{
+	game.ProcessInput(deltaTime);
+}
+
+void UpdateThread(GLfloat deltaTime)
+{
+	game.Update(deltaTime);
+}
+
 int main(int argc, char **argv)
 {
-
+	
 	
 	/* initialize OpenAL context, asking for 44.1kHz to match HRIR data */
 	ALCint contextAttr[] = { ALC_FREQUENCY,44100,0 };
@@ -163,15 +178,22 @@ int main(int argc, char **argv)
 			glfwPollEvents();
 
 			// Manage user input
-			game.ProcessInput(deltaTime);
-
+			std::thread InputThread(ProcessInputThread,deltaTime);
+			//game.ProcessInput(deltaTime);
 			// Update Game state
+			//std::thread UpdateLoopThread(UpdateThread,deltaTime);
 			game.Update(deltaTime);
-
 			// Render
+			//std::thread RenderThread (RenderThread);
+			
 			game.Render();
-
+			game.RenderThread();
 			glfwSwapBuffers(window);
+
+
+			InputThread.join();
+			//UpdateLoopThread.join();
+			//RenderThread.join();
 		}
 	}
 

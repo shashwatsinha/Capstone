@@ -15,47 +15,9 @@ BGMovingObjects::~BGMovingObjects()
 	
 }
 
-void BGMovingObjects::Update(Shader * shader)
+void BGMovingObjects::Render(Shader * shader)
 {
 	this->SetPosition(this->GetPosition() + velocity);
-	/*
-	if (this->GetPosition().x > 50.0f)
-	{
-		this->SetPosition(glm::vec3(-50.0f, this->GetPosition().y, this->GetPosition().z));
-	}
-
-	if (this->GetPosition().x < -50.0f)
-	{
-		this->SetPosition(glm::vec3(50.0f, this->GetPosition().y, this->GetPosition().z));
-	}
-
-	if (this->GetPosition().y > 50.0f)
-	{
-		this->SetPosition(glm::vec3(this->GetPosition().x, -50.0f, this->GetPosition().z));
-	}
-
-	if (this->GetPosition().y < -50.0f)
-	{
-		this->SetPosition(glm::vec3(this->GetPosition().x, 50.0f , this->GetPosition().z));
-	}
-
-	if (this->GetPosition().z > 50.0f)
-	{
-		this->SetPosition(glm::vec3(this->GetPosition().x, this->GetPosition().y, -50.0f));
-	}
-
-	if (this->GetPosition().z < -50.0f)
-	{
-		this->SetPosition(glm::vec3(this->GetPosition().x, this->GetPosition().y, 50.0f));
-	}
-
-	GLfloat ct = glfwGetTime();
-	if (ct - currentTime > 5.0f)
-	{
-		ChangeVelocity(ct);
-		currentTime = ct;
-	}*/
-
 	Draw(shader);
 }
 

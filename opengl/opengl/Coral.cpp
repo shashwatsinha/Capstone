@@ -76,6 +76,14 @@ void Coral::InitializeSound()
 	fflush(stderr); /* in case OpenAL reported an error earlier */
 }
 
+void Coral::UpdatePhysics()
+{
+}
+
+void Coral::Render(Shader * shader)
+{
+}
+
 void * Coral::load(char * fname, long * bufsize)
 {
 	FILE* fp = fopen(fname, "rb");

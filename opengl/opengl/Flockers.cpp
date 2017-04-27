@@ -169,44 +169,16 @@ Flockers::~Flockers()
 {
 }
 
-void Flockers::RenderFlock(Shader * shader, glm::vec3 player)
+void Flockers::Render(Shader * shader)
 {
-	playerPos = player;
+	playerPos = Camera::instance()->GetPosition();
 	for (int i = 0; i < objs.size(); i++)
 	{
 		//if (Frustum::instance()->CheckSphere(objs[i]->GetPosition(), 5))
-			objs[i]->Update(shader);
+			objs[i]->Render(shader);
 
 		//alSource3f(soundSources[i], AL_POSITION, objs[i]->GetPosition().x, objs[i]->GetPosition().y, objs[i]->GetPosition().z);
 	}
-
-	currentTime = glfwGetTime();
-
-	if (currentTime - flockTime > updateDelay)
-	{
-		UpdateVelocity();
-		flockTime = currentTime;
-	}
-
-	if (currentTime - seperatorTime > seperatorDelay && seperate==true)
-	{
-		seperator *= -1;
-		seperatorTime = currentTime;
-	}
-
-	if (patternTrue)
-	{
-		switch (patternNumber)
-		{
-		case 1:
-			ChangeCentreOfFlockCircular();
-			break;
-		case 2:
-			ChangeCentreOfFlockLinearPositiveX();
-			break;
-		}
-	}
-
 
 }
 
@@ -335,6 +307,36 @@ glm::vec3 Flockers::ReturnCentreOfFlock()
 glm::vec3 Flockers::ReturnScaleOfElementOfFlock()
 {
 	return objs[0]->GetScale();
+}
+
+void Flockers::UpdatePhysics()
+{
+	currentTime = glfwGetTime();
+
+	if (currentTime - flockTime > updateDelay)
+	{
+		UpdateVelocity();
+		flockTime = currentTime;
+	}
+
+	if (currentTime - seperatorTime > seperatorDelay && seperate == true)
+	{
+		seperator *= -1;
+		seperatorTime = currentTime;
+	}
+
+	if (patternTrue)
+	{
+		switch (patternNumber)
+		{
+		case 1:
+			ChangeCentreOfFlockCircular();
+			break;
+		case 2:
+			ChangeCentreOfFlockLinearPositiveX();
+			break;
+		}
+	}
 }
 
 void Flockers::UpdateVelocity()

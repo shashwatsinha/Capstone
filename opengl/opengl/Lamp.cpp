@@ -7,7 +7,7 @@ Lamp::Lamp()
 	//srand(time(NULL));
 }
 
-void Lamp::Update(Shader * shader)
+void Lamp::Render(Shader * shader)
 {
 	Draw(shader);
 

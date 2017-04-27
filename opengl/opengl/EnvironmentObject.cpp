@@ -98,6 +98,10 @@ bool EnvironmentObject::IsVelocityZero()
 		return false;
 }
 
+void EnvironmentObject::UpdatePhysics()
+{
+}
+
 
 EnvironmentObject::~EnvironmentObject()
 {
@@ -108,10 +112,10 @@ void EnvironmentObject::SetVelocity(glm::vec3 velocity)
 	this->velocity = velocity;
 }
 
-void EnvironmentObject::Update(Shader * shader,glm::vec3 playerPos)
+void EnvironmentObject::Render(Shader * shader)
 {
 	this->SetPosition(this->GetPosition() + velocity);
-	this->playerPos = playerPos;
+	this->playerPos = Camera::instance()->GetPosition();
 
 	if (DistanceFromPlayer() < 500.0f && IsVelocityZero()==true)
 	{

@@ -7,10 +7,11 @@ public:
 	EnvironmentObject();
 	~EnvironmentObject();
 	void SetVelocity(glm::vec3 velocity);
-	void Update(Shader *shader,glm::vec3 playerPos);
+	void Render(Shader *shader);
 	float DistanceFromPlayer();
 	glm::vec3 ReturnPerpendicularVector(glm::vec3 inputVector);
 	bool IsVelocityZero();
+	void UpdatePhysics();
 
 private:
 	glm::vec3 velocity;

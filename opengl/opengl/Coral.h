@@ -23,6 +23,10 @@ public:
 
 	void InitializeSound();
 
+	void UpdatePhysics();
+
+	void Render(Shader *shader);
+
 private:
 	bool emitParticles;
 	bool lerpColor;
