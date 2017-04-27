@@ -800,7 +800,7 @@ void Game::Render()
 	
 	
 
-	//RenderThread();
+	RenderThread();
 
 	ChangeDirectionOfCameraRandomly(false);
 
@@ -813,7 +813,7 @@ void Game::Render()
 	
 	for (int i = 0;i < corals.size();i++)
 	{
-		if (corals[i]->GetLerpColorStatus() == false)
+		/*if (corals[i]->GetLerpColorStatus() == false)
 		{
 			mixValue = 0.0f;
 			coralShader.SetFloat("mixValue", mixValue);
@@ -824,9 +824,9 @@ void Game::Render()
 			if (mixValue > 1.0f)
 				mixValue = 1.0f;
 			coralShader.SetFloat("mixValue", mixValue);
-		}
+		}*/
 		corals[i]->Render(&coralShader);
-		corals[i]->IsParticleActivated(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
+		//corals[i]->IsParticleActivated();
 		coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());
 	}
 

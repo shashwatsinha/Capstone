@@ -187,7 +187,7 @@ int main(int argc, char **argv)
 			//std::thread RenderThread (RenderThread);
 			
 			game.Render();
-			game.RenderThread();
+			//game.RenderThread();
 			glfwSwapBuffers(window);
 
 

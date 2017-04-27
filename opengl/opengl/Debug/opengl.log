@@ -1,14 +1,6 @@
-﻿  main.cpp
-d:\cpstone\capstone\opengl\opengl\main.cpp(59): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+﻿  Coral.cpp
+d:\profiles\ub8701\github\capstone\capstone\opengl\opengl\coral.cpp(98): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\profiles\ub8701\github\capstone\capstone\opengl\opengl\coral.cpp(111): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-d:\cpstone\capstone\opengl\opengl\main.cpp(130): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\cpstone\capstone\opengl\opengl\main.cpp(173): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-d:\cpstone\capstone\opengl\opengl\main.cpp(233): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\cpstone\capstone\opengl\opengl\main.cpp(234): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\cpstone\capstone\opengl\opengl\main.cpp(238): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-d:\cpstone\capstone\opengl\opengl\main.cpp(239): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-d:\cpstone\capstone\opengl\opengl\main.cpp(241): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\cpstone\capstone\opengl\opengl\main.cpp(242): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\cpstone\capstone\opengl\opengl\main.cpp(249): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-  opengl.vcxproj -> D:\cpstone\Capstone\opengl\Debug\opengl.exe
-  opengl.vcxproj -> D:\cpstone\Capstone\opengl\Debug\opengl.pdb (Full PDB)
+  opengl.vcxproj -> D:\Profiles\ub8701\Github\Capstone\Capstone\opengl\Debug\opengl.exe
+  opengl.vcxproj -> D:\Profiles\ub8701\Github\Capstone\Capstone\opengl\Debug\opengl.pdb (Full PDB)

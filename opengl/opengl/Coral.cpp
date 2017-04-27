@@ -26,9 +26,9 @@ float Coral::DistanceFromPlayer(glm::vec3 playerPos)
 	return distance;
 }
 
-void Coral::IsParticleActivated(glm::vec3 pos)
+void Coral::IsParticleActivated()
 {
-	playerPos = pos;
+	playerPos = Camera::instance()->GetPosition();
 	if (DistanceFromPlayer(playerPos) > 350)
 	{
 		emitParticles = false;
@@ -82,6 +82,28 @@ void Coral::UpdatePhysics()
 
 void Coral::Render(Shader * shader)
 {
+	Shader coralShader = ResourceManager::GetShader("coralShader");
+	coralShader.Use();
+	coralShader.SetMatrix4("view", Camera::instance()->GetViewMatrix());
+	coralShader.SetMatrix4("projection", glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(800.0f) / static_cast<GLfloat>(600.0f), 0.1f, 5000.0f));
+
+	if (GetLerpColorStatus() == false)
+	{
+		mixValue = 0.0f;
+		coralShader.SetFloat("mixValue", mixValue);
+	}
+
+	else
+	{
+		mixValue = mixValue + (glfwGetTime() * 0.009f);
+		if (mixValue > 1.0f)
+			mixValue = 1.0f;
+		coralShader.SetFloat("mixValue", mixValue);
+	}
+
+	IsParticleActivated();
+	Draw(shader);
+
 }
 
 void * Coral::load(char * fname, long * bufsize)
