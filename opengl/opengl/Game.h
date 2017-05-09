@@ -187,6 +187,7 @@ private:
 
 	float alpha;
 	float fogDensity = 0.01f;
+	vector<string> uniformNames;
 };
 
 #endif

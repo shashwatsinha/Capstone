@@ -356,24 +356,35 @@ void Game::Init()
 	for (int i = 0; i < pointLightPositions.size(); i++)
 	{
 		Lights *pointLight = new Lights();
+		int lightDistance;
 		// Note that the 4th parameter is the distance the point light should affect (set the distance from the pre initialized pointLightDistance array)
 		if (i == 103)
 		{
 			ambient = glm::vec3(3.0f, 3.0f, 3.0f);
 			diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
 			specular = glm::vec3(1.0f, 1.0f, 1.0f);
-
-			pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[6]);
-			pointLights.push_back(pointLight);
+			lightDistance = pointLightDistance[6];
 		}
 		else {
 			ambient = glm::vec3(0.0f, 0.0f, 0.0f);
 			diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
 			specular = glm::vec3(0.0f, 0.0f, 0.0f);
-
-			pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
-			pointLights.push_back(pointLight);
+			lightDistance = pointLightDistance[4];
 		}
+
+		uniformNames.clear();
+		uniformNames.push_back("pointLights[" + to_string(i) + "].position");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].ambient");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].diffuse");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].specular");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].constant");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].linear");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].quadratic");
+
+		pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, lightDistance);
+		pointLight->setPointLightUniforms(uniformNames, &ResourceManager::GetShader("default"));
+		pointLights.push_back(pointLight);
+
 	}
 
 
@@ -442,8 +453,11 @@ void Game::Init()
 		surfaceEmitter.push_back(surfaceParticle);
 	}
 
-	// Initialize framebuffer and setup the screenQuad
-	setupScreenQuadAndFrameBuffer();
+	if (!isVR)
+	{
+		// Initialize framebuffer and setup the screenQuad
+		setupScreenQuadAndFrameBuffer();
+	}
 }
 
 void Game::Update(GLfloat dt)
@@ -687,19 +701,7 @@ void Game::ProcessInput(GLfloat dt)
 //}
 
 void Game::Render()
-{
-	/////////////////////////////////////////////////////
-	// Bind to framebuffer and draw to color texture 
-	// as we normally would.
-	// //////////////////////////////////////////////////
-	//glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-	//// Clear all attached buffers        
-	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // We're not using stencil buffer so why bother with clearing?
-
-	//glEnable(GL_DEPTH_TEST);
-	
-	
+{		
 	if (isVR)
 	{
 		 for (int i = 0;i < 4;i++)
@@ -717,38 +719,46 @@ void Game::Render()
 			 }
 		 }
 
-		// camView = transpose(camView);
-		// camProjection= transpose(camProjection);
-
 	}
 	
 	else
 	{
-		 camView = Camera::instance()->GetViewMatrix();
+		/////////////////////////////////////////////////////
+		// Bind to framebuffer and draw to color texture 
+		// as we normally would.
+		// //////////////////////////////////////////////////
+		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+		// Clear all attached buffers        
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // We're not using stencil buffer so why bother with clearing?
+
+		glEnable(GL_DEPTH_TEST);
+		
+		camView = Camera::instance()->GetViewMatrix();
 		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
 	}
 
-	for (int i = 0;i < 4;i++)
-	{
-		for (int j = 0;j < 4;j++)
-		{
+	//for (int i = 0;i < 4;i++)
+	//{
+	//	for (int j = 0;j < 4;j++)
+	//	{
 
-			cout << camView[i][j] << " ";
-		}
-		cout << endl;
-	}
+	//		cout << camView[i][j] << " ";
+	//	}
+	//	cout << endl;
+	//}
 
-	cout << endl;
-	
-	for (int i = 0;i < 4;i++)
-	{
-		for (int j = 0;j < 4;j++)
-		{
+	//cout << endl;
+	//
+	//for (int i = 0;i < 4;i++)
+	//{
+	//	for (int j = 0;j < 4;j++)
+	//	{
 
-			cout << camProjection[i][j] << " ";
-		}
-		cout << endl;
-	}
+	//		cout << camProjection[i][j] << " ";
+	//	}
+	//	cout << endl;
+	//}
 
 	Frustum::instance()->ConstructFrustum(5, camProjection, camView);
 
@@ -807,18 +817,8 @@ void Game::Render()
 				pointLights[i]->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
 			}
 		}
-		
-		string *uniformName = new string[7];
-		uniformName[0] = string("pointLights[") + to_string(i) + string("].position");
-		uniformName[1] = string("pointLights[") + to_string(i) + string("].ambient");
-		uniformName[2] = string("pointLights[") + to_string(i) + string("].diffuse");
-		uniformName[3] = string("pointLights[") + to_string(i) + string("].specular");
-		uniformName[4] = string("pointLights[") + to_string(i) + string("].constant");
-		uniformName[5] = string("pointLights[") + to_string(i) + string("].linear");
-		uniformName[6] = string("pointLights[") + to_string(i) + string("].quadratic");
 
-		pointLights[i]->setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance(), uniformName);
-		delete[] uniformName;
+		pointLights[i]->setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance());
 	}
 
 	
@@ -1018,24 +1018,26 @@ void Game::Render()
 	//glDepthFunc(GL_LESS); // Set depth function back to default
 	
 	
+	if (!isVR)
+	{
+		/////////////////////////////////////////////////////
+		// Bind to default framebuffer again and draw the 
+		// quad plane with attched screen texture.
+		// //////////////////////////////////////////////////
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		// Clear all relevant buffers
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+		glClear(GL_COLOR_BUFFER_BIT);
+		glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
 
-	/////////////////////////////////////////////////////
-	// Bind to default framebuffer again and draw the 
-	// quad plane with attched screen texture.
-	// //////////////////////////////////////////////////
-	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	//// Clear all relevant buffers
-	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
-	//glClear(GL_COLOR_BUFFER_BIT);
-	//glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
-
-	//// Draw Screen
-	//Shader screenShader = ResourceManager::GetShader("screenShader");
-	//screenShader.Use();
-	//glBindVertexArray(quadVAO);
-	//glBindTexture(GL_TEXTURE_2D, textureColorbuffer);	// Use the color attachment texture as the texture of the quad plane
-	//glDrawArrays(GL_TRIANGLES, 0, 6);
-	//glBindVertexArray(0);
+		// Draw Screen
+		Shader screenShader = ResourceManager::GetShader("screenShader");
+		screenShader.Use();
+		glBindVertexArray(quadVAO);
+		glBindTexture(GL_TEXTURE_2D, textureColorbuffer);	// Use the color attachment texture as the texture of the quad plane
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
+	}
 }
 
 // Other methods specific to our game
