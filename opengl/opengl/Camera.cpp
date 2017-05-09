@@ -19,6 +19,11 @@ void Camera::SetSpeed(float s)
 	speed = s;
 }
 
+void Camera::SetPosition(glm::vec3 Position)
+{
+	this->Position = Position;
+}
+
 void Camera :: ProcessMouseMovement(GLfloat xoffset, GLfloat yoffset, GLboolean constrainPitch = true)
 {
 	xoffset *= this->MouseSensitivity;

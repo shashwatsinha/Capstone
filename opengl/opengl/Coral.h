@@ -4,7 +4,6 @@
 #include <al.h>
 #include <alc.h>
 #include "Model.h"
-#include "ResourceManager.h"
 
 class Coral : public Model
 {
@@ -14,7 +13,7 @@ public:
 
 	float DistanceFromPlayer(glm::vec3 playerPos);
 
-	void IsParticleActivated();
+	void IsParticleActivated(glm::vec3 pos);
 
 	bool ActivateParticles();
 
@@ -24,10 +23,6 @@ public:
 
 	void InitializeSound();
 
-	void UpdatePhysics();
-
-	void Render(Shader *shader);
-
 private:
 	bool emitParticles;
 	bool lerpColor;
@@ -36,6 +31,5 @@ private:
 	ALuint source;
 	ALuint buffer;
 	void *load(char *fname, long *bufsize);
-	float mixValue = 0.0f;
 };
 

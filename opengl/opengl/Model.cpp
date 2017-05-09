@@ -91,15 +91,6 @@ glm::quat Model::GetRotation()
 	return this->rotation;
 }
 
-void Model::Render(Shader * shader)
-{
-	Draw(shader);
-}
-
-void Model::UpdatePhysics()
-{
-}
-
 void Model::loadModel(string path)
 {
 	// Read file via ASSIMP

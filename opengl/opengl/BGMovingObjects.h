@@ -9,7 +9,7 @@ class BGMovingObjects : public Model
 public:
 	BGMovingObjects();
 	~BGMovingObjects();
-	void Render(Shader *shader);
+	void Update(Shader *shader);
 	void SetVelocity(glm::vec3 velocity);
 	void ResetPosition();
 	void ChangeVelocity(float ct);

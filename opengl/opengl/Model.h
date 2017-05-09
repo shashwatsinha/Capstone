@@ -11,7 +11,7 @@ using namespace std;
 #include <GL/glew.h> // Contains all the necessery OpenGL includes
 
 #include "Win32_GLAppUtil.h"
-#include "Camera.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp> 
@@ -22,7 +22,7 @@ using namespace std;
 #include <assimp/postprocess.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <ppl.h>
+
 #include "Mesh.h"
 
 GLint TextureFromFile(const char* path, string directory);
@@ -65,12 +65,6 @@ public:
 
 	//virtual function
 	virtual void ProcessAI() {};
-
-	//virtual function for Render
-	virtual void Render(Shader *shader);
-
-	//virtual function for physics
-	virtual void UpdatePhysics();
 
 private:
 	/*  Model Data  */

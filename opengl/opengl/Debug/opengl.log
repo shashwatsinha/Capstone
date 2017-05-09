@@ -1,6 +1,2 @@
-﻿  Coral.cpp
-d:\profiles\ub8701\github\capstone\capstone\opengl\opengl\coral.cpp(98): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\profiles\ub8701\github\capstone\capstone\opengl\opengl\coral.cpp(111): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-  opengl.vcxproj -> D:\Profiles\ub8701\Github\Capstone\Capstone\opengl\Debug\opengl.exe
-  opengl.vcxproj -> D:\Profiles\ub8701\Github\Capstone\Capstone\opengl\Debug\opengl.pdb (Full PDB)
+﻿  opengl.vcxproj -> Z:\IGMProfile\Desktop\or imagine\4.8\opengl\Debug\opengl.exe
+  opengl.vcxproj -> Z:\IGMProfile\Desktop\or imagine\4.8\opengl\Debug\opengl.pdb (Full PDB)

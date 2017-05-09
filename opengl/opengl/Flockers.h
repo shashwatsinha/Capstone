@@ -21,7 +21,7 @@ public:
 	Flockers();
 	~Flockers();
 	
-	void Render(Shader *shader);
+	void RenderFlock(Shader *shader,glm::vec3 player);
 
 	void setSeperationDelay(float sDelay);
 
@@ -43,7 +43,7 @@ public:
 
 	glm::vec3 ReturnScaleOfElementOfFlock();
 
-	void UpdatePhysics();
+
 
 private:
 	vector<BGMovingObjects*> objs;
