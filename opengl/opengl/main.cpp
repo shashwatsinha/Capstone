@@ -5,6 +5,8 @@
 #define BUFFER_SIZE 4096
 #include "Game.h"
 
+#include "BackgroundMusic.h"
+
 #pragma comment(lib, "glfw3.lib")
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
@@ -95,29 +97,31 @@ int main(int argc, char **argv)
 	
 	alListener3f(AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
 
-	ALuint source;
+	/*ALuint source;
 	alGenSources(1, &source);
 	alSourcef(source, AL_PITCH, 1.);
 	alSourcef(source, AL_GAIN, 5);
 	alSource3f(source, AL_POSITION, -250, 0, 50);
 	alSource3f(source, AL_VELOCITY, 0., 0., 0.);
-	alSourcei(source, AL_LOOPING, AL_TRUE);
+	alSourcei(source, AL_LOOPING, AL_TRUE);*/
 
 	///* allocate an OpenAL buffer and fill it with monaural sample data */
-	ALuint buffer;
-	alGenBuffers(1, &buffer);
-	{
-		long dataSize;
-		const ALvoid* data = load("Background.raw", &dataSize);
+	//ALuint buffer;
+	//alGenBuffers(1, &buffer);
+	//{
+	//	long dataSize;
+	//	const ALvoid* data = load("Background.raw", &dataSize);
 		/* for simplicity, assume raw file is signed-16b at 44.1kHz */
-		alBufferData(buffer, AL_FORMAT_MONO16, data, dataSize, 44100);
-		free((void*)data);
-	}
-	alSourcei(source, AL_BUFFER, buffer);
+	//	alBufferData(buffer, AL_FORMAT_MONO16, data, dataSize, 44100);
+	//	free((void*)data);
+	//}
+	//alSourcei(source, AL_BUFFER, buffer);
 
-	alSourcePlay(source);
+	//alSourcePlay(source);
 
-	fflush(stderr); /* in case OpenAL reported an error earlier */
+	//fflush(stderr); /* in case OpenAL reported an error earlier */
+
+	BackgroundMusic::GetInstance();
 
 
 	// Start Game within Menu State
@@ -166,7 +170,7 @@ int main(int argc, char **argv)
 			
 			calcFPS(1.0, windowTitle);
 
-			alSource3f(source, AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
+			//alSource3f(source, AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
 			alListener3f(AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
 
 			// Set frame time
@@ -183,6 +187,7 @@ int main(int argc, char **argv)
 			// Update Game state
 			//std::thread UpdateLoopThread(UpdateThread,deltaTime);
 			game.Update(deltaTime);
+			BackgroundMusic::Update(deltaTime);
 			// Render
 			//std::thread RenderThread (RenderThread);
 			
@@ -196,6 +201,8 @@ int main(int argc, char **argv)
 			//RenderThread.join();
 		}
 	}
+
+	BackgroundMusic::Destroy();
 
 	ResourceManager::Clear();
 	game.CleanUp();

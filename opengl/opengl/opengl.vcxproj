@@ -158,6 +158,7 @@
   <ItemGroup>
     <ClCompile Include="ActorFactory.cpp" />
     <ClCompile Include="aldlist.cpp" />
+    <ClCompile Include="BackgroundMusic.cpp" />
     <ClCompile Include="BGMovingObjects.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -193,6 +194,7 @@
   <ItemGroup>
     <ClInclude Include="ActorFactory.h" />
     <ClInclude Include="aldlist.h" />
+    <ClInclude Include="BackgroundMusic.h" />
     <ClInclude Include="BGMovingObjects.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />

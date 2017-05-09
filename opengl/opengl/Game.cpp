@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "BackgroundMusic.h"
 //#include "resource_manager.h"
 //if (Frustum::instance()->CheckSphere(centreOfFlock1, satellites[0]->GetScale().x))
 float bgX = 0.0f;
@@ -471,6 +472,10 @@ void Game::Update(GLfloat dt)
 	{
 		surfaceEmitter[i]->Update(dt, 2);
 	}
+
+
+	// background music update
+	BackgroundMusic::Switch(Camera::instance()->GetPosition().z <= 200);
 }
 
 
