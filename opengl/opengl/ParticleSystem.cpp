@@ -226,17 +226,15 @@ void ParticleSystem::Update(GLfloat dt, GLuint newParticles)
 			int unusedParticle = this->firstUnusedParticle();
 			this->respawnParticle(this->particles[unusedParticle]);
 		}
-		for (GLuint i = 0;i < this->amount;++i)
+		concurrency::parallel_for(size_t(0), this->amount, [&](size_t i)
 		{
-			//this->shader.Use();
 			Particle &p = this->particles[i];
 			p.Life -= dt;
 			if (p.Life > 0.0f)
 			{
 				p.Position += p.Velocity*dt;
 				p.Velocity += acceleration*dt;
-				//p.Velocity += acceleration*dt;p.m_velocity += glm::vec4(m_acceleration, 0) * dt;
 			}
-		}
+		});
 	}
 }

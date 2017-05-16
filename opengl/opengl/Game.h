@@ -92,7 +92,7 @@ public:
 	// GameLoop
 	void ProcessInput(GLfloat dt);
 	void Update(GLfloat dt);
-	void Render();
+	void Render(GLfloat dt);
 
 	// Other methods specific for our game
 

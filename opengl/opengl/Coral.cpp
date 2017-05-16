@@ -102,7 +102,7 @@ void Coral::Render(Shader * shader)
 	}
 
 	IsParticleActivated();
-	Draw(shader);
+	Draw(&coralShader);
 
 }
 

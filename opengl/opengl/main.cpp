@@ -71,7 +71,7 @@ void* load(char *fname, long *bufsize) {
 
 void RenderThread()
 {
-	game.RenderThread();
+	//game.Render();
 }
 
 void ProcessInputThread(GLfloat deltaTime)
@@ -186,12 +186,16 @@ int main(int argc, char **argv)
 			//game.ProcessInput(deltaTime);
 			// Update Game state
 			//std::thread UpdateLoopThread(UpdateThread,deltaTime);
-			game.Update(deltaTime);
+
+			//game.Update(deltaTime);
+
+            game.Update(deltaTime);
 			BackgroundMusic::Update(deltaTime);
+
 			// Render
-			//std::thread RenderThread (RenderThread);
+		//	std::thread RenderThread (RenderThread);
 			
-			game.Render();
+			game.Render(deltaTime);
 			//game.RenderThread();
 			glfwSwapBuffers(window);
 

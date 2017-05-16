@@ -175,20 +175,7 @@ void Game::Init()
 		modelObjects.push_back(obj);
 	}
 
-	/*for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			for (int k = 0; k < 10; k++)
-			{
-				EnvironmentObject *obj = new EnvironmentObject();
-				obj->InitPath("Models/Bullet/Bullet.obj");
-				obj->SetPosition(glm::vec3((i * 4) - 30 , (j * 4)-10, k * 3 + 200));
-				obj->SetScale(glm::vec3(4.0f, 4.0f, 4.0f));
-				bgObjs.push_back(obj);
-			}
-		}
-	}*/
+
 
 	
 	ResourceManager::LoadShader("Shaders/vertexShader_Coral.vs", "Shaders/fragmentShader_Coral.frag", nullptr, "coralShader");
@@ -206,6 +193,7 @@ void Game::Init()
 		coral->SetPosition(coralPositions[i]);
 		coral->InitializeSound();
 		corals.push_back(coral);
+	
 	}
 
 	//sample coral
@@ -454,6 +442,11 @@ void Game::Init()
 		surfaceEmitter.push_back(surfaceParticle);
 	}
 
+	for (int i = 0; i < corals.size(); i++)
+	{
+		modelObjects.push_back(corals[i]);
+	}
+
 	// Initialize framebuffer and setup the screenQuad
 	setupScreenQuadAndFrameBuffer();
 }
@@ -462,20 +455,22 @@ void Game::Update(GLfloat dt)
 {
 	
 	
-	//coral particle update
-	for (int i = 0;i < coralParticles.size();i++)
-	{
-		coralParticles[i]->Update(dt, 2);
-	}
 
-	for (int i = 0;i < surfaceEmitter.size(); i++)
-	{
-		surfaceEmitter[i]->Update(dt, 2);
-	}
+	////coral particle update
+	//for (int i = 0;i < coralParticles.size();i++)
+	//{
+	//	coralParticles[i]->Update(dt, 2);
+	//}
+
+	//for (int i = 0;i < surfaceEmitter.size(); i++)
+	//{
+	//	surfaceEmitter[i]->Update(dt, 2);
+	//}
 
 
 	// background music update
 	BackgroundMusic::Switch(Camera::instance()->GetPosition().z <= 200);
+
 }
 
 
@@ -572,137 +567,8 @@ void Game::ProcessInput(GLfloat dt)
 	}
 }
 
-//void Game::RenderVR()
-//{
-//	glm::mat4 view = Camera::instance()->GetViewMatrix();
-//	glm::mat4 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 100.0f);
-//
-//	Shader shader = ResourceManager::GetShader("default");
-//	shader.Use();
-//	shader.SetMatrix4("view", view);
-//	shader.SetMatrix4("projection", projection);
-//
-//	// Setup Directional Light
-//	directionalLight.setUpDirectionalLight(&ResourceManager::GetShader("default"), Camera::instance());
-//
-//	// Setup Point Light. Properties of Point Light can be changed over time if required.
-//	// Get the Point Light whose values need to be changed using the vector pointLights and change the properties as required
-//	glm::vec3 position = glm::vec3(sin(glfwGetTime() * 1.0f), 0.0f, cos(glfwGetTime() * 1.0f));
-//	glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f);
-//	glm::vec3 diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
-//	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
-//	float constant = 1.0f;
-//	float linear = 0.09f;
-//	float quadratic = 0.032f;
-//	pointLightContainer.SetPosition(glm::vec3(sin(glfwGetTime() * 1.0f), 0.0f, cos(glfwGetTime() * 1.0f)));
-//	for (int i = 0; i < pointLights.size(); i++)
-//	{
-//		// Note that the 4th parameter is the distance the point light should affect (set the distance from the pre initialized pointLightDistance array)
-//		pointLights[i].setPointLightParameters(position, ambient, diffuse, specular, pointLightDistance[4]);
-//		pointLights[i].setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance());
-//	}
-//	ResourceManager::GetShader("default").SetInteger("NO_OF_POINT_LIGHTS", pointLights.size());
-//
-//	glm::quat myQuat;
-//	glm::quat key_quat = glm::quat(glm::vec3(0.0f, (GLfloat)glfwGetTime() * glm::radians(20.0f), 0.0f));
-//	myQuat = key_quat * myQuat;
-//	myQuat = glm::normalize(myQuat);
-//	//spaceShip.SetRotation(myQuat);
-//	spaceShip.DrawVR(&shader);
-//
-//	planet.DrawVR(&shader);
-//
-//	Shader coralShader = ResourceManager::GetShader("coralShader");
-//	coralShader.Use();
-//	coralShader.SetMatrix4("view", view);
-//	coralShader.SetMatrix4("projection", projection);
-//
-//	for (int i = 0; i < corals.size(); i++)
-//	{
-//		if (corals[i]->GetLerpColorStatus() == false)
-//		{
-//			mixValue = 0.0f;
-//			coralShader.SetFloat("mixValue", mixValue);
-//		}
-//		else
-//		{
-//			mixValue = mixValue + (glfwGetTime() * 0.009f);
-//			if (mixValue > 1.0f)
-//				mixValue = 1.0f;
-//			coralShader.SetFloat("mixValue", mixValue);
-//		}
-//		corals[i]->DrawVR(&coralShader);
-//		corals[i]->IsParticleActivated(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
-//		coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());
-//	}
-//
-//	Shader particleShader = ResourceManager::GetShader("particle");
-//	particleShader.Use();
-//	view = Camera::instance()->GetViewMatrix();
-//	particleShader.SetMatrix4("view", view);
-//	particleShader.SetMatrix4("projection", projection);
-//	glm::mat4 model;
-//	//model = glm::translate(model, particle.Position);
-//	model[0][0] = view[0][0];
-//	model[0][1] = view[1][0];
-//	model[0][2] = view[2][0];
-//	model[1][0] = view[0][1];
-//	model[1][1] = view[1][1];
-//	model[1][2] = view[2][1];
-//	model[2][0] = view[0][2];
-//	model[2][1] = view[1][2];
-//	model[2][2] = view[2][2];
-//	particleShader.SetMatrix4("model", model);
-//
-//	particlesystem1->DrawVR();
-//	particlesystem2->DrawVR();
-//
-//	for (int i = 0; i < physicsObjects.size(); i++)
-//	{
-//		physicsObjects[i]->DrawVR(&ResourceManager::GetShader("default"));
-//		for (int j = 0; j < physicsObjects[i]->enemyBullets.size(); j++)
-//		{
-//			physicsObjects[i]->enemyBullets[j]->DrawVR(&ResourceManager::GetShader("default"));
-//		}
-//	}
-//
-//	for (int i = 0; i < bullets.size(); i++)
-//	{
-//		bullets[i]->DrawVR(&ResourceManager::GetShader("default"));
-//	}
-//
-//	// Also draw the point light object, again binding the appropriate shader
-//	Shader lampShader = ResourceManager::GetShader("lightContainerShader");
-//	lampShader.Use();
-//	lampShader.SetMatrix4("view", view);
-//	lampShader.SetMatrix4("projection", projection);
-//	pointLightContainer.DrawVR(&lampShader);
-//
-//	glDepthFunc(GL_LEQUAL);
-//	Shader skySphereShader = ResourceManager::GetShader("skySphere");
-//	skySphereShader.Use();
-//	view = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
-//	skySphereShader.SetMatrix4("view", view);
-//	skySphereShader.SetMatrix4("projection", projection);
-//	GLfloat timeValue = glfwGetTime();
-//	skySphereShader.SetFloat("iGlobalTime", timeValue);
-//	sphere.DrawVR(&skySphereShader);
-//	glDepthFunc(GL_LESS);
-//
-//	// Draw the skybox last
-//	//glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
-//	//Shader skyboxShader = ResourceManager::GetShader("skybox");
-//	//skyboxShader.Use();
-//	//view = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
-//	//skyboxShader.SetMatrix4("view", view);
-//	//skyboxShader.SetMatrix4("projection", projection);
-//	//skybox.Draw(&skyboxShader);
-//	//glDepthFunc(GL_LESS); // Set depth function back to default
-//
-//	DetectCollisions();
-//}
 
-void Game::Render()
+void Game::Render(GLfloat dt)
 {
 	/////////////////////////////////////////////////////
 	// Bind to framebuffer and draw to color texture 
@@ -785,55 +651,26 @@ void Game::Render()
 		}
 		
 		string *uniformName = new string[7];
-		uniformName[0] = string("pointLights[") + to_string(i) + string("].position");
-		uniformName[1] = string("pointLights[") + to_string(i) + string("].ambient");
-		uniformName[2] = string("pointLights[") + to_string(i) + string("].diffuse");
-		uniformName[3] = string("pointLights[") + to_string(i) + string("].specular");
-		uniformName[4] = string("pointLights[") + to_string(i) + string("].constant");
-		uniformName[5] = string("pointLights[") + to_string(i) + string("].linear");
-		uniformName[6] = string("pointLights[") + to_string(i) + string("].quadratic");
+		uniformName[0] = "pointLights[" + to_string(i) + "].position";
+		uniformName[1] = "pointLights[" + to_string(i) + "].ambient";
+		uniformName[2] = "pointLights[" + to_string(i) + "].diffuse";
+		uniformName[3] = "pointLights[" + to_string(i) + "].specular";
+		uniformName[4] = "pointLights[" + to_string(i) + "].constant";
+		uniformName[5] = "pointLights[" + to_string(i) + "].linear";
+		uniformName[6] = "pointLights[" + to_string(i) + "].quadratic";
 
 		pointLights[i]->setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance(), uniformName);
 	}
 
 	
 
-	
-		
-		
-	
-	
-	
 
 	RenderThread();
 
 	ChangeDirectionOfCameraRandomly(false);
 
-	
 
-	Shader coralShader = ResourceManager::GetShader("coralShader");
-	coralShader.Use();
-	coralShader.SetMatrix4("view", camView);
-	coralShader.SetMatrix4("projection", camProjection);
 	
-	for (int i = 0;i < corals.size();i++)
-	{
-		/*if (corals[i]->GetLerpColorStatus() == false)
-		{
-			mixValue = 0.0f;
-			coralShader.SetFloat("mixValue", mixValue);
-		}
-		else
-		{
-			mixValue = mixValue + (glfwGetTime() * 0.009f);
-			if (mixValue > 1.0f)
-				mixValue = 1.0f;
-			coralShader.SetFloat("mixValue", mixValue);
-		}*/
-		corals[i]->Render(&coralShader);
-		//corals[i]->IsParticleActivated();
-		coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());
-	}
 
 
 	glDepthFunc(GL_LEQUAL);
@@ -843,21 +680,19 @@ void Game::Render()
 	camView = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
 	skySphereShader.SetMatrix4("view", camView);
 	skySphereShader.SetMatrix4("projection", camProjection);
-	//GLfloat timeValue = glfwGetTime();
-	//skySphereShader.SetFloat("iGlobalTime", timeValue);
-	for (int i = 0; i < corals.size(); i++)
+
+	
+
+	if (noOfCoralsActivated == corals.size()) 
 	{
-		if (corals[i]->GetLerpColorStatus() == true)
-			noOfCoralsActivated++;
-	}
-	if (noOfCoralsActivated == corals.size()) {
-		noOfCoralsActivated = 0;
 		skySphereShader.SetFloat("isColor", 1.0f);
 	}
-	else {
-		noOfCoralsActivated = 0;
-		skySphereShader.SetFloat("isColor", 0.0f);
+
+	else 
+	{
+		skySphereShader.SetFloat("isColor", 0.0f);		
 	}
+
 	sphere->Draw(&skySphereShader);
 	glDepthFunc(GL_LESS);
 
@@ -882,22 +717,22 @@ void Game::Render()
 	particleShader.SetMatrix4("model", model);
 
 
-
-
-
-	for (int i = 0;i < coralParticles.size();i++)
+	for (int i = 0; i < corals.size(); i++)
 	{
-		coralParticles[i]->Draw();
-	}
+		if (corals[i]->GetLerpColorStatus() == true)
+			noOfCoralsActivated++;
 
+		coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());
+		coralParticles[i]->Draw();
+		coralParticles[i]->Update(dt, 2);
+	}
+	
 	for (int i = 0;i < surfaceEmitter.size(); i++)
 	{
 		surfaceEmitter[i]->Draw();
+		surfaceEmitter[i]->Update(dt, 2);
 	}
 
-	
-	
-	
 	
 	
 
@@ -1030,10 +865,10 @@ void Game::CleanUp()
 
 	delete coral1;
 
-	for (int i = 0; i < corals.size(); i++)
+	/*for (int i = 0; i < corals.size(); i++)
 	{
 		delete corals[i];
-	}
+	}*/
 
 	for (int i = 0; i < coralParticles.size(); i++)
 	{
@@ -1313,7 +1148,7 @@ bool Game::RenderOculus()
 				ProcessInput(deltaTime);
 
 				// Update Game state
-				Update(deltaTime);
+				//Update(deltaTime);
 
 				// Clear the colorbuffer
 				glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
@@ -1322,7 +1157,7 @@ bool Game::RenderOculus()
 
 
 				//glm::mat4 viewVR; glm::mat4 projectionVR;
-				Render();
+				Render(deltaTime);
 
 				// Avoids an error when calling SetAndClearRenderSurface during next iteration.
 				// Without this, during the next while loop iteration SetAndClearRenderSurface
