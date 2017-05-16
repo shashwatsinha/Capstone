@@ -29,7 +29,7 @@ void InitGLFW();
 double calcFPS(double theTimeInterval, string theWindowTitle);
 
 GLfloat lastX = 400, lastY = 300;
-bool firstMouse = false;
+bool firstMouse = true;
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
@@ -69,20 +69,12 @@ void* load(char *fname, long *bufsize) {
 	return buf;
 }
 
-void RenderThread()
-{
-	//game.Render();
-}
 
 void ProcessInputThread(GLfloat deltaTime)
 {
 	game.ProcessInput(deltaTime);
 }
 
-void UpdateThread(GLfloat deltaTime)
-{
-	game.Update(deltaTime);
-}
 
 int main(int argc, char **argv)
 {

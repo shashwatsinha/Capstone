@@ -87,6 +87,8 @@ public:
 
 	//Set Speed
 	void SetSpeed(float s);
+
+	void SetPosition(glm::vec3 Position);
 	static Camera *instance()
 	{
 		if (!player_instance)

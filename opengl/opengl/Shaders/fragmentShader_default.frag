@@ -42,7 +42,7 @@ uniform int NO_OF_POINT_LIGHTS;
 uniform PointLight pointLights[140];
 
 const vec3 fogColor = vec3(0.5, 0.5, 0.5);
-const float FogDensity = 0.01;
+uniform float FogDensity;
 
 // Function prototypes
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);

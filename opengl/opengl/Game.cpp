@@ -363,24 +363,35 @@ void Game::Init()
 	for (int i = 0; i < pointLightPositions.size(); i++)
 	{
 		Lights *pointLight = new Lights();
+		int lightDistance;
 		// Note that the 4th parameter is the distance the point light should affect (set the distance from the pre initialized pointLightDistance array)
 		if (i == 103)
 		{
 			ambient = glm::vec3(3.0f, 3.0f, 3.0f);
 			diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
 			specular = glm::vec3(1.0f, 1.0f, 1.0f);
-
-			pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[6]);
-			pointLights.push_back(pointLight);
+			lightDistance = pointLightDistance[6];
 		}
 		else {
 			ambient = glm::vec3(0.0f, 0.0f, 0.0f);
 			diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
 			specular = glm::vec3(0.0f, 0.0f, 0.0f);
-
-			pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
-			pointLights.push_back(pointLight);
+			lightDistance = pointLightDistance[4];
 		}
+
+		uniformNames.clear();
+		uniformNames.push_back("pointLights[" + to_string(i) + "].position");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].ambient");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].diffuse");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].specular");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].constant");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].linear");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].quadratic");
+
+		pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, lightDistance);
+		pointLight->setPointLightUniforms(uniformNames, &ResourceManager::GetShader("default"));
+		pointLights.push_back(pointLight);
+
 	}
 
 
@@ -447,8 +458,11 @@ void Game::Init()
 		modelObjects.push_back(corals[i]);
 	}
 
-	// Initialize framebuffer and setup the screenQuad
-	setupScreenQuadAndFrameBuffer();
+	if (!isVR)
+	{
+		// Initialize framebuffer and setup the screenQuad
+		setupScreenQuadAndFrameBuffer();
+	}
 }
 
 void Game::Update(GLfloat dt)
@@ -570,28 +584,40 @@ void Game::ProcessInput(GLfloat dt)
 
 void Game::Render(GLfloat dt)
 {
-	/////////////////////////////////////////////////////
-	// Bind to framebuffer and draw to color texture 
-	// as we normally would.
-	// //////////////////////////////////////////////////
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-	// Clear all attached buffers        
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // We're not using stencil buffer so why bother with clearing?
-
-	glEnable(GL_DEPTH_TEST);
-	
-	
 	if (isVR)
 	{
-		 camView = Camera::instance()->GetViewMatrix();
-		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
+		 for (int i = 0;i < 4;i++)
+		 {
+			 for (int j = 0;j < 4;j++)
+			 {
+				 camView[i][j] = viewVR.M[j][i];
+			 }
+		 }
+		 for (int i = 0;i < 4;i++)
+		 {
+			 for (int j = 0;j < 4;j++)
+			 {
+				 camProjection[i][j] = projVR.M[j][i];
+			 }
+		 }
+
 	}
 	
 	else
 	{
-		 camView = Camera::instance()->GetViewMatrix();
-		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
+		/////////////////////////////////////////////////////
+		// Bind to framebuffer and draw to color texture 
+		// as we normally would.
+		// //////////////////////////////////////////////////
+		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+		// Clear all attached buffers        
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // We're not using stencil buffer so why bother with clearing?
+
+		glEnable(GL_DEPTH_TEST);
+		
+		camView = Camera::instance()->GetViewMatrix();
+		camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
 	}
 
 	Frustum::instance()->ConstructFrustum(5, camProjection, camView);
@@ -601,6 +627,8 @@ void Game::Render(GLfloat dt)
 	shader.Use();
 	shader.SetMatrix4("view", camView);
 	shader.SetMatrix4("projection", camProjection);
+
+	ResourceManager::GetShader("default").SetFloat("FogDensity", fogDensity);
 	
 	// Setup Directional Light
 	directionalLight->setUpDirectionalLight(&ResourceManager::GetShader("default"), Camera::instance());
@@ -650,16 +678,7 @@ void Game::Render(GLfloat dt)
 			}
 		}
 		
-		string *uniformName = new string[7];
-		uniformName[0] = "pointLights[" + to_string(i) + "].position";
-		uniformName[1] = "pointLights[" + to_string(i) + "].ambient";
-		uniformName[2] = "pointLights[" + to_string(i) + "].diffuse";
-		uniformName[3] = "pointLights[" + to_string(i) + "].specular";
-		uniformName[4] = "pointLights[" + to_string(i) + "].constant";
-		uniformName[5] = "pointLights[" + to_string(i) + "].linear";
-		uniformName[6] = "pointLights[" + to_string(i) + "].quadratic";
-
-		pointLights[i]->setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance(), uniformName);
+		pointLights[i]->setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance());
 	}
 
 	
@@ -674,22 +693,29 @@ void Game::Render(GLfloat dt)
 
 
 	glDepthFunc(GL_LEQUAL);
-	//Shader skySphereShader = ResourceManager::GetShader("skySphere");
-	Shader skySphereShader = ResourceManager::GetShader("default");
+	Shader skySphereShader = ResourceManager::GetShader("skySphere");
+	//Shader skySphereShader = ResourceManager::GetShader("default");
+	//Shader skySphereShader = ResourceManager::GetShader(shaderName);
 	skySphereShader.Use();
-	camView = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
-	skySphereShader.SetMatrix4("view", camView);
+	//camView = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
+	glm::mat4 camViewVRSkysphere = glm::mat4(glm::mat3(camView));
+	skySphereShader.SetMatrix4("view", camViewVRSkysphere);
 	skySphereShader.SetMatrix4("projection", camProjection);
-
-	
-
+	skySphereShader.SetFloat("fog", fogDensity);
+	GLfloat timeValue = glfwGetTime();
+	skySphereShader.SetFloat("iGlobalTime", timeValue);
 	if (noOfCoralsActivated == corals.size()) 
 	{
+		noOfCoralsActivated = 0;
 		skySphereShader.SetFloat("isColor", 1.0f);
+		fogDensity = 0.0f;
+		skySphereShader.SetFloat("fog", fogDensity);
+		ResourceManager::GetShader("default").SetFloat("FogDensity", fogDensity);
 	}
 
 	else 
 	{
+		noOfCoralsActivated = 0;
 		skySphereShader.SetFloat("isColor", 0.0f);		
 	}
 
@@ -700,7 +726,7 @@ void Game::Render(GLfloat dt)
 
 	Shader particleShader = ResourceManager::GetShader("particle");
 	particleShader.Use();
-	camView = Camera::instance()->GetViewMatrix();
+	//camView = Camera::instance()->GetViewMatrix();
 	particleShader.SetMatrix4("view", camView);
 	particleShader.SetMatrix4("projection", camProjection);
 	glm::mat4 model;
@@ -736,23 +762,26 @@ void Game::Render(GLfloat dt)
 	
 	
 
-	/////////////////////////////////////////////////////
-	// Bind to default framebuffer again and draw the 
-	// quad plane with attched screen texture.
-	// //////////////////////////////////////////////////
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	// Clear all relevant buffers
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
-	glClear(GL_COLOR_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
+	if (!isVR)
+	{
+		/////////////////////////////////////////////////////
+		// Bind to default framebuffer again and draw the 
+		// quad plane with attched screen texture.
+		// //////////////////////////////////////////////////
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		// Clear all relevant buffers
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+		glClear(GL_COLOR_BUFFER_BIT);
+		glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
 
-	//// Draw Screen
-	Shader screenShader = ResourceManager::GetShader("screenShader");
-	screenShader.Use();
-	glBindVertexArray(quadVAO);
-	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);	// Use the color attachment texture as the texture of the quad plane
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
+		// Draw Screen
+		Shader screenShader = ResourceManager::GetShader("screenShader");
+		screenShader.Use();
+		glBindVertexArray(quadVAO);
+		glBindTexture(GL_TEXTURE_2D, textureColorbuffer);	// Use the color attachment texture as the texture of the quad plane
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
+	}
 }
 
 // Other methods specific to our game
@@ -1060,15 +1089,17 @@ bool Game::RenderOculus()
 		{
 			// Keyboard inputs to adjust player orientation
 			static float Yaw(3.141592f);
-			//if (Platform.Key[VK_LEFT])  Yaw += 0.02f;
-			//if (Platform.Key[VK_RIGHT]) Yaw -= 0.02f;
+			if (Platform.Key[VK_LEFT])  Yaw += 2.0f;
+			if (Platform.Key[VK_RIGHT]) Yaw -= 2.0f;
 
-			// Keyboard inputs to adjust player position
-			static Vector3f Pos2(0.0f, 0.0f, -5.0f);
-			//if (Platform.Key['W'] || Platform.Key[VK_UP])     Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, -0.05f));
-			//if (Platform.Key['S'] || Platform.Key[VK_DOWN])   Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, +0.05f));
-			//if (Platform.Key['D'])                            Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(+0.05f, 0, 0));
-			//if (Platform.Key['A'])                            Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(-0.05f, 0, 0));
+
+
+			Camera::instance()->SetPosition(glm::vec3(Pos2.x, Pos2.y, Pos2.z));
+
+			//if (Platform.Key['W'] || Platform.Key[VK_UP])     Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, -20.f));
+			//if (Platform.Key['S'] || Platform.Key[VK_DOWN])   Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, +20.f));
+			//if (Platform.Key['D'])                            Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(+20.f, 0, 0));
+			//if (Platform.Key['A'])                            Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(-20.0f, 0, 0));
 
 			// Animate the cube
 			//manju_change
@@ -1102,31 +1133,42 @@ bool Game::RenderOculus()
 				Vector3f finalForward = finalRollPitchYaw.Transform(Vector3f(0, 0, -1));
 				Vector3f shiftedEyePos = Pos2 + rollPitchYaw.Transform(EyeRenderPose[eye].Position);
 
-				//if (!VROrientationSet)
-				//{
-				//	VRx = EyeRenderPose[eye].Orientation.x;
-				//	VRy= EyeRenderPose[eye].Orientation.y;
-				//	VROrientationSet = true;
-				//}
 
-				//else
-				//{
-				//	xoffset = VRx - EyeRenderPose[eye].Orientation.w;
-				//	yoffset = VRy - EyeRenderPose[eye].Orientation.y;
 
-				//	//if ((xoffset > 0.5) || (yoffset > 0.5))
-				//	//{
-				//		VRtoMouse(xoffset*3, yoffset*3);
-				//	//}
-				//}
+				// Keyboard inputs to adjust player position			
+				if (this->Keys[GLFW_KEY_W])      Pos2 += finalForward; //Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, +2.f));;// Pos2 += Matrix4f::RotationY(Yaw).Transform(EyeRenderPose[eye].Orientation)*2);
+				if (this->Keys[GLFW_KEY_S])      Pos2 -= finalForward;
+				if (this->Keys[GLFW_KEY_D])      Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(-2.0f, 0, 0));
+				if (this->Keys[GLFW_KEY_A])      Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(+2.f, 0, 0));
+
 				
 
 				//manju_note
-				Matrix4f view = Matrix4f::LookAtRH(shiftedEyePos, shiftedEyePos + finalForward, finalUp);
-				Matrix4f proj = ovrMatrix4f_Projection(hmdDesc.DefaultEyeFov[eye], 0.2f, 1000.0f, ovrProjection_None);
+				 viewVR = Matrix4f::LookAtRH(shiftedEyePos, shiftedEyePos + finalForward, finalUp);
+				 projVR = ovrMatrix4f_Projection(hmdDesc.DefaultEyeFov[eye], 0.2f, 1000.0f, ovrProjection_None);
 
+				//for (int i = 0;i < 4;i++)
+				//{
+				//	for (int j = 0;j < 4;j++)
+				//	{
 
-				
+				//		cout << view.M[i][j] << " ";
+				//	}
+				//	cout << endl;
+				//}
+
+				//cout << endl;
+				//
+				//for (int i = 0;i < 4;i++)
+				//{
+				//	for (int j = 0;j < 4;j++)
+				//	{
+
+				//		cout << proj.M[i][j] << " ";
+				//	}
+				//	cout << endl;
+				//}
+
 				
 
 				//manju_change
@@ -1148,7 +1190,7 @@ bool Game::RenderOculus()
 				ProcessInput(deltaTime);
 
 				// Update Game state
-				//Update(deltaTime);
+				Update(deltaTime);
 
 				// Clear the colorbuffer
 				glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
