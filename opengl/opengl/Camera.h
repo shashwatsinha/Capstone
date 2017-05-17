@@ -43,6 +43,8 @@ public:
 	GLfloat MovementSpeed;
 	GLfloat MouseSensitivity;
 	GLfloat Zoom;
+	glm::mat4 camView;
+	glm::mat4 camProjection;
 
 	Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), GLfloat yaw = YAW, GLfloat pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM)
 	{
@@ -87,6 +89,8 @@ public:
 
 	//Set Speed
 	void SetSpeed(float s);
+
+	void SetPosition(glm::vec3 Position);
 	static Camera *instance()
 	{
 		if (!player_instance)

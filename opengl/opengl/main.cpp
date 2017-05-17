@@ -29,7 +29,7 @@ void InitGLFW();
 double calcFPS(double theTimeInterval, string theWindowTitle);
 
 GLfloat lastX = 400, lastY = 300;
-bool firstMouse = false;
+bool firstMouse = true;
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
@@ -39,7 +39,7 @@ string windowTitle = "OurGame";
 
 Game game(screenWidth, screenHeight);
 
-bool isVR = false;
+bool isVR = true;
 
 static void list_audio_devices(const ALCchar *devices)
 {
@@ -69,20 +69,12 @@ void* load(char *fname, long *bufsize) {
 	return buf;
 }
 
-void RenderThread()
-{
-	game.RenderThread();
-}
 
 void ProcessInputThread(GLfloat deltaTime)
 {
 	game.ProcessInput(deltaTime);
 }
 
-void UpdateThread(GLfloat deltaTime)
-{
-	game.Update(deltaTime);
-}
 
 int main(int argc, char **argv)
 {
@@ -146,13 +138,19 @@ int main(int argc, char **argv)
 
 		//VALIDATE(Platform.InitWindow(GetModuleHandle(NULL), L"Oculus Room Tiny (GL)"), "Failed to open window.");
 		game.isVR = true;
+		//alSource3f(source, AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
+		
+
+
 		game.RunVR();
 		ResourceManager::Clear();
 
-		glfwTerminate();
-		return 0;
 
+		glfwTerminate();
 		ovr_Shutdown();
+
+		return 0;
+		
 
 	}
 
@@ -186,12 +184,16 @@ int main(int argc, char **argv)
 			//game.ProcessInput(deltaTime);
 			// Update Game state
 			//std::thread UpdateLoopThread(UpdateThread,deltaTime);
-			game.Update(deltaTime);
+
+			//game.Update(deltaTime);
+
+            game.Update(deltaTime);
 			BackgroundMusic::Update(deltaTime);
+
 			// Render
-			//std::thread RenderThread (RenderThread);
+		//	std::thread RenderThread (RenderThread);
 			
-			game.Render();
+			game.Render(deltaTime);
 			//game.RenderThread();
 			glfwSwapBuffers(window);
 

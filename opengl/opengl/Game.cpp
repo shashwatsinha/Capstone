@@ -22,6 +22,8 @@ Game::~Game()
 
 void Game::Init()
 {
+	Pos2 = Vector3f(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
+
 	flock1 = new Flockers();
 	centreOfFlock1 = glm::vec3(-22, 38, -108);
 	flock1->InitializeFlock(27, centreOfFlock1, 1.0f, false, 0.0f, true, 2);
@@ -116,7 +118,7 @@ void Game::Init()
 
 	for (int i = 0; i < 4; i++)
 	{
-		EnvironmentObject *obj = new EnvironmentObject();
+		Model *obj = new Model();
 		obj->InitPath("Models/Tree1/tree2.obj");
 		obj->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 		trees.push_back(obj);
@@ -130,7 +132,7 @@ void Game::Init()
 
 	for (int i = 0; i < 8; i++)
 	{
-		EnvironmentObject *obj = new EnvironmentObject();
+		Model *obj = new Model();
 		obj->InitPath("Models/Tree1/tree3.obj");
 		obj->SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 		trees.push_back(obj);
@@ -148,7 +150,7 @@ void Game::Init()
 
 	for (int i = 0; i < 4; i++)
 	{
-		EnvironmentObject *obj = new EnvironmentObject();
+		Model *obj = new Model();
 		obj->InitPath("Models/Tree1/tree4.obj");
 		obj->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 		trees.push_back(obj);
@@ -175,20 +177,7 @@ void Game::Init()
 		modelObjects.push_back(obj);
 	}
 
-	/*for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			for (int k = 0; k < 10; k++)
-			{
-				EnvironmentObject *obj = new EnvironmentObject();
-				obj->InitPath("Models/Bullet/Bullet.obj");
-				obj->SetPosition(glm::vec3((i * 4) - 30 , (j * 4)-10, k * 3 + 200));
-				obj->SetScale(glm::vec3(4.0f, 4.0f, 4.0f));
-				bgObjs.push_back(obj);
-			}
-		}
-	}*/
+
 
 	
 	ResourceManager::LoadShader("Shaders/vertexShader_Coral.vs", "Shaders/fragmentShader_Coral.frag", nullptr, "coralShader");
@@ -206,6 +195,7 @@ void Game::Init()
 		coral->SetPosition(coralPositions[i]);
 		coral->InitializeSound();
 		corals.push_back(coral);
+	
 	}
 
 	//sample coral
@@ -375,24 +365,35 @@ void Game::Init()
 	for (int i = 0; i < pointLightPositions.size(); i++)
 	{
 		Lights *pointLight = new Lights();
+		int lightDistance;
 		// Note that the 4th parameter is the distance the point light should affect (set the distance from the pre initialized pointLightDistance array)
 		if (i == 103)
 		{
 			ambient = glm::vec3(3.0f, 3.0f, 3.0f);
 			diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
 			specular = glm::vec3(1.0f, 1.0f, 1.0f);
-
-			pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[6]);
-			pointLights.push_back(pointLight);
+			lightDistance = pointLightDistance[6];
 		}
 		else {
 			ambient = glm::vec3(0.0f, 0.0f, 0.0f);
 			diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
 			specular = glm::vec3(0.0f, 0.0f, 0.0f);
-
-			pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, pointLightDistance[4]);
-			pointLights.push_back(pointLight);
+			lightDistance = pointLightDistance[4];
 		}
+
+		uniformNames.clear();
+		uniformNames.push_back("pointLights[" + to_string(i) + "].position");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].ambient");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].diffuse");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].specular");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].constant");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].linear");
+		uniformNames.push_back("pointLights[" + to_string(i) + "].quadratic");
+
+		pointLight->setPointLightParameters(pointLightPositions[i], ambient, diffuse, specular, lightDistance);
+		pointLight->setPointLightUniforms(uniformNames, &ResourceManager::GetShader("default"));
+		pointLights.push_back(pointLight);
+
 	}
 
 
@@ -454,31 +455,37 @@ void Game::Init()
 		surfaceEmitter.push_back(surfaceParticle);
 	}
 
-	// Initialize framebuffer and setup the screenQuad
-	setupScreenQuadAndFrameBuffer();
+	for (int i = 0; i < corals.size(); i++)
+	{
+		modelObjects.push_back(corals[i]);
+	}
+
+	if (!isVR)
+	{
+		// Initialize framebuffer and setup the screenQuad
+		setupScreenQuadAndFrameBuffer();
+	}
 }
 
 void Game::Update(GLfloat dt)
 {
 	
 	
-	//coral particle update
-	for (int i = 0;i < coralParticles.size();i++)
-	{
-		coralParticles[i]->Update(dt, 2);
-	}
 
-	for (int i = 0;i < surfaceEmitter.size(); i++)
-	{
-		surfaceEmitter[i]->Update(dt, 2);
-	}
+	////coral particle update
+	//for (int i = 0;i < coralParticles.size();i++)
+	//{
+	//	coralParticles[i]->Update(dt, 2);
+	//}
+
+	//for (int i = 0;i < surfaceEmitter.size(); i++)
+	//{
+	//	surfaceEmitter[i]->Update(dt, 2);
+	//}
 
 
 	// background music update
 	BackgroundMusic::Switch(Camera::instance()->GetPosition().z <= 200);
-
-	glm::vec3 pos = Camera::instance()->GetPosition();
-	std::cout << pos.x << ", " << pos.y << ", " << pos.z << std::endl;
 }
 
 
@@ -515,7 +522,7 @@ void Game::ProcessInput(GLfloat dt)
 		}
 
 		float movespeed = 2.0f;
-		Model * movObj = trees.at(12);
+//		Model * movObj = trees.at(12);
 
 		if (this->Keys[GLFW_KEY_I])
 		{
@@ -575,160 +582,46 @@ void Game::ProcessInput(GLfloat dt)
 	}
 }
 
-//void Game::RenderVR()
-//{
-//	glm::mat4 view = Camera::instance()->GetViewMatrix();
-//	glm::mat4 projection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 100.0f);
-//
-//	Shader shader = ResourceManager::GetShader("default");
-//	shader.Use();
-//	shader.SetMatrix4("view", view);
-//	shader.SetMatrix4("projection", projection);
-//
-//	// Setup Directional Light
-//	directionalLight.setUpDirectionalLight(&ResourceManager::GetShader("default"), Camera::instance());
-//
-//	// Setup Point Light. Properties of Point Light can be changed over time if required.
-//	// Get the Point Light whose values need to be changed using the vector pointLights and change the properties as required
-//	glm::vec3 position = glm::vec3(sin(glfwGetTime() * 1.0f), 0.0f, cos(glfwGetTime() * 1.0f));
-//	glm::vec3 ambient = glm::vec3(0.05f, 0.05f, 0.05f);
-//	glm::vec3 diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
-//	glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
-//	float constant = 1.0f;
-//	float linear = 0.09f;
-//	float quadratic = 0.032f;
-//	pointLightContainer.SetPosition(glm::vec3(sin(glfwGetTime() * 1.0f), 0.0f, cos(glfwGetTime() * 1.0f)));
-//	for (int i = 0; i < pointLights.size(); i++)
-//	{
-//		// Note that the 4th parameter is the distance the point light should affect (set the distance from the pre initialized pointLightDistance array)
-//		pointLights[i].setPointLightParameters(position, ambient, diffuse, specular, pointLightDistance[4]);
-//		pointLights[i].setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance());
-//	}
-//	ResourceManager::GetShader("default").SetInteger("NO_OF_POINT_LIGHTS", pointLights.size());
-//
-//	glm::quat myQuat;
-//	glm::quat key_quat = glm::quat(glm::vec3(0.0f, (GLfloat)glfwGetTime() * glm::radians(20.0f), 0.0f));
-//	myQuat = key_quat * myQuat;
-//	myQuat = glm::normalize(myQuat);
-//	//spaceShip.SetRotation(myQuat);
-//	spaceShip.DrawVR(&shader);
-//
-//	planet.DrawVR(&shader);
-//
-//	Shader coralShader = ResourceManager::GetShader("coralShader");
-//	coralShader.Use();
-//	coralShader.SetMatrix4("view", view);
-//	coralShader.SetMatrix4("projection", projection);
-//
-//	for (int i = 0; i < corals.size(); i++)
-//	{
-//		if (corals[i]->GetLerpColorStatus() == false)
-//		{
-//			mixValue = 0.0f;
-//			coralShader.SetFloat("mixValue", mixValue);
-//		}
-//		else
-//		{
-//			mixValue = mixValue + (glfwGetTime() * 0.009f);
-//			if (mixValue > 1.0f)
-//				mixValue = 1.0f;
-//			coralShader.SetFloat("mixValue", mixValue);
-//		}
-//		corals[i]->DrawVR(&coralShader);
-//		corals[i]->IsParticleActivated(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
-//		coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());
-//	}
-//
-//	Shader particleShader = ResourceManager::GetShader("particle");
-//	particleShader.Use();
-//	view = Camera::instance()->GetViewMatrix();
-//	particleShader.SetMatrix4("view", view);
-//	particleShader.SetMatrix4("projection", projection);
-//	glm::mat4 model;
-//	//model = glm::translate(model, particle.Position);
-//	model[0][0] = view[0][0];
-//	model[0][1] = view[1][0];
-//	model[0][2] = view[2][0];
-//	model[1][0] = view[0][1];
-//	model[1][1] = view[1][1];
-//	model[1][2] = view[2][1];
-//	model[2][0] = view[0][2];
-//	model[2][1] = view[1][2];
-//	model[2][2] = view[2][2];
-//	particleShader.SetMatrix4("model", model);
-//
-//	particlesystem1->DrawVR();
-//	particlesystem2->DrawVR();
-//
-//	for (int i = 0; i < physicsObjects.size(); i++)
-//	{
-//		physicsObjects[i]->DrawVR(&ResourceManager::GetShader("default"));
-//		for (int j = 0; j < physicsObjects[i]->enemyBullets.size(); j++)
-//		{
-//			physicsObjects[i]->enemyBullets[j]->DrawVR(&ResourceManager::GetShader("default"));
-//		}
-//	}
-//
-//	for (int i = 0; i < bullets.size(); i++)
-//	{
-//		bullets[i]->DrawVR(&ResourceManager::GetShader("default"));
-//	}
-//
-//	// Also draw the point light object, again binding the appropriate shader
-//	Shader lampShader = ResourceManager::GetShader("lightContainerShader");
-//	lampShader.Use();
-//	lampShader.SetMatrix4("view", view);
-//	lampShader.SetMatrix4("projection", projection);
-//	pointLightContainer.DrawVR(&lampShader);
-//
-//	glDepthFunc(GL_LEQUAL);
-//	Shader skySphereShader = ResourceManager::GetShader("skySphere");
-//	skySphereShader.Use();
-//	view = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
-//	skySphereShader.SetMatrix4("view", view);
-//	skySphereShader.SetMatrix4("projection", projection);
-//	GLfloat timeValue = glfwGetTime();
-//	skySphereShader.SetFloat("iGlobalTime", timeValue);
-//	sphere.DrawVR(&skySphereShader);
-//	glDepthFunc(GL_LESS);
-//
-//	// Draw the skybox last
-//	//glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
-//	//Shader skyboxShader = ResourceManager::GetShader("skybox");
-//	//skyboxShader.Use();
-//	//view = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
-//	//skyboxShader.SetMatrix4("view", view);
-//	//skyboxShader.SetMatrix4("projection", projection);
-//	//skybox.Draw(&skyboxShader);
-//	//glDepthFunc(GL_LESS); // Set depth function back to default
-//
-//	DetectCollisions();
-//}
 
-void Game::Render()
+void Game::Render(GLfloat dt)
 {
-	/////////////////////////////////////////////////////
-	// Bind to framebuffer and draw to color texture 
-	// as we normally would.
-	// //////////////////////////////////////////////////
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-	// Clear all attached buffers        
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // We're not using stencil buffer so why bother with clearing?
-
-	glEnable(GL_DEPTH_TEST);
-	
-	
 	if (isVR)
 	{
-		 camView = Camera::instance()->GetViewMatrix();
-		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
+		 for (int i = 0;i < 4;i++)
+		 {
+			 for (int j = 0;j < 4;j++)
+			 {
+				 camView[i][j] = viewVR.M[j][i];
+			 }
+		 }
+		 for (int i = 0;i < 4;i++)
+		 {
+			 for (int j = 0;j < 4;j++)
+			 {
+				 camProjection[i][j] = projVR.M[j][i];
+			 }
+		 }
+
+		 Camera::instance()->camView = camView;
+		 Camera::instance()->camProjection = camProjection;
+
 	}
 	
 	else
 	{
-		 camView = Camera::instance()->GetViewMatrix();
-		 camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
+		/////////////////////////////////////////////////////
+		// Bind to framebuffer and draw to color texture 
+		// as we normally would.
+		// //////////////////////////////////////////////////
+		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+		// Clear all attached buffers        
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // We're not using stencil buffer so why bother with clearing?
+
+		glEnable(GL_DEPTH_TEST);
+		
+		camView = Camera::instance()->GetViewMatrix();
+		camProjection = glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(this->Width) / static_cast<GLfloat>(this->Height), 0.1f, 5000.0f);
 	}
 
 	Frustum::instance()->ConstructFrustum(5, camProjection, camView);
@@ -738,6 +631,8 @@ void Game::Render()
 	shader.Use();
 	shader.SetMatrix4("view", camView);
 	shader.SetMatrix4("projection", camProjection);
+
+	ResourceManager::GetShader("default").SetFloat("FogDensity", fogDensity);
 	
 	// Setup Directional Light
 	directionalLight->setUpDirectionalLight(&ResourceManager::GetShader("default"), Camera::instance());
@@ -760,7 +655,7 @@ void Game::Render()
 		}
 		else
 		{
-			pointLights[i]->EmitLight(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
+			pointLights[i]->EmitLight(glm::vec3(Pos2.x,Pos2.y,Pos2.z));
 			if (pointLights[i]->getEmitLightValue() == true)
 			{
 				//cout << i << " : " << pointLights[i]->getEmitLightValue() << endl << endl << endl << endl;
@@ -787,80 +682,47 @@ void Game::Render()
 			}
 		}
 		
-		string *uniformName = new string[7];
-		uniformName[0] = string("pointLights[") + to_string(i) + string("].position");
-		uniformName[1] = string("pointLights[") + to_string(i) + string("].ambient");
-		uniformName[2] = string("pointLights[") + to_string(i) + string("].diffuse");
-		uniformName[3] = string("pointLights[") + to_string(i) + string("].specular");
-		uniformName[4] = string("pointLights[") + to_string(i) + string("].constant");
-		uniformName[5] = string("pointLights[") + to_string(i) + string("].linear");
-		uniformName[6] = string("pointLights[") + to_string(i) + string("].quadratic");
-
-		pointLights[i]->setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance(), uniformName);
+		pointLights[i]->setUpPointLight(&ResourceManager::GetShader("default"), Camera::instance());
 	}
 
 	
 
-	
-		
-		
-	
-	
-	
 
 	RenderThread();
 
 	ChangeDirectionOfCameraRandomly(false);
 
-	
 
-	Shader coralShader = ResourceManager::GetShader("coralShader");
-	coralShader.Use();
-	coralShader.SetMatrix4("view", camView);
-	coralShader.SetMatrix4("projection", camProjection);
 	
-	for (int i = 0;i < corals.size();i++)
-	{
-		/*if (corals[i]->GetLerpColorStatus() == false)
-		{
-			mixValue = 0.0f;
-			coralShader.SetFloat("mixValue", mixValue);
-		}
-		else
-		{
-			mixValue = mixValue + (glfwGetTime() * 0.009f);
-			if (mixValue > 1.0f)
-				mixValue = 1.0f;
-			coralShader.SetFloat("mixValue", mixValue);
-		}*/
-		corals[i]->Render(&coralShader);
-		//corals[i]->IsParticleActivated();
-		coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());
-	}
 
 
 	glDepthFunc(GL_LEQUAL);
-	//Shader skySphereShader = ResourceManager::GetShader("skySphere");
-	Shader skySphereShader = ResourceManager::GetShader("default");
+	Shader skySphereShader = ResourceManager::GetShader("skySphere");
+	//Shader skySphereShader = ResourceManager::GetShader("default");
+	//Shader skySphereShader = ResourceManager::GetShader(shaderName);
 	skySphereShader.Use();
-	camView = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
-	skySphereShader.SetMatrix4("view", camView);
+	//camView = glm::mat4(glm::mat3(Camera::instance()->GetViewMatrix()));	// Remove any translation component of the view matrix
+	glm::mat4 camViewVRSkysphere = glm::mat4(glm::mat3(camView));
+	skySphereShader.SetMatrix4("view", camViewVRSkysphere);
 	skySphereShader.SetMatrix4("projection", camProjection);
-	//GLfloat timeValue = glfwGetTime();
-	//skySphereShader.SetFloat("iGlobalTime", timeValue);
-	for (int i = 0; i < corals.size(); i++)
+	skySphereShader.SetFloat("fog", fogDensity);
+	GLfloat timeValue = glfwGetTime();
+	skySphereShader.SetFloat("iGlobalTime", timeValue);
+	if (noOfCoralsActivated == corals.size()) 
 	{
-		if (corals[i]->GetLerpColorStatus() == true)
-			noOfCoralsActivated++;
-	}
-	if (noOfCoralsActivated == corals.size()) {
 		noOfCoralsActivated = 0;
 		skySphereShader.SetFloat("isColor", 1.0f);
+		fogDensity = 0.0f;
+		skySphereShader.SetFloat("fog", fogDensity);
+		ResourceManager::GetShader("default").SetFloat("FogDensity", fogDensity);
 	}
-	else {
+
+	else 
+	{
 		noOfCoralsActivated = 0;
-		skySphereShader.SetFloat("isColor", 0.0f);
+		skySphereShader.SetFloat("isColor", 0.0f);		
 	}
+
 	sphere->Draw(&skySphereShader);
 	glDepthFunc(GL_LESS);
 
@@ -868,7 +730,7 @@ void Game::Render()
 
 	Shader particleShader = ResourceManager::GetShader("particle");
 	particleShader.Use();
-	camView = Camera::instance()->GetViewMatrix();
+	//camView = Camera::instance()->GetViewMatrix();
 	particleShader.SetMatrix4("view", camView);
 	particleShader.SetMatrix4("projection", camProjection);
 	glm::mat4 model;
@@ -885,42 +747,45 @@ void Game::Render()
 	particleShader.SetMatrix4("model", model);
 
 
-
-
-
-	for (int i = 0;i < coralParticles.size();i++)
+	for (int i = 0; i < corals.size(); i++)
 	{
-		coralParticles[i]->Draw();
-	}
+		if (corals[i]->GetLerpColorStatus() == true)
+			noOfCoralsActivated++;
 
+		coralParticles[i]->ActivateParticles(corals[i]->ActivateParticles());
+		coralParticles[i]->Draw();
+		coralParticles[i]->Update(dt, 2);
+	}
+	
 	for (int i = 0;i < surfaceEmitter.size(); i++)
 	{
 		surfaceEmitter[i]->Draw();
+		surfaceEmitter[i]->Update(dt, 2);
 	}
 
 	
 	
-	
-	
-	
 
-	/////////////////////////////////////////////////////
-	// Bind to default framebuffer again and draw the 
-	// quad plane with attched screen texture.
-	// //////////////////////////////////////////////////
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	// Clear all relevant buffers
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
-	glClear(GL_COLOR_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
+	if (!isVR)
+	{
+		/////////////////////////////////////////////////////
+		// Bind to default framebuffer again and draw the 
+		// quad plane with attched screen texture.
+		// //////////////////////////////////////////////////
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		// Clear all relevant buffers
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+		glClear(GL_COLOR_BUFFER_BIT);
+		glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
 
-	//// Draw Screen
-	Shader screenShader = ResourceManager::GetShader("screenShader");
-	screenShader.Use();
-	glBindVertexArray(quadVAO);
-	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);	// Use the color attachment texture as the texture of the quad plane
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
+		// Draw Screen
+		Shader screenShader = ResourceManager::GetShader("screenShader");
+		screenShader.Use();
+		glBindVertexArray(quadVAO);
+		glBindTexture(GL_TEXTURE_2D, textureColorbuffer);	// Use the color attachment texture as the texture of the quad plane
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
+	}
 }
 
 // Other methods specific to our game
@@ -1033,10 +898,10 @@ void Game::CleanUp()
 
 	delete coral1;
 
-	for (int i = 0; i < corals.size(); i++)
+	/*for (int i = 0; i < corals.size(); i++)
 	{
 		delete corals[i];
-	}
+	}*/
 
 	for (int i = 0; i < coralParticles.size(); i++)
 	{
@@ -1228,15 +1093,18 @@ bool Game::RenderOculus()
 		{
 			// Keyboard inputs to adjust player orientation
 			static float Yaw(3.141592f);
-			//if (Platform.Key[VK_LEFT])  Yaw += 0.02f;
-			//if (Platform.Key[VK_RIGHT]) Yaw -= 0.02f;
+			if (Platform.Key[VK_LEFT])  Yaw += 2.0f;
+			if (Platform.Key[VK_RIGHT]) Yaw -= 2.0f;
 
-			// Keyboard inputs to adjust player position
-			static Vector3f Pos2(0.0f, 0.0f, -5.0f);
-			//if (Platform.Key['W'] || Platform.Key[VK_UP])     Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, -0.05f));
-			//if (Platform.Key['S'] || Platform.Key[VK_DOWN])   Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, +0.05f));
-			//if (Platform.Key['D'])                            Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(+0.05f, 0, 0));
-			//if (Platform.Key['A'])                            Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(-0.05f, 0, 0));
+
+
+			Camera::instance()->SetPosition(glm::vec3(Pos2.x, Pos2.y, Pos2.z));
+			alListener3f(AL_POSITION, Pos2.x, Pos2.y, Pos2.z);
+
+			//if (Platform.Key['W'] || Platform.Key[VK_UP])     Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, -20.f));
+			//if (Platform.Key['S'] || Platform.Key[VK_DOWN])   Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, +20.f));
+			//if (Platform.Key['D'])                            Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(+20.f, 0, 0));
+			//if (Platform.Key['A'])                            Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(-20.0f, 0, 0));
 
 			// Animate the cube
 			//manju_change
@@ -1270,31 +1138,42 @@ bool Game::RenderOculus()
 				Vector3f finalForward = finalRollPitchYaw.Transform(Vector3f(0, 0, -1));
 				Vector3f shiftedEyePos = Pos2 + rollPitchYaw.Transform(EyeRenderPose[eye].Position);
 
-				//if (!VROrientationSet)
-				//{
-				//	VRx = EyeRenderPose[eye].Orientation.x;
-				//	VRy= EyeRenderPose[eye].Orientation.y;
-				//	VROrientationSet = true;
-				//}
 
-				//else
-				//{
-				//	xoffset = VRx - EyeRenderPose[eye].Orientation.w;
-				//	yoffset = VRy - EyeRenderPose[eye].Orientation.y;
 
-				//	//if ((xoffset > 0.5) || (yoffset > 0.5))
-				//	//{
-				//		VRtoMouse(xoffset*3, yoffset*3);
-				//	//}
-				//}
+				// Keyboard inputs to adjust player position			
+				if (this->Keys[GLFW_KEY_W])      Pos2 += finalForward; //Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, +2.f));;// Pos2 += Matrix4f::RotationY(Yaw).Transform(EyeRenderPose[eye].Orientation)*2);
+				if (this->Keys[GLFW_KEY_S])      Pos2 -= finalForward;
+				if (this->Keys[GLFW_KEY_D])      Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(-2.0f, 0, 0));
+				if (this->Keys[GLFW_KEY_A])      Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(+2.f, 0, 0));
+
 				
 
 				//manju_note
-				Matrix4f view = Matrix4f::LookAtRH(shiftedEyePos, shiftedEyePos + finalForward, finalUp);
-				Matrix4f proj = ovrMatrix4f_Projection(hmdDesc.DefaultEyeFov[eye], 0.2f, 1000.0f, ovrProjection_None);
+				 viewVR = Matrix4f::LookAtRH(shiftedEyePos, shiftedEyePos + finalForward, finalUp);
+				 projVR = ovrMatrix4f_Projection(hmdDesc.DefaultEyeFov[eye], 0.2f, 1000.0f, ovrProjection_None);
 
+				//for (int i = 0;i < 4;i++)
+				//{
+				//	for (int j = 0;j < 4;j++)
+				//	{
 
-				
+				//		cout << view.M[i][j] << " ";
+				//	}
+				//	cout << endl;
+				//}
+
+				//cout << endl;
+				//
+				//for (int i = 0;i < 4;i++)
+				//{
+				//	for (int j = 0;j < 4;j++)
+				//	{
+
+				//		cout << proj.M[i][j] << " ";
+				//	}
+				//	cout << endl;
+				//}
+
 				
 
 				//manju_change
@@ -1304,10 +1183,6 @@ bool Game::RenderOculus()
 				//for (int i = 0; i < game.AllModels.size(); ++i)
 				calcFPS(1.0, windowTitle);
 
-				// Set frame time
-				GLfloat currentFrame = glfwGetTime();
-				deltaTime = currentFrame - lastFrame;
-				lastFrame = currentFrame;
 
 				// Check and call events
 				glfwPollEvents();
@@ -1316,7 +1191,7 @@ bool Game::RenderOculus()
 				ProcessInput(deltaTime);
 
 				// Update Game state
-				Update(deltaTime);
+				//Update(deltaTime);
 
 				// Clear the colorbuffer
 				glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
@@ -1325,7 +1200,7 @@ bool Game::RenderOculus()
 
 
 				//glm::mat4 viewVR; glm::mat4 projectionVR;
-				Render();
+				Render(deltaTime);
 
 				// Avoids an error when calling SetAndClearRenderSurface during next iteration.
 				// Without this, during the next while loop iteration SetAndClearRenderSurface
@@ -1397,6 +1272,21 @@ void Game::RunVR()
 {
 	while (!glfwWindowShouldClose(window))
 	{
+		//alSource3f(source, AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
+		alListener3f(AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
+
+		// Set frame time
+		GLfloat currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+		// Check and call events
+		glfwPollEvents();
+
+
+		//game.Update(deltaTime);
+		BackgroundMusic::Update(deltaTime);
+
 		if(retryCreate)
 		RenderOculus();
 

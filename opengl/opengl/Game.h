@@ -15,7 +15,8 @@
 #include <ppl.h>
 
 
-
+#include "Camera.h"
+#include "ActorFactory.h"
 #include <stdlib.h>    
 #include <time.h>
 #include <map>
@@ -79,6 +80,11 @@ public:
 	GLuint textureColorbuffer;
 	GLuint framebuffer;
 
+	//manju_note
+	Matrix4f viewVR;
+	Matrix4f projVR;
+    Vector3f Pos2;
+
 	float VRx=0;
 	float VRy=0;
 	float xoffset, yoffset;
@@ -92,7 +98,7 @@ public:
 	// GameLoop
 	void ProcessInput(GLfloat dt);
 	void Update(GLfloat dt);
-	void Render();
+	void Render(GLfloat dt);
 
 	// Other methods specific for our game
 
@@ -188,7 +194,8 @@ private:
 	float alpha;
 
 	vector<Model*> modelObjects;
-	
+	float fogDensity = 0.01f;
+	vector<string> uniformNames;
 };
 
 #endif
