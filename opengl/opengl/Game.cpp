@@ -22,6 +22,8 @@ Game::~Game()
 
 void Game::Init()
 {
+	Pos2 = Vector3f(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
+
 	flock1 = new Flockers();
 	centreOfFlock1 = glm::vec3(-22, 38, -108);
 	flock1->InitializeFlock(27, centreOfFlock1, 1.0f, false, 0.0f, true, 2);
@@ -521,7 +523,7 @@ void Game::ProcessInput(GLfloat dt)
 		}
 
 		float movespeed = 2.0f;
-		Model * movObj = trees.at(12);
+//		Model * movObj = trees.at(12);
 
 		if (this->Keys[GLFW_KEY_I])
 		{
@@ -601,6 +603,9 @@ void Game::Render(GLfloat dt)
 			 }
 		 }
 
+		 Camera::instance()->camView = camView;
+		 Camera::instance()->camProjection = camProjection;
+
 	}
 	
 	else
@@ -651,7 +656,7 @@ void Game::Render(GLfloat dt)
 		}
 		else
 		{
-			pointLights[i]->EmitLight(glm::vec3(Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z));
+			pointLights[i]->EmitLight(glm::vec3(Pos2.x,Pos2.y,Pos2.z));
 			if (pointLights[i]->getEmitLightValue() == true)
 			{
 				//cout << i << " : " << pointLights[i]->getEmitLightValue() << endl << endl << endl << endl;
@@ -1178,10 +1183,6 @@ bool Game::RenderOculus()
 				//for (int i = 0; i < game.AllModels.size(); ++i)
 				calcFPS(1.0, windowTitle);
 
-				// Set frame time
-				GLfloat currentFrame = glfwGetTime();
-				deltaTime = currentFrame - lastFrame;
-				lastFrame = currentFrame;
 
 				// Check and call events
 				glfwPollEvents();
@@ -1190,7 +1191,7 @@ bool Game::RenderOculus()
 				ProcessInput(deltaTime);
 
 				// Update Game state
-				Update(deltaTime);
+				//Update(deltaTime);
 
 				// Clear the colorbuffer
 				glClearColor(0.05f, 0.05f, 0.05f, 1.0f);

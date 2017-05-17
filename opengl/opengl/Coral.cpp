@@ -84,8 +84,8 @@ void Coral::Render(Shader * shader)
 {
 	Shader coralShader = ResourceManager::GetShader("coralShader");
 	coralShader.Use();
-	coralShader.SetMatrix4("view", Camera::instance()->GetViewMatrix());
-	coralShader.SetMatrix4("projection", glm::perspective(Camera::instance()->Zoom, static_cast<GLfloat>(800.0f) / static_cast<GLfloat>(600.0f), 0.1f, 5000.0f));
+	coralShader.SetMatrix4("view", Camera::instance()->camView);
+	coralShader.SetMatrix4("projection", Camera::instance()->camProjection);
 
 	if (GetLerpColorStatus() == false)
 	{
