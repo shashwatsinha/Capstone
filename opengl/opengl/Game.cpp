@@ -118,7 +118,7 @@ void Game::Init()
 
 	for (int i = 0; i < 4; i++)
 	{
-		EnvironmentObject *obj = new EnvironmentObject();
+		Model *obj = new Model();
 		obj->InitPath("Models/Tree1/tree2.obj");
 		obj->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 		trees.push_back(obj);
@@ -132,7 +132,7 @@ void Game::Init()
 
 	for (int i = 0; i < 8; i++)
 	{
-		EnvironmentObject *obj = new EnvironmentObject();
+		Model *obj = new Model();
 		obj->InitPath("Models/Tree1/tree3.obj");
 		obj->SetScale(glm::vec3(1.0f, 1.0f, 1.0f));
 		trees.push_back(obj);
@@ -150,7 +150,7 @@ void Game::Init()
 
 	for (int i = 0; i < 4; i++)
 	{
-		EnvironmentObject *obj = new EnvironmentObject();
+		Model *obj = new Model();
 		obj->InitPath("Models/Tree1/tree4.obj");
 		obj->SetScale(glm::vec3(0.5f, 0.5f, 0.5f));
 		trees.push_back(obj);
@@ -1100,6 +1100,7 @@ bool Game::RenderOculus()
 
 
 			Camera::instance()->SetPosition(glm::vec3(Pos2.x, Pos2.y, Pos2.z));
+			alListener3f(AL_POSITION, Pos2.x, Pos2.y, Pos2.z);
 
 			//if (Platform.Key['W'] || Platform.Key[VK_UP])     Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, -20.f));
 			//if (Platform.Key['S'] || Platform.Key[VK_DOWN])   Pos2 += Matrix4f::RotationY(Yaw).Transform(Vector3f(0, 0, +20.f));
@@ -1272,6 +1273,21 @@ void Game::RunVR()
 {
 	while (!glfwWindowShouldClose(window))
 	{
+		//alSource3f(source, AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
+		alListener3f(AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
+
+		// Set frame time
+		GLfloat currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+		// Check and call events
+		glfwPollEvents();
+
+
+		//game.Update(deltaTime);
+		BackgroundMusic::Update(deltaTime);
+
 		if(retryCreate)
 		RenderOculus();
 

@@ -103,7 +103,7 @@ void Coral::Render(Shader * shader)
 
 	IsParticleActivated();
 	Draw(&coralShader);
-
+	alSourcef(source, AL_GAIN, 1.);
 }
 
 void * Coral::load(char * fname, long * bufsize)

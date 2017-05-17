@@ -139,21 +139,9 @@ int main(int argc, char **argv)
 		//VALIDATE(Platform.InitWindow(GetModuleHandle(NULL), L"Oculus Room Tiny (GL)"), "Failed to open window.");
 		game.isVR = true;
 		//alSource3f(source, AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
-		alListener3f(AL_POSITION, Camera::instance()->GetPosition().x, Camera::instance()->GetPosition().y, Camera::instance()->GetPosition().z);
-
-		// Set frame time
-		GLfloat currentFrame = glfwGetTime();
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
-
-		game.deltaTime = deltaTime;
-
-		// Check and call events
-		glfwPollEvents();
+		
 
 
-		//game.Update(deltaTime);
-		BackgroundMusic::Update(deltaTime);
 		game.RunVR();
 		ResourceManager::Clear();
 
