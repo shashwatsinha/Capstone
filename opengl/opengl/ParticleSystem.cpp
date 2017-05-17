@@ -2,11 +2,39 @@
 
 
 
+void* load(char * fname, long * bufsize);
+
 ParticleSystem::ParticleSystem(Shader shader, Texture2D texture, GLuint amount)
 	:shader(shader), texture(texture), amount(amount)
 {
 	this->init();
 
+	hasSound = false;
+}
+
+ParticleSystem::ParticleSystem(Shader shader, Texture2D texture, GLuint amount, char *sound) : ParticleSystem(shader, texture, amount) {
+	// load and play sound effect
+	alGenSources(1, &source);
+	alSourcef(source, AL_PITCH, 1.);
+	alSourcef(source, AL_GAIN, 25.0f);
+	alSource3f(source, AL_POSITION, 0, 0, 100); // TODO: put the particle's starting position (or whatever position works best) here
+	alSource3f(source, AL_VELOCITY, 0., 0., 0.);
+	alSourcei(source, AL_REFERENCE_DISTANCE, 50);
+	alSourcei(source, AL_MAX_DISTANCE, FLT_MAX);
+	alSourcei(source, AL_LOOPING, AL_TRUE);
+
+	alGenBuffers(1, &buffer);
+	{
+		long dataSize;
+		const ALvoid* data = load(sound, &dataSize);
+		/* for simplicity, assume raw file is signed-16b at 44.1kHz */
+		alBufferData(buffer, AL_FORMAT_MONO16, data, dataSize, 44100);
+		free((void*)data);
+	}
+
+	alSourcei(source, AL_BUFFER, buffer);
+	alSourcePlay(source);
+	hasSound = true;
 }
 
 void ParticleSystem::ActivateParticles(bool Ap)
@@ -215,6 +243,10 @@ void ParticleSystem::SetModelMatrix()
 
 ParticleSystem::~ParticleSystem()
 {
+	if (hasSound) {
+		alDeleteSources(1, &source);
+		alDeleteBuffers(1, &buffer);
+	}
 }
 
 void ParticleSystem::Update(GLfloat dt, GLuint newParticles)
@@ -240,3 +272,5 @@ void ParticleSystem::Update(GLfloat dt, GLuint newParticles)
 		}
 	}
 }
+
+

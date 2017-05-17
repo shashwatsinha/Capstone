@@ -8,6 +8,7 @@
 #include"Shader.h"
 #include"Texture2D.h"
 #include<vector>
+#include<al.h>
 #include"Camera.h"
 
 struct Particle {
@@ -24,6 +25,7 @@ class ParticleSystem
 {
 public:
 	ParticleSystem(Shader shader, Texture2D texture, GLuint amount);
+	ParticleSystem(Shader shader, Texture2D texture, GLuint amount, char *sound);
 	~ParticleSystem();
 	void Update(GLfloat dt, GLuint newParticles);
 	void Draw();
@@ -67,6 +69,10 @@ private:
 
 	bool emittingParticles;
 
+	// sound emitter stuff
+	ALuint source;
+	ALuint buffer;
+	bool hasSound;
 };
 #endif
 

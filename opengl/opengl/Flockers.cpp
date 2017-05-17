@@ -132,14 +132,14 @@ void Flockers::InitializeFlock(float flockSize, glm::vec3 centre, float delay,  
 		alGenBuffers(1, &buffer[i]);
 		{
 			long dataSize;
-			const ALvoid* data = load("footsteps.raw", &dataSize);
+			const ALvoid* data = load("Flocker.raw", &dataSize);
 			/* for simplicity, assume raw file is signed-16b at 44.1kHz */
 			alBufferData(buffer[i], AL_FORMAT_MONO16, data, dataSize, 44100);
 			free((void*)data);
 		}
 
 		alSourcei(soundSources[i], AL_BUFFER, buffer[i]);
-		//alSourcePlay(soundSources[i]);
+		alSourcePlay(soundSources[i]);
 
 		fflush(stderr); /* in case OpenAL reported an error earlier */
 
@@ -177,7 +177,8 @@ void Flockers::Render(Shader * shader)
 		//if (Frustum::instance()->CheckSphere(objs[i]->GetPosition(), 5))
 			objs[i]->Render(shader);
 
-		//alSource3f(soundSources[i], AL_POSITION, objs[i]->GetPosition().x, objs[i]->GetPosition().y, objs[i]->GetPosition().z);
+		alSource3f(soundSources[i], AL_POSITION, objs[i]->GetPosition().x, objs[i]->GetPosition().y, objs[i]->GetPosition().z);
+		alSource3f(soundSources[i], AL_VELOCITY, objs[i]->GetVelocity().x, objs[i]->GetVelocity().y, objs[i]->GetVelocity().z);
 	}
 
 }

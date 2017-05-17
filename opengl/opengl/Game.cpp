@@ -438,7 +438,7 @@ void Game::Init()
 	}
 
 	//surface emitter setup
-	ParticleSystem* masterSurfaceEmitter = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 5000);
+	ParticleSystem* masterSurfaceEmitter = new ParticleSystem(ResourceManager::GetShader("particle"), ResourceManager::GetTexture("particle"), 5000, "Pushing_Particles.raw");
 	masterSurfaceEmitter->age = 15.0f;
 	masterSurfaceEmitter->acceleration = glm::vec3(0.0, 0.0, 1.5);
 	masterSurfaceEmitter->color = glm::vec4(1.0f, 0.0f, 0.5f, 1.0f);
@@ -476,6 +476,9 @@ void Game::Update(GLfloat dt)
 
 	// background music update
 	BackgroundMusic::Switch(Camera::instance()->GetPosition().z <= 200);
+
+	glm::vec3 pos = Camera::instance()->GetPosition();
+	std::cout << pos.x << ", " << pos.y << ", " << pos.z << std::endl;
 }
 
 

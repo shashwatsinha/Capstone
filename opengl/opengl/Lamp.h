@@ -2,6 +2,7 @@
 #include <time.h> 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <al.h>
 #include "Model.h"
 
 class Lamp : public Model
@@ -16,5 +17,8 @@ private:
 	glm::vec3 meanPosition;
 	float currentYPos;
 	float dirAmplitude;
+
+	ALuint source;
+	ALuint buffer;
 };
 

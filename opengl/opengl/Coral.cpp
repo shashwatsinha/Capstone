@@ -56,7 +56,7 @@ void Coral::InitializeSound()
 {
 	alGenSources(1, &source);
 	alSourcef(source, AL_PITCH, 1.);
-	alSourcef(source, AL_GAIN, 0.8f);
+	alSourcef(source, AL_GAIN, 8.0f);
 	alSource3f(source, AL_POSITION, this->GetPosition().x, this->GetPosition().y, this->GetPosition().z);
 	alSource3f(source, AL_VELOCITY, 0., 0., 0.);
 	alSourcei(source, AL_LOOPING, AL_TRUE);
